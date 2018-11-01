@@ -68,7 +68,7 @@ class Usuario implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="roles", type="string", columnDefinition="enum('ROLE_USER', 'ROLE_ADMIN')" , length=15, nullable=false)
+     * @ORM\Column(name="roles", type="string", columnDefinition="enum('ROLE_PROFE', 'ROLE_PROFI',  'ROLE_ALU', 'ROLE_ADMIN')" , length=15, nullable=false)
      */
     private $roles;
 
@@ -79,6 +79,12 @@ class Usuario implements UserInterface
      */
     private $avatar;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="telefono", type="integer")
+     */
+    private $telefono;
 
     /**
      * Get id
@@ -285,6 +291,32 @@ class Usuario implements UserInterface
     {
         return $this->avatar;
     }
+
+    /**
+     * Get telefono
+     *
+     * @return int
+     */
+    public function getTelefono()
+    {
+        return $this->telefono;
+    }
+
+    /**
+     * Set telefono
+     *
+     * @param int $telefono
+     *
+     * @return Usuario
+     */
+    public function setTelefono($telefono)
+    {
+        $this->telefono = $telefono;
+
+        return $this;
+    }
+
+
     public function getSalt()
     {
         return null;

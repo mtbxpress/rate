@@ -21,6 +21,62 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class UsuarioController extends Controller
 {
+
+    /**
+     * Lógica de la pantalla donde se muestra todos los usuarios permitiendo hacer búsquedas.
+     * @return Response HTML
+     */
+
+    public function mostrarUsuariosAction(Request $request){
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $rep = $em->getRepository('AppBundle:Usuario');
+            $usuarios = $rep->findAll();
+
+        } catch (Exception $ex) {
+            echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
+        }
+//dump($usuarios[0]);die();
+        return $this->render('Usuario/mostrar_usuarios.html.twig', array('usuarios'=>$usuarios ));
+    }
+
+
+    /**
+     * Busca usuarios según una letra
+     * @return Response HTML
+     */
+
+    public function buscaUsarioLetraAction(Request $request, $letra){
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $rep = $em->getRepository('AppBundle:Usuario');
+            $usuarios = $rep->buscaUsarioLetra($letra);
+
+        } catch (Exception $ex) {
+            echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
+        }
+        return $this->render('Usuario/mostrar_usuarios.html.twig', array('usuarios'=>$usuarios ));
+    }
+
+    /**
+     * Busca usuarios según una letra
+     * @return Response HTML
+     */
+
+    public function busquedaGeneralAction(Request $request){
+        try{
+
+            $palabraBuscar = $request->query->get('busqueda');
+            $em = $this->getDoctrine()->getManager();
+            $rep = $em->getRepository('AppBundle:Usuario');
+            $usuarios = $rep->busquedaGeneral($palabraBuscar);
+
+        } catch (Exception $ex) {
+            echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
+        }
+        return $this->render('Usuario/mostrar_usuarios.html.twig', array('usuarios'=>$usuarios ));
+    }
+
     /**
      * Lógica de la pantalla donde se muestra todos los usuarios permitiendo hacer búsquedas.
      * @return Response HTML

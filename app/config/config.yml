@@ -39,6 +39,8 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
+        mapping_types:
+            enum:       string
         driver: pdo_mysql
         host: '%database_host%'
         port: '%database_port%'

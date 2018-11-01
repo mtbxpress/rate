@@ -1,0 +1,150 @@
+{% extends 'base_menu.html.twig' %}
+{% block title %} {% trans %}Mostrar Usuarios{% endtrans %}{% endblock %}
+{% block head %}
+  {{ parent() }}
+<script>
+function funcion(){
+
+    setTimeout(function() {
+      $('.alert').hide()
+    }, 3500);
+  }
+</script>
+{% endblock %}
+{% block pageContent %}
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>{% trans %}Usuarios{% endtrans %}</h3>
+              </div>
+                <form action="{{ path('buscar_general')}}">
+                  <div class="title_right">
+                    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                      <div class="input-group">
+
+                          <input type="text" name="busqueda" class="form-control" placeholder="Search for...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit" >Go!</button>
+                          </span>
+
+                      </div>
+                    </div>
+                  </div>
+                </form>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_content">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                        <ul class="pagination pagination-split">
+                          <a href="{{ path('buscar_usuario_letra', {'letra': 'admin'})}}" class="btn btn-danger btn-md" role="button">Admin</a>
+                          <a href="{{ path('buscar_usuario_letra', {'letra': 'alumno'})}}" class="btn btn-success btn-md" role="button">{% trans %}Alumno{% endtrans %} </a>
+                          <a href="{{ path('buscar_usuario_letra', {'letra': 'externo'})}}" class="btn btn-info btn-md" role="button">{% trans %}Externo{% endtrans %}</a>
+                          <a href="{{ path('buscar_usuario_letra', {'letra': 'interno'})}}" class="btn btn-warning btn-md" role="button">{% trans %}Interno{% endtrans %}</a>
+                          <a href="{{ path('buscar_usuario_letra', {'letra': 'All'})}}" class="btn btn-default btn-md" role="button">{% trans %}Todos{% endtrans %}</a>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                        <ul class="pagination pagination-split">
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'A'})}}">A</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'B'})}}">B</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'C'})}}">C</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'D'})}}">D</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'E'})}}">E</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'F'})}}">F</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'G'})}}">G</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'H'})}}">H</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'I'})}}">I</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'J'})}}">J</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'K'})}}">K</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'L'})}}">L</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'M'})}}">M</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'N'})}}">N</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'Ñ'})}}">Ñ</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'O'})}}">O</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'P'})}}">P</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'Q'})}}">Q</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'R'})}}">R</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'S'})}}">S</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'T'})}}">T</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'U'})}}">U</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'W'})}}">W</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'X'})}}">X</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'Y'})}}">Y</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'Z'})}}">Z</a></li>
+                          <li><a href="{{ path('buscar_usuario_letra', {'letra': 'All'})}}">{% trans %}Todos{% endtrans %}</a></li>
+                        </ul>
+                      </div>
+                      <div class="clearfix"></div>
+{% if usuarios|length == 0 %}
+    <div class="text-center"><h3> {% trans %}SIN RESULTADOS{% endtrans %}</h3></div>
+{% endif %}
+                    {% for usuario in usuarios %}
+
+                      <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
+                        <div class="well profile_view">
+                          <div class="col-sm-12">
+                            <h4 class="brief"><i>Digital Strategist</i></h4>
+                            <div class="left col-xs-7">
+                              <h2>{{ usuario.nombre }}  {{ usuario.apellidos }}</h2>
+                              <p><strong>About: </strong> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                              <ul class="list-unstyled">
+                                <li><i class="fa fa-building"></i> {% trans %}Email{% endtrans %}: {{ usuario.email }}</li>
+                                <li><i class="fa fa-phone"></i> {% trans %}Telefono{% endtrans %}: {{ usuario.telefono }}</li>
+                              </ul>
+                            </div>
+                            <div class="right col-xs-5 text-center">
+                              <img src="{{ asset('template/build/images/img.jpg') }}" alt="" class="img-circle img-responsive">
+                            </div>
+                          </div>
+                          <div class="col-xs-12 bottom text-center">
+                            <div class="col-xs-12 col-sm-6 emphasis">
+                              <p class="ratings">
+                                <a>4.0</a>
+                                <a href="#"><span class="fa fa-star"></span></a>
+                                <a href="#"><span class="fa fa-star"></span></a>
+                                <a href="#"><span class="fa fa-star"></span></a>
+                                <a href="#"><span class="fa fa-star"></span></a>
+                                <a href="#"><span class="fa fa-star-o"></span></a>
+                              </p>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-6 emphasis">
+                              {% if usuario.roles == 'ROLE_ADMIN' %}
+                                  <button type="button" class="btn btn-danger btn-xs">Admin </button>
+                              {% elseif usuario.roles == 'ROLE_ALU' %}
+                                  <button type="button" class="btn btn-success btn-xs">{% trans %}Alumno{% endtrans %} </button>
+                              {% elseif usuario.roles == 'ROLE_PROFE' %}
+                                  <button type="button" class="btn btn-info btn-xs">{% trans %}Externo{% endtrans %} </button>
+                              {% elseif usuario.roles == 'ROLE_PROFI' %}
+                                  <button type="button" class="btn btn-warning btn-xs">{% trans %}Interno{% endtrans %}</button>
+                              {% endif %}
+                              <button type="button" class="btn btn-primary btn-xs">
+                                <i class="fa fa-user"> </i> {% trans %}Ver{% endtrans %}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    {% endfor %}
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+        {% endblock %}

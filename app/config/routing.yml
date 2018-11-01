@@ -23,3 +23,17 @@ inicio:
     path: /inicio
     defaults: { _controller: AppBundle:Inicio:inicio }
 
+mostrar_usuarios:
+    path: /admin/usuarios
+    defaults: { _controller: AppBundle:Usuario:mostrarUsuarios }
+
+buscar_usuario_letra:
+    path:  /admin/usuarios/{letra}
+    defaults: { _controller: AppBundle:Usuario:buscaUsarioLetra }
+    requirements:
+        _letra: 'a|b|c|d|e|f|g|h|i|j|k|l|m|n|ñ|o|p|q|r|s|t|u|v|w|x|y|z'
+
+buscar_general:
+    path:  /admin/busqueda
+    defaults: { _controller: AppBundle:Usuario:busquedaGeneral }
+

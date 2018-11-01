@@ -25,7 +25,9 @@ security:
                 target: /
 
     access_control:
-        - { path: ^/inicio, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        #- { path: ^/admin, roles: ROLE_ADMIN }
+        #- { path: ^/inicio, roles: [ROLE_USER, ROLE_ADMIN ]}
 
 
 # https://symfony.com/doc/current/security.html

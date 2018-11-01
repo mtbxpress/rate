@@ -1,0 +1,249 @@
+Cerrar sesion: Cerrar sesion
+Bienvenido: Bienvenido
+Usuarios: Usuarios
+Cerrar: Cerrar
+Mostrar Usuarios: Mostrar Usuarios
+Crear Usuario: Crear Usuario
+Todos: Todos
+SIN RESULTADOS: SIN RESULTADOS
+Alumno: Alumno
+Externo: Pr. Externo
+Interno: Pr. Interno
+
+
+
+
+
+
+Aceptar: Aceptar
+Reset: Reset
+Miembro desde: Miembro desde
+Home: Home
+MIS DATOS: MIS DATOS
+Empresas: Empresas
+Ofertas: Ofertas
+Oferta: Oferta
+oferta: oferta
+Descargar: Descargar
+Puesto: Puesto
+Ver: Ver
+Mostrar: Mostrar
+Crear: Crear
+Editar: Editar
+Eliminar: Eliminar
+Mostrar todas: Mostrar todas
+Mostrar todos: Mostrar todos
+Gestor: Gestor
+Mostrar Empresas: Mostrar Empresas
+Lista de Empresas: Lista de Empresas
+Mostrar Ofertas: Mostrar Ofertas
+Localizacion: Localización
+Opciones: Opciones
+Info: Info
+Url: Url
+Total de ofertas registradas: <b>Ofertas</b> registradas
+Total de empresas registradas: <b>Empresas</b> registradas
+Total de requisitos registrados: <b>Requisitos</b> registrados
+Total de solicitudes registradas: <b>Solicitudes</b> registradas
+Requisitos: Requisitos
+Requisito: Requisito
+mensaje localizacion: Para conocer la localizacion exacta de la empresa pulse en el siguiente boton
+Eventos arrastrables: Eventos arrastrables
+Calendario de eventos: Calendario de eventos
+Entrevista: Entrevista
+Reunion: Reunion
+Entrega de CV: Entrega de CV
+Visita: Visita
+Subida salarial: Subida salarial
+Crear Evento: Crear Evento
+Titulo evento: Titulo evento
+Añadir: Añadir
+Hoy: Hoy
+Mes: Mes
+Semana: Semana
+Dia: Dia
+Eliminar tras arrastrar: Eliminar tras arrastrar
+Calendario: Calendario
+CV: CV
+Nombre del Cv: Nombre del Cv
+mensaje busqueda vacia: Sin resultados => Introduzca algun valor válido.
+mensaje busqueda erronea: Sin resultados => Introduzca el patron de búsqueda corréctamente.
+busqueda1: <strong>campo:valor</strong>
+busqueda2: Mostrar todas "empresa:"
+busqueda3: Buscar alguna "empresa:ibm
+busqueda4: <strong>campo</strong> = (empresa, oferta, contacto, requisito)
+Mostrar Resultados Busqueda: Mostrar Resultados Busqueda
+Busqueda: Busqueda
+Patron de Busqueda: Patrón de búsqueda
+Total de resultados encontrados: Total de resultados encontrados
+
+Seleccione una empresa: Seleccione una empresa
+Todos los derechos reservados: Todos los derechos reservados
+Sueldo: Sueldo
+Experiencia: Experiencia
+Solicitudes: Solicitudes
+Solicitud: Solicitud
+Ver Solicitud: Ver Solicitud
+Puesto ofertado: Puesto ofertado
+Requisitos oferta: Requisitos oferta
+Descripcion de la oferta: Descripcion de la oferta
+Crear Solicitud: Crear Solicitud
+Inserte los datos de la solicitud : Inserte los datos de la solicitud
+
+Registro modificado correctamente: Registro modificado correctamente
+Registro eliminado correctamente: Registro eliminado correctamente
+Registro creado correctamente: Registro creado correctamente
+Edite los datos: Edite los datos
+Esta seguro de eliminar la empresa: ¿Esta seguro de eliminar la empresa?
+Esta seguro de eliminar la oferta: ¿Esta seguro de eliminar la oferta?
+Esta seguro de eliminar el requisito: ¿Esta seguro de eliminar el requisito?
+Actividad reciente: Actividad reciente
+Lista cosas pendientes: Lista cosas pendientes
+
+# CREAR OFERTA
+Nombre oferta: Nombre oferta
+Crear Oferta: Crear Oferta
+Descripcion oferta: Descripcion oferta
+Sueldo oferta: Sueldo oferta
+Conocimientos oferta: Conocimientos oferta
+Fecha: Fecha
+Localizacion oferta: Localizacion oferta
+Experiencia oferta: Experiencia oferta
+Latitud: Latitud
+Longitud: Longitud
+
+Inserte los datos de la Oferta: Inserte los datos de la Oferta
+Nombre: Nombre
+Descripcion: Descripcion
+Ver Oferta: Ver Oferta
+Edite los datos de la oferta: Edite los datos de la oferta
+Editar Oferta: Editar Oferta
+Marcar como favorita: Marcar como favorita
+Solicitada: Solicitada
+# WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
+# CREAR EMPRESA
+Nombre empresa: Nombre empresa
+Crear Empresa: Crear Empresa
+Localizacion empresa: Localizacion empresa
+Info empresa: Info empresa
+Url empresa: Url empresa
+Inserte los datos de la empresa: Inserte los datos de la empresa
+Seleccione un valor: Seleccione un valor
+Fk trabajador: Trabajador
+Editar Empresa: Editar empresa
+Edite los datos de la empresa: Edite los datos de la empresa
+Ver Empresa: Ver Empresa
+Logo: Logo
+Por favor inserta el nombre de la empresa: Por favor inserta el nombre de la empresa
+Empresa: Empresa
+Empresa ofertante: Empresa
+Para conocer la localizacion exacta de la empresa pusle en el siguiente boton: Para conocer la localización exacta de la empresa pusle en el siguiente botón
+Ver en Google Maps: Ver en Google Maps
+Falta la latitud o longitud de esta empresa: Falta la latitud o longitud de esta empresa
+Correo: Correo
+#Email no valido.: Email no valido.
+#Ese valor ya se ha usado: Ese valor ya se ha usado
+# WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
+# CREAR CORREO
+Contacto: Contacto
+Contactos: Contactos
+Inserte los datos: Inserte los datos
+Crear Correo: Crear Correo
+Correos: Correos
+Mostrar Correos: Mostrar Correos
+Total de correos registrados: <b>Correos</b> registrados
+Editar Correo: Editar Correo
+
+# WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
+# CREAR TELEFONO
+Telefono: Telefono
+Telefonos: Telefonos
+Crear Telefono: Crear Telefono
+Mostrar Telefonos: Mostrar Telefonos
+Total de telefonos registrados: <b>Telefonos</b> registrados
+Editar Telefono: Editar Telefono
+
+# WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+# CONOCIMIENTOS
+Mostrar Conocimientos: Mostrar Conocimientos
+Total de conocimientos registrados: <b>Conocimientos</b> registrados
+Crear Conocimiento: Crear Conocimiento
+
+# WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+Crear Contacto: Crear Contacto
+Total de contactos registrados: <b>Contactos</b> registrados
+Mostrar Contactos: Mostrar Contactos
+Editar Contacto: Editar Contacto
+Email: Email
+Emails: Emails
+Buzon: Buzon
+Crear Email: Crear Email
+Estadisticas: Estadisticas
+Emails totales: Email totales
+En 7 dias: En 7 dias
+En 30 dias: En 30 dias
+En 365 dias: En 365 dias
+Mostrar Emails: Mostrar Emails
+Crear nuevo email: Crear nuevo email
+Para: Para
+Asunto: Asunto
+Adjuntar archivo: Adjuntar archivo
+Enviar: Enviar
+Leer Email: Leer Email
+
+mensaje info: Esta aplicación ha sido creada por Juan José Delgado Romero como trabajo fin de Grado de Ingeniería de Sistemas de la Información, de la Universidad Católica de Avila.
+Informacion: Informacion
+
+Crear nuevo registro: Crear nuevo registro
+Ver registro: Ver registro
+Editar registro: Editar registro
+Eliminar registro: Eliminar registro
+Ya solicitada: Ya solicitada
+Oferta ya solicitada: Oferta ya solicitada
+Solicitar: Solicitar
+Solicitar oferta: Solicitar oferta
+
+
+
+Nombre Usuario: Nombre Usuario
+Password: Password
+Apellidos: Apellidos
+Rol: Rol
+ROLE_ADMIN: ROLE_ADMIN
+ROLE_USER: ROLE_USER
+Eliminar Contacto: Eliminar Contacto
+Esta seguro de eliminar el contacto: ¿Esta seguro de eliminar el contacto?
+USUARIOS: USUARIOS
+Mostrar usuario: Mostrar usuario
+Crear usuario: Crear usuario
+Eliminar usuario: Eliminar usuario
+
+Crear nuevo usuario: Crear nuevo usuario
+ROL: ROL
+Fecha alta: Fecha alta
+Eliminar Usuario: Eliminar Usuario
+Eliminar Solicitud: Eliminar Solicitud
+Mostrar usuarios: Mostrar usuarios
+¿Esta seguro de eliminar el usuario?: ¿Esta seguro de eliminar el usuario?
+¿Esta seguro de eliminar la solicitud?: ¿Esta seguro de eliminar la solicitud?
+Perfil: Perfil
+Perfil Usuario: User Profile
+Mas info: More info
+Eventos: Eventos
+Nombre usuario: Nombre usuario
+Fecha de alta: Fecha de alta
+Idiomas: Idiomas
+Español: Español
+Ingles: Ingles
+Editar Avatar: Editar Avatar
+Editar contacto: Editar contact
+mensaje bienvenida: Bienvenido a Gestof. <br>Aplicación para gestionar ofertas de empleo, agenda de empresas, contactos de las empresas, eventos, y mucho más. <br> Te animo a probar y familiarizarte con ella.
+Crear Requisito:  Crear Requisito
+Se ha enviado la contraseña del usuario a su email: Se ha enviado la password del usuario a su email
+Ya existe el requisito: Ya existe el requisito
+Editar Usuario: Editar Usuario
+Usuario: Usuario
+No puede eliminarse así mismo: No puede eliminarse así mismo
