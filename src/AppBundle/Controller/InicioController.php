@@ -17,6 +17,7 @@ class InicioController extends Controller{
     public function inicioAction(Request $request)
     {
         return $this->render('Inicio/inicio.html.twig');
+    //    return $this->render('Inicio/inicio.html.twig');
        // return $this->render('@App/base_menu.html.twig');
     }
 }

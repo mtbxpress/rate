@@ -1,0 +1,57 @@
+{% extends 'base_menu.html.twig' %}
+
+
+{% block head %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('template/build/css/custom2.css')}} ">
+{% endblock %}
+
+{% block classBody %}class="login_body"{% endblock %}
+
+{% block body %}
+<div class="">
+    <a class="hiddenanchor" id="toregister"></a>
+    <a class="hiddenanchor" id="tologin"></a>
+    <div id="wrapper" style="max-width: 380px;">
+        <div id="login" class="animate form">
+            <section class="login_content">
+                {% if error %}
+            		<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>  {{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
+                <form action="{{ path('login_check') }}" method="post">
+                    <h1 class="h1_login_administrador">Acceso UPO Rate</h1>
+                      <div class="form-group has-feedback f1" >
+                        <input type="text" class="form-control" placeholder="Usuario" id="username" name="_username" value="{{ last_username }}" required="required" autocomplete="username">
+                        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                      </div>
+
+                      <div class="form-group has-feedback f1">
+                        <input type="password" class="form-control" placeholder="Contraseña" id="password" name="_password" required="required" autocomplete="current-password" >
+                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                      </div>
+
+                    <div>
+                        <button type="reset"  class="f1" onclick="funcion1()">Recuperar Password</button>
+                        <button type="reset"  class="f2 hidden" onclick="f2()">Volver al Login</button>
+                        <button type="submit">Enviar</button>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="separator">
+                        {# <p class="change_link">New to site?
+                            <a href="#toregister" class="to_register"> Create Account </a>
+                        </p> #}
+                        <div class="clearfix"></div>
+                        <br />
+                    </div>
+                </form>
+                <!-- form -->
+            </section>
+            <!-- content -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% endblock %}

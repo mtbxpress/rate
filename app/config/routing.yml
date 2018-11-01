@@ -1,12 +1,25 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
+#app:
+ #   resource: '@AppBundle/Controller/'
+  #  type: annotation
 
 
 #app:
 #  resource: '@AppBundle/Resources/config/routing.yml'
 #  prefix: /
 
+########    LOGIN/LOGOUT  ##########
+login:
+    path: /
+    defaults: { _controller: AppBundle:Security:loginAdmin }
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
+
+
 inicio:
     path: /inicio
     defaults: { _controller: AppBundle:Inicio:inicio }
+
