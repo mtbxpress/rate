@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Base{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta name="description" content="UPO Rate: Valoracion de practicas en empresas.">
+        <meta name="author" content="Juan José Delgado">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/x-icon" href="" />
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        {% block stylesheets %}     {% endblock %}
+        {% block head %}     {% endblock %}
+    </head>
+    <body {% block classBody %}{% endblock %}>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>
