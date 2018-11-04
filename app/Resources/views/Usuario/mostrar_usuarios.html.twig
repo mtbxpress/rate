@@ -1,15 +1,15 @@
 {% extends 'base_menu.html.twig' %}
-{% block title %} {% trans %}Mostrar Usuarios{% endtrans %}{% endblock %}
+{% block title %} {% trans %}Mostrar usuarios{% endtrans %}{% endblock %}
 {% block head %}
   {{ parent() }}
-<script>
+{#<script>
 function funcion(){
 
     setTimeout(function() {
       $('.alert').hide()
     }, 3500);
   }
-</script>
+</script>#}
 {% endblock %}
 {% block pageContent %}
         <!-- page content -->
@@ -24,9 +24,9 @@ function funcion(){
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                       <div class="input-group">
 
-                          <input type="text" name="busqueda" class="form-control" placeholder="Search for...">
+                          <input type="text" name="busqueda" class="form-control" placeholder="{% trans %}Buscar por{% endtrans %}...">
                           <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit" >Go!</button>
+                            <button class="btn btn-default" type="submit" >{% trans %}Buscar{% endtrans %}</button>
                           </span>
 
                       </div>
@@ -90,10 +90,41 @@ function funcion(){
 {% endif %}
                     {% for usuario in usuarios %}
 
+                       {% if usuario.roles[0] is defined %}
+                        {% if usuario.roles[0] == 'ROLE_ADMIN'  %}
+                          {% set claseBtn = 'btn btn-danger btn-xs' %}
+                          {% set nomRol = 'Admin' %}
+                         {% elseif usuario.roles[0] == 'ROLE_ALU' %}
+                            {% set claseBtn = 'btn btn-success btn-xs' %}
+                            {% set nomRol = 'Alumno' %}
+                         {% elseif usuario.roles[0] == 'ROLE_PROFE' %}
+                           {% set claseBtn = 'btn btn-info btn-xs' %}
+                            {% set nomRol = 'Externo' %}
+                         {% elseif usuario.roles[0] == 'ROLE_PROFI' %}
+                           {% set claseBtn = 'btn btn-warning btn-xs' %}
+                            {% set nomRol = 'Interno' %}
+                        {% endif %}
+                      {% else %}
+                        {% if usuario.roles == 'ROLE_ADMIN'  %}
+                          {% set claseBtn = 'btn btn-danger btn-xs' %}
+                          {% set nomRol = 'Admin' %}
+                         {% elseif usuario.roles == 'ROLE_ALU' %}
+                            {% set claseBtn = 'btn btn-success btn-xs' %}
+                            {% set nomRol = 'Alumno' %}
+                         {% elseif usuario.roles == 'ROLE_PROFE' %}
+                           {% set claseBtn = 'btn btn-info btn-xs' %}
+                            {% set nomRol = 'Externo' %}
+                         {% elseif usuario.roles == 'ROLE_PROFI' %}
+                           {% set claseBtn = 'btn btn-warning btn-xs' %}
+                            {% set nomRol = 'Interno' %}
+                        {% endif %}
+                       {% endif %}
+
+
                       <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
                         <div class="well profile_view">
                           <div class="col-sm-12">
-                            <h4 class="brief"><i>Digital Strategist</i></h4>
+                            <h3 class="brief text-center" style='color: black;' ><i>{{ usuario.username }}</i></h3>
                             <div class="left col-xs-7">
                               <h2>{{ usuario.nombre }}  {{ usuario.apellidos }}</h2>
                               <p><strong>About: </strong> Web Designer / UX / Graphic Artist / Coffee Lover </p>
@@ -117,20 +148,69 @@ function funcion(){
                                 <a href="#"><span class="fa fa-star-o"></span></a>
                               </p>
                             </div>
-
                             <div class="col-xs-12 col-sm-6 emphasis">
-                              {% if usuario.roles == 'ROLE_ADMIN' %}
-                                  <button type="button" class="btn btn-danger btn-xs">Admin </button>
-                              {% elseif usuario.roles == 'ROLE_ALU' %}
+
+                              {#% if usuario.roles is defined %}
+                                {% if usuario.roles == 'ROLE_ADMIN'  %}
+                                  {% set claseBtn = 'btn btn-danger btn-xs' %}
+                                  {% set nomRol = 'Admin' %}
+                                {% elseif usuario.roles == 'ROLE_ALU' %}
+                                  {% set claseBtn = 'btn btn-success btn-xs' %}
+                                {% elseif usuario.roles == 'ROLE_PROFE' %}
+                                  {% set claseBtn = 'btn btn-info btn-xs' %}
+                                {% elseif usuario.roles == 'ROLE_PROFI' %}
+                                  {% set claseBtn = 'btn btn-warning btn-xs' %}
+                                {% endif %}
+                               {% endif %#}
+
+                               <button type="button" class="{{ claseBtn }}">{{ nomRol }} </button>
+
+                              {#% if usuario.roles == 'ROLE_ADMIN' or usuario.roles[0]  == 'ROLE_ADMIN'  %}
+                                  <button type="button" class="{{ claseBtn }}">Admin </button>
+                              {% elseif usuario.roles == 'ROLE_ALU' or usuario.roles[0]  == 'ROLE_ALU' %}
                                   <button type="button" class="btn btn-success btn-xs">{% trans %}Alumno{% endtrans %} </button>
-                              {% elseif usuario.roles == 'ROLE_PROFE' %}
+                              {% elseif usuario.roles == 'ROLE_PROFE' or usuario.roles[0]  == 'ROLE_PROFE' %}
                                   <button type="button" class="btn btn-info btn-xs">{% trans %}Externo{% endtrans %} </button>
-                              {% elseif usuario.roles == 'ROLE_PROFI' %}
+                              {% elseif usuario.roles == 'ROLE_PROFI' or usuario.roles[0]  == 'ROLE_PROFI' %}
                                   <button type="button" class="btn btn-warning btn-xs">{% trans %}Interno{% endtrans %}</button>
                               {% endif %}
-                              <button type="button" class="btn btn-primary btn-xs">
-                                <i class="fa fa-user"> </i> {% trans %}Ver{% endtrans %}
-                              </button>
+
+                              {% endif %}
+
+                              {% if usuario.roles == 'ROLE_ADMIN' or usuario.roles[0]  == 'ROLE_ADMIN'  %}
+                                  <button type="button" class="{{ claseBtn }}">Admin </button>
+                              {% elseif usuario.roles == 'ROLE_ALU' or usuario.roles[0]  == 'ROLE_ALU' %}
+                                  <button type="button" class="btn btn-success btn-xs">{% trans %}Alumno{% endtrans %} </button>
+                              {% elseif usuario.roles == 'ROLE_PROFE' or usuario.roles[0]  == 'ROLE_PROFE' %}
+                                  <button type="button" class="btn btn-info btn-xs">{% trans %}Externo{% endtrans %} </button>
+                              {% elseif usuario.roles == 'ROLE_PROFI' or usuario.roles[0]  == 'ROLE_PROFI' %}
+                                  <button type="button" class="btn btn-warning btn-xs">{% trans %}Interno{% endtrans %}</button>
+                              {% endif %#}
+                          <a href="{{ path('mostrar_usuario', {'idUsuario': usuario.id})}}">
+                            <button type="button" class="btn btn-link btn-xs"><!-- btn-danger  style="color: blue;"-->
+                              <i class="fa fa-eye fa-lg" ></i>
+                            </button>
+                          </a>
+                          <a href="{{ path('editar_usuario', {'idUsuario': usuario.id})}}">
+                            <button type="button" class="btn btn-link btn-xs"><!-- btn-danger -->
+                              <i class="fa fa-pencil fa-lg"></i>
+                            </button>
+                          </a>
+
+
+                    {% if usuario.username !=  app.user.username  %}
+                    <a href="#">
+                      <button type="button" class="btn btn-link btn-xs eliminar" data-toggle="modal" data-target="#myModal" id="{{ usuario.id }}" name="{{ usuario.username }}">
+                        <i class="fa fa-trash fa-lg" {#style="color: red;"#}></i>
+                      </button>
+                    </a>
+                    {% else  %}
+
+                      <button class="btn btn-link btn-xs "  >
+                        <i class="fa fa-trash fa-lg" style="color: gray;"></i>
+                      </button>
+
+                      {% endif  %}
                             </div>
                           </div>
                         </div>
@@ -146,5 +226,73 @@ function funcion(){
             </div>
           </div>
         </div>
+
+
+
+          {% set urlActual =  path(app.request.attributes.get('_route'),  app.request.attributes.get('_route_params'))  %}
+
+              {% set urlActual = urlActual|split('/') %}
+<!-- VENTANA MODAL -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><b>{% trans %}Eliminar Usuario{% endtrans %}</b></h4>
+      </div>
+      <div class="modal-body">
+        <div class="text-center"><h4>{% trans %}¿Esta seguro de eliminar el usuario?{% endtrans %}</h4><div id="nombre"></div></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar">{% trans %}Cerrar{% endtrans %}</button>
+
+        <a id="enlace_eliminar" href="/admin/{{ urlActual[2] }}/eliminar/usuario/">
+          <button type="submit" class="btn btn-primary" name="aceptar" id="aceptar" >{% trans %}Aceptar{% endtrans %}</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /VENTANA MODAL -->
         <!-- /page content -->
         {% endblock %}
+
+
+{% block javascripts %}
+  {{ parent() }}
+{% if app.request.getLocale() == 'es' %}
+      <script>var url = "{{ asset('traduciones_datatables/Spanish.json') }}";</script>
+  {% elseif app.request.getLocale() == 'en' %}
+      <script>var url = "{{ asset('traduciones_datatables/English.json') }}";</script>
+  {% else %}
+      <script>var url = "{{ asset('traduciones_datatables/Spanish.json') }}";</script>
+  {% endif %}
+
+    <script src="{{ asset('traduciones_datatables/Spanish.json') }}../build/js/custom.min.js"></script>
+
+<script>
+/*$(document).ready(function() {
+    $('table.display').DataTable( {
+       "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        "language": {
+     //       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+             "url": url
+        }
+    } );
+} );
+*/
+  $( document ).ready(function() {
+    $(".eliminar").on('click', function() {
+      $("#nombre").html($(this).attr("name"));
+      var hrf = $("#enlace_eliminar").attr("href").split("/");
+      var url = "/admin/"+hrf[2]+"/eliminar/usuario/"+$(this).attr("id");
+      $("#enlace_eliminar").attr("href",url);
+    });
+  });
+/*
+ $(window).on('load',function(){
+     $(".loader").fadeOut( "slow" );
+});
+*/
+</script>
+{% endblock %}

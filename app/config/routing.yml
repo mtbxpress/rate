@@ -24,16 +24,49 @@ inicio:
     defaults: { _controller: AppBundle:Inicio:inicio }
 
 mostrar_usuarios:
-    path: /admin/usuarios
-    defaults: { _controller: AppBundle:Usuario:mostrarUsuarios }
+    path: /admin/{_locale}/usuarios
+    defaults: { _controller: AppBundle:Usuario:mostrarUsuarios,_locale: es }
+    requirements:
+        _locale: 'en|es'
+
+mostrar_usuario:
+    path:  /admin/{_locale}/mostrar/usuario/{idUsuario}
+    defaults: { _controller: AppBundle:Usuario:mostrarUsuario, _locale: es }
+    requirements:
+        _locale: 'en|es'
+        idUsuario: \d+
+
+crear_usuario:
+    path:  /admin/{_locale}/crear/usuario
+    defaults: { _controller: AppBundle:Usuario:crearUsuario, _locale: es }
+    requirements:
+        _locale: 'en|es'
+
+editar_usuario:
+    path:   /admin/{_locale}/editar/usuario/{idUsuario}
+    defaults: {_controller: AppBundle:Usuario:editarUsuario, _locale: es}
+    requirements:
+        _locale: 'en|es'
+#        idUsuario: \d+
+
+eliminar_usuario:
+    path:   /admin/{_locale}/eliminar/usuario/{idUsuario}
+    defaults: {_controller: AppBundle:Usuario:eliminarUsuario, _locale: es}
+    requirements:
+        _locale: 'en|es'
+        idUsuario: \d+
 
 buscar_usuario_letra:
-    path:  /admin/usuarios/{letra}
-    defaults: { _controller: AppBundle:Usuario:buscaUsarioLetra }
+    path:  /admin/{_locale}/usuarios/{letra}
+    defaults: { _controller: AppBundle:Usuario:buscaUsarioLetra, _locale: es }
     requirements:
         _letra: 'a|b|c|d|e|f|g|h|i|j|k|l|m|n|ñ|o|p|q|r|s|t|u|v|w|x|y|z'
 
 buscar_general:
-    path:  /admin/busqueda
-    defaults: { _controller: AppBundle:Usuario:busquedaGeneral }
+    path:  /admin/{_locale}/busqueda
+    defaults: { _controller: AppBundle:Usuario:busquedaGeneral, _locale: es }
+    requirements:
+        _locale: 'en|es'
+
+
 

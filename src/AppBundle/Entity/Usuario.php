@@ -77,12 +77,12 @@ class Usuario implements UserInterface
      *
      * @ORM\Column(name="avatar", type="string", length=50)
      */
-    private $avatar;
+    private $avatar = 'img.jpg';
 
     /**
      * @var int
      *
-     * @ORM\Column(name="telefono", type="integer")
+     * @ORM\Column(name="telefono", type="integer", nullable=true)
      */
     private $telefono;
 
@@ -249,7 +249,7 @@ class Usuario implements UserInterface
      */
     public function setRoles($roles)
     {
-    if (!in_array($roles, array('ROLE_USER', 'ROLE_ADMIN'))) {
+    if (!in_array($roles, array('ROLE_ALU', 'ROLE_ADMIN',  'ROLE_PROFI', 'ROLE_PROFE'))) {
         throw new \InvalidArgumentException("Rol no valido");
     }
         $this->roles = $roles;
