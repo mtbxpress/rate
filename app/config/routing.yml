@@ -68,5 +68,10 @@ buscar_general:
     requirements:
         _locale: 'en|es'
 
+prueba:
+    path:  /admin/{_locale}/prueba
+    defaults: { _controller: AppBundle:Usuario:prueba, _locale: es }
+    requirements:
+        _locale: 'en|es'
 
 

@@ -17,6 +17,11 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 use AppBundle\Form\UsuarioType;
+
+
+use AppBundle\Entity\Encuesta;
+use AppBundle\Entity\Resultado;
+
 /**
  * Lógica de todas las pantallas relacionadas con el apartado de usuarios.
  */
@@ -38,6 +43,43 @@ class UsuarioController extends Controller
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
 //dump($usuarios[0]);die();
+        return $this->render('Usuario/mostrar_usuarios.html.twig', array('usuarios'=>$usuarios ));
+    }
+
+    public function pruebaAction(Request $request){
+
+    $encuesta = $this->getDoctrine()
+        ->getRepository(Encuesta::class)
+        ->find(1);
+
+/*    $categoryName = $product->getCategory()->getName();
+
+        $encuesta = new Encuesta();
+        $encuesta->setTipo('Computer');
+
+        $resultado = new Resultado();
+        $resultado->setValor('Keyboard');
+
+        // relates this resultado to the encuesta
+        $resultado->setEncuesta($encuesta);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($encuesta);
+        $entityManager->persist($resultado);
+        $entityManager->flush();
+*/
+     //   print_r($encuesta->getResultados());
+   //     echo $encuesta->getResultados()->getId();
+       echo  $encuesta->getResultados()[0]->getEncuesta()->getId();
+        foreach ($encuesta->getResultados() as $key => $value) {
+            echo $value->getId();
+        }
+        dump($encuesta->getResultados());die();
+        return new Response(
+            $encuesta->getResultados()->getId().
+            ' Saved new resultado with id: './*$resultado->getId()*/
+            ' and new encuesta with id: '.$encuesta[0]->getId()
+        );
         return $this->render('Usuario/mostrar_usuarios.html.twig', array('usuarios'=>$usuarios ));
     }
 
