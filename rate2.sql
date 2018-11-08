@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 04-11-2018 a las 19:59:16
+-- Tiempo de generación: 08-11-2018 a las 19:53:09
 -- Versión del servidor: 5.7.24-0ubuntu0.16.04.1
 -- Versión de PHP: 7.2.7-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `rate2`
 --
-CREATE DATABASE IF NOT EXISTS `rate2` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `rate2`;
 
 -- --------------------------------------------------------
 
@@ -318,7 +316,7 @@ ALTER TABLE `curso`
 -- AUTO_INCREMENT de la tabla `encuesta`
 --
 ALTER TABLE `encuesta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT de la tabla `encuesta_pregunta`
 --
@@ -333,7 +331,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `titulacion`
 --
 ALTER TABLE `titulacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `titulacion_curso`
 --
@@ -348,7 +346,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `usuario_encuesta`
 --
 ALTER TABLE `usuario_encuesta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `usuario_titulacion`
 --
