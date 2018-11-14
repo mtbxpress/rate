@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 14-11-2018 a las 21:03:55
+-- Tiempo de generación: 14-11-2018 a las 23:30:16
 -- Versión del servidor: 5.7.24-0ubuntu0.16.04.1
 -- Versión de PHP: 7.2.7-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `rate`
 --
-CREATE DATABASE IF NOT EXISTS `rate` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `rate`;
 
 -- --------------------------------------------------------
 
