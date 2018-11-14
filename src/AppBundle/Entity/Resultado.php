@@ -22,45 +22,11 @@ class Resultado
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Encuesta", inversedBy="resultados")
-     * @ORM\JoinColumn(name="encuesta_id", referencedColumnName="id")
-     */
-    private $encuesta;
-
-    /**
      * @var int
      *
      * @ORM\Column(name="valor", type="smallint")
      */
     private $valor;
-
-    /**
-     * @return Encuesta|null
-     */
-    public function getEncuesta() {
-        return $this->encuesta;
-    }
-
-    /**
-     * @param null|Resultado $resultados
-     */
-    public function setEncuesta($encuesta) {
-        if($encuesta === null) {
-      //      if($this->resultados !== null) {
-      //          $this->resultados->getUsers()->removeElement($this);
-      //      }
-            $this->encuesta = null;
-        } else {
-   //         if(!$resultados instanceof \AppBundle\Entity\Resultado $resultados) {
-   //             throw new InvalidArgumentException('$group must be null or instance of HelloWorld\UserGroup');
-   //         }
-    //        if($this->resultados !== null) {
-     //           $this->resultados->getUsers()->removeElement($this);
-   //         }
-            $this->encuesta = $encuesta;
-      //      $group->getUsers()->add($this);
-        }
-    }
 
     /**
      * Get id
