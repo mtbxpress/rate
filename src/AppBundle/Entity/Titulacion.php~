@@ -47,9 +47,16 @@ class Titulacion
      */
     private $cursos;
 
+    /**
+     * One product has many features. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="Encuesta", mappedBy="titulacion")
+     */
+    private $encuestas;
+
     public function __construct() {
         $this->usuarios = new \Doctrine\Common\Collections\ArrayCollection();
         $this->cursos   = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->encuestas = new ArrayCollection();
     }
 
     /**
@@ -142,5 +149,39 @@ class Titulacion
     public function getUsuarios()
     {
         return $this->usuarios;
+    }
+
+    /**
+     * Add curso
+     *
+     * @param \AppBundle\Entity\Curso $curso
+     *
+     * @return Titulacion
+     */
+    public function addCurso(\AppBundle\Entity\Curso $curso)
+    {
+        $this->cursos[] = $curso;
+
+        return $this;
+    }
+
+    /**
+     * Remove curso
+     *
+     * @param \AppBundle\Entity\Curso $curso
+     */
+    public function removeCurso(\AppBundle\Entity\Curso $curso)
+    {
+        $this->cursos->removeElement($curso);
+    }
+
+    /**
+     * Get cursos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCursos()
+    {
+        return $this->cursos;
     }
 }

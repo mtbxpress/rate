@@ -29,11 +29,11 @@ class Encuesta
     private $descripcion;
 
     /**
-     * Many encuestas have one product. This is the owning side.
+     * Many encuestas have one titulacion. This is the owning side.
      * @ORM\ManyToOne(targetEntity="Titulacion", inversedBy="encuestas")
      * @ORM\JoinColumn(name="titulacion_id", referencedColumnName="id")
      */
-    private $product;
+    private $titulacion;
 
    /**
      * Many encuestas have Many preguntas.
@@ -48,6 +48,13 @@ class Encuesta
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     private $usuario;
+
+    /**
+     * Many encuestas have one usuario. This is the owning side.
+     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="encuestas")
+     * @ORM\JoinColumn(name="evaluado_id", referencedColumnName="id")
+     */
+    private $evaluado;
 
     public function __construct() {
         $this->preguntas = new \Doctrine\Common\Collections\ArrayCollection();
@@ -88,27 +95,27 @@ class Encuesta
     }
 
     /**
-     * Set product
+     * Set titulacion
      *
-     * @param \AppBundle\Entity\Titulacion $product
+     * @param \AppBundle\Entity\Titulacion $titulacion
      *
      * @return Encuesta
      */
-    public function setProduct(\AppBundle\Entity\Titulacion $product = null)
+    public function setTitulacion(\AppBundle\Entity\Titulacion $titulacion = null)
     {
-        $this->product = $product;
+        $this->titulacion = $titulacion;
 
         return $this;
     }
 
     /**
-     * Get product
+     * Get titulacion
      *
      * @return \AppBundle\Entity\Titulacion
      */
-    public function getProduct()
+    public function getTitulacion()
     {
-        return $this->product;
+        return $this->titulacion;
     }
 
     /**

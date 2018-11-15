@@ -184,4 +184,38 @@ class Titulacion
     {
         return $this->cursos;
     }
+
+    /**
+     * Add encuesta
+     *
+     * @param \AppBundle\Entity\Encuesta $encuesta
+     *
+     * @return Titulacion
+     */
+    public function addEncuesta(\AppBundle\Entity\Encuesta $encuesta)
+    {
+        $this->encuestas[] = $encuesta;
+
+        return $this;
+    }
+
+    /**
+     * Remove encuesta
+     *
+     * @param \AppBundle\Entity\Encuesta $encuesta
+     */
+    public function removeEncuesta(\AppBundle\Entity\Encuesta $encuesta)
+    {
+        $this->encuestas->removeElement($encuesta);
+    }
+
+    /**
+     * Get encuestas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEncuestas()
+    {
+        return $this->encuestas;
+    }
 }
