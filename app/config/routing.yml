@@ -74,4 +74,14 @@ prueba:
     requirements:
         _locale: 'en|es'
 
+crear_titulacion:
+    path:  /admin/{_locale}/crear/titulacion
+    defaults: { _controller: AppBundle:Titulacion:crearTitulacion, _locale: es }
+    requirements:
+        _locale: 'en|es'
 
+mostrar_titulaciones:
+    path:  /admin/{_locale}/mostrar/titulaciones
+    defaults: { _controller: AppBundle:Titulacion:mostrarTitulaciones, _locale: es }
+    requirements:
+        _locale: 'en|es'

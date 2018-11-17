@@ -35,11 +35,13 @@ class Titulacion
      */
     private $codigo;
 
-    /**
+    /* COMENTADO
      * Many titulaciones have Many usuarios.
      * @ORM\ManyToMany(targetEntity="Usuario", mappedBy="titulaciones")
-     */
+
     private $usuarios;
+    */
+
 
     /**
      * Many titulaciones have Many cursos.
@@ -54,7 +56,7 @@ class Titulacion
     private $encuestas;
 
     public function __construct() {
-        $this->usuarios = new \Doctrine\Common\Collections\ArrayCollection();
+   //     $this->usuarios = new \Doctrine\Common\Collections\ArrayCollection();
         $this->cursos   = new \Doctrine\Common\Collections\ArrayCollection();
         $this->encuestas = new ArrayCollection();
     }
@@ -117,13 +119,13 @@ class Titulacion
         return $this->codigo;
     }
 
-    /**
+    /* COMENTADO
      * Add usuario
      *
      * @param \AppBundle\Entity\Usuario $usuario
      *
      * @return Titulacion
-     */
+     *
     public function addUsuario(\AppBundle\Entity\Usuario $usuario)
     {
         $this->usuarios[] = $usuario;
@@ -131,25 +133,29 @@ class Titulacion
         return $this;
     }
 
-    /**
+    /*
      * Remove usuario
      *
      * @param \AppBundle\Entity\Usuario $usuario
-     */
+     *
     public function removeUsuario(\AppBundle\Entity\Usuario $usuario)
     {
         $this->usuarios->removeElement($usuario);
     }
 
-    /**
+    /*
      * Get usuarios
      *
      * @return \Doctrine\Common\Collections\Collection
-     */
+     *
     public function getUsuarios()
     {
         return $this->usuarios;
     }
+*/
+
+
+
 
     /**
      * Add curso
@@ -183,5 +189,39 @@ class Titulacion
     public function getCursos()
     {
         return $this->cursos;
+    }
+
+    /**
+     * Add encuesta
+     *
+     * @param \AppBundle\Entity\Encuesta $encuesta
+     *
+     * @return Titulacion
+     */
+    public function addEncuesta(\AppBundle\Entity\Encuesta $encuesta)
+    {
+        $this->encuestas[] = $encuesta;
+
+        return $this;
+    }
+
+    /**
+     * Remove encuesta
+     *
+     * @param \AppBundle\Entity\Encuesta $encuesta
+     */
+    public function removeEncuesta(\AppBundle\Entity\Encuesta $encuesta)
+    {
+        $this->encuestas->removeElement($encuesta);
+    }
+
+    /**
+     * Get encuestas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEncuestas()
+    {
+        return $this->encuestas;
     }
 }

@@ -90,12 +90,14 @@ class Usuario implements UserInterface
      */
     private $telefono;
 
-    /**
+    /* COMENTADO
      * Many Users have Many Titulaciones.
      * @ORM\ManyToMany(targetEntity="Titulacion", inversedBy="usuarios")
      * @ORM\JoinTable(name="usuario_titulacion")
-     */
+
     private $titulaciones;
+    */
+
 
     /**
      * One usuario has many encuestas. This is the inverse side.
@@ -104,7 +106,7 @@ class Usuario implements UserInterface
     private $encuestas;
 
     public function __construct() {
-        $this->titulaciones = new \Doctrine\Common\Collections\ArrayCollection();
+   //     $this->titulaciones = new \Doctrine\Common\Collections\ArrayCollection();
         $this->encuestas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -373,13 +375,13 @@ class Usuario implements UserInterface
         ) = unserialize($serialized);
     }
 
-    /**
+    /*
      * Add titulacion
      *
      * @param \AppBundle\Entity\Titulacion $titulacion
      *
      * @return Usuario
-     */
+     *
     public function addTitulacion(\AppBundle\Entity\Titulacion $titulacion)
     {
         $this->titulaciones[] = $titulacion;
@@ -387,49 +389,27 @@ class Usuario implements UserInterface
         return $this;
     }
 
-    /**
+    /*
      * Remove titulacion
      *
      * @param \AppBundle\Entity\Titulacion $titulacion
-     */
+     *
     public function removeTitulacion(\AppBundle\Entity\Titulacion $titulacion)
     {
         $this->titulaciones->removeElement($titulacion);
     }
 
-    /**
+    /*
      * Get titulaciones
      *
      * @return \Doctrine\Common\Collections\Collection
-     */
+     *
     public function getTitulaciones()
     {
         return $this->titulaciones;
     }
+*/
 
-    /**
-     * Add titulacione
-     *
-     * @param \AppBundle\Entity\Titulacion $titulacione
-     *
-     * @return Usuario
-     */
-    public function addTitulacione(\AppBundle\Entity\Titulacion $titulacione)
-    {
-        $this->titulaciones[] = $titulacione;
-
-        return $this;
-    }
-
-    /**
-     * Remove titulacione
-     *
-     * @param \AppBundle\Entity\Titulacion $titulacione
-     */
-    public function removeTitulacione(\AppBundle\Entity\Titulacion $titulacione)
-    {
-        $this->titulaciones->removeElement($titulacione);
-    }
 
     /**
      * Add encuesta

@@ -23,13 +23,32 @@ class UsuarioType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder->add('username',TextType::class,array('required' => true, 'label' => 'Nombre Usuario'))
         ->add('password',PasswordType::class)
         ->add('nombre',TextType::class,array('required' => true, 'label' => 'Nombre'))
         ->add('apellidos',TextType::class,array('required' => true, 'label' => 'Apellidos'))
         ->add('email',EmailType::class, array('required' => true))
         ->add('telefono',IntegerType::class, array('required' => false))
+/*
+>add('idFkRolSistema',EntityType::class, array(
+                    'class'=> 'AppBundle:RolSistema',
+                    'label'=> 'Rol *',
+                    'placeholder' => 'Seleccionar' ,
+                    'choice_label'=> 'nombre'
+                ))
+        ->add('roles', ChoiceType::class, array(
+                    'choices' => array(
+                        'Annuel' => true,
+                        'Itérmidaire' => false,
+            )))*/
+ /*       ->add('roles', 'choice', array(
+            'required' => true,
+            'choices' => MessageTypeEnum::getAvailableTypes(),
+            'choices_as_values' => true,
+            'choice_label' => function($choice) {
+                return MessageTypeEnum::getTypeName($choice);
+            },
+        ))*/
         ->add('reset',ResetType::class, array('attr' => array( 'class' => 'btn btn-success'  )))
         ->add('aceptar',SubmitType::class, array('attr' => array( 'class' => 'btn btn-primary'  )));
     }/**

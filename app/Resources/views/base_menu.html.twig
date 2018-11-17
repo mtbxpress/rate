@@ -36,7 +36,11 @@
     <link href="{{ asset('template/vendors/jqvmap/dist/jqvmap.min.css') }}" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="{{ asset('template/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
-
+    <!--datatable -->
+{#    <script src="{{ asset('template/build/mi_datatable/datatables.net/js/jquery.dataTables.min.js') }}"></script>#}
+    <link href="{{ asset('template/build/mi_datatable/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('template/build/mi_datatable/datatables.net/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('template/build/mi_datatable/datatables.net/css/responsive.dataTables.min.css') }}" rel="stylesheet">
 
 {% endblock %}
 
@@ -130,5 +134,8 @@
     <!-- bootstrap-daterangepicker -->
     <script src="{{ asset('template/vendors/moment/min/moment.min.js') }}"></script>
     <script src="{{ asset('template/vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <!-- datatable -->
+    <script src="{{ asset('template/build/mi_datatable/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('template/build/mi_datatable/datatables.net/js/dataTables.responsive.min.js') }}"></script>
 
 {% endblock %}

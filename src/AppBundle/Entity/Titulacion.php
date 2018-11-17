@@ -3,7 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 /**
  * Titulacion
  *
@@ -35,11 +36,13 @@ class Titulacion
      */
     private $codigo;
 
-    /**
+    /* COMENTADO
      * Many titulaciones have Many usuarios.
      * @ORM\ManyToMany(targetEntity="Usuario", mappedBy="titulaciones")
-     */
+
     private $usuarios;
+    */
+
 
     /**
      * Many titulaciones have Many cursos.
@@ -54,9 +57,9 @@ class Titulacion
     private $encuestas;
 
     public function __construct() {
-        $this->usuarios = new \Doctrine\Common\Collections\ArrayCollection();
+   //     $this->usuarios = new \Doctrine\Common\Collections\ArrayCollection();
         $this->cursos   = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->encuestas = new ArrayCollection();
+        $this->encuestas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -117,13 +120,13 @@ class Titulacion
         return $this->codigo;
     }
 
-    /**
+    /* COMENTADO
      * Add usuario
      *
      * @param \AppBundle\Entity\Usuario $usuario
      *
      * @return Titulacion
-     */
+     *
     public function addUsuario(\AppBundle\Entity\Usuario $usuario)
     {
         $this->usuarios[] = $usuario;
@@ -131,25 +134,29 @@ class Titulacion
         return $this;
     }
 
-    /**
+    /*
      * Remove usuario
      *
      * @param \AppBundle\Entity\Usuario $usuario
-     */
+     *
     public function removeUsuario(\AppBundle\Entity\Usuario $usuario)
     {
         $this->usuarios->removeElement($usuario);
     }
 
-    /**
+    /*
      * Get usuarios
      *
      * @return \Doctrine\Common\Collections\Collection
-     */
+     *
     public function getUsuarios()
     {
         return $this->usuarios;
     }
+*/
+
+
+
 
     /**
      * Add curso
@@ -218,4 +225,9 @@ class Titulacion
     {
         return $this->encuestas;
     }
+
+/*public function __toString() {
+    return $this->cursos->id;
+}
+*/
 }

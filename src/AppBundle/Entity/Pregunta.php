@@ -45,8 +45,15 @@ class Pregunta
     /**
      * Many preguntas have Many encuestas.
      * @ORM\ManyToMany(targetEntity="Encuesta", mappedBy="preguntas")
-     */
+     *
     private $encuestas;
+    */
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EncuestaPregunta", mappedBy="pregunta", cascade={"persist"})
+     */
+    private $encuestapregunta;
 
     public function __construct() {
         $this->encuestas = new \Doctrine\Common\Collections\ArrayCollection();
@@ -134,13 +141,13 @@ class Pregunta
         return $this->orden;
     }
 
-    /**
+    /*
      * Add encuesta
      *
      * @param \AppBundle\Entity\Encuesta $encuesta
      *
      * @return Pregunta
-     */
+     *
     public function addEncuesta(\AppBundle\Entity\Encuesta $encuesta)
     {
         $this->encuestas[] = $encuesta;
@@ -148,23 +155,58 @@ class Pregunta
         return $this;
     }
 
-    /**
+    /*
      * Remove encuesta
      *
      * @param \AppBundle\Entity\Encuesta $encuesta
-     */
+     *
     public function removeEncuesta(\AppBundle\Entity\Encuesta $encuesta)
     {
         $this->encuestas->removeElement($encuesta);
     }
 
-    /**
+    /*
      * Get encuestas
      *
      * @return \Doctrine\Common\Collections\Collection
-     */
+     *
     public function getEncuestas()
     {
         return $this->encuestas;
+    }
+*/
+
+    /**
+     * Add encuestapreguna
+     *
+     * @param \AppBundle\Entity\EncuestaPregunta $encuestapreguna
+     *
+     * @return Pregunta
+     */
+    public function addEncuestapreguna(\AppBundle\Entity\EncuestaPregunta $encuestapreguna)
+    {
+        $this->encuestapregunta[] = $encuestapreguna;
+
+        return $this;
+    }
+
+    /**
+     * Remove encuestapreguna
+     *
+     * @param \AppBundle\Entity\EncuestaPregunta $encuestapreguna
+     */
+    public function removeEncuestapreguna(\AppBundle\Entity\EncuestaPregunta $encuestapreguna)
+    {
+        $this->encuestapregunta->removeElement($encuestapreguna);
+    }
+
+    /**
+     * Get encuestapregunta
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEncuestapregunta()
+    {
+        return $this->encuestapregunta;
     }
 }
