@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 15-11-2018 a las 22:59:00
+-- Tiempo de generación: 17-11-2018 a las 20:04:00
 -- Versión del servidor: 5.7.24-0ubuntu0.16.04.1
 -- Versión de PHP: 7.2.7-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -34,6 +34,14 @@ CREATE TABLE `curso` (
   `activo` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `curso`
+--
+
+INSERT INTO `curso` (`id`, `descripcion`, `activo`) VALUES
+(1, '2015/16', 0),
+(2, '2016/17', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -44,6 +52,14 @@ CREATE TABLE `curso_titulacion` (
   `curso_id` int(11) NOT NULL,
   `titulacion_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `curso_titulacion`
+--
+
+INSERT INTO `curso_titulacion` (`curso_id`, `titulacion_id`) VALUES
+(1, 1),
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -56,7 +72,7 @@ CREATE TABLE `encuesta` (
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `titulacion_id` int(11) DEFAULT NULL,
   `usuario_id` int(11) DEFAULT NULL,
-  `evaluado_id` int(11) DEFAULT NULL
+  `evaluado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -66,8 +82,9 @@ CREATE TABLE `encuesta` (
 --
 
 CREATE TABLE `encuesta_pregunta` (
-  `encuesta_id` int(11) NOT NULL,
-  `pregunta_id` int(11) NOT NULL
+  `id` int(11) NOT NULL,
+  `encuesta_id` int(11) DEFAULT NULL,
+  `pregunta_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -102,9 +119,18 @@ CREATE TABLE `post_tag` (
 CREATE TABLE `pregunta` (
   `id` int(11) NOT NULL,
   `descripcion` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `tipo` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `tipo` enum('PROFESOR_INTERNO','PROFESOR_EXTERNO','ALUMNO') COLLATE utf8_unicode_ci DEFAULT NULL,
   `orden` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `pregunta`
+--
+
+INSERT INTO `pregunta` (`id`, `descripcion`, `tipo`, `orden`) VALUES
+(21, 'LLEGA A SU HORAO', 'PROFESOR_INTERNO', 4),
+(26, 'YYYYY', 'ALUMNO', 5),
+(30, 'PO', 'PROFESOR_INTERNO', 9);
 
 -- --------------------------------------------------------
 
@@ -148,6 +174,14 @@ CREATE TABLE `titulacion` (
   `codigo` varchar(15) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `titulacion`
+--
+
+INSERT INTO `titulacion` (`id`, `nombre`, `codigo`) VALUES
+(1, 'Informatica', 'INF'),
+(22, 'sdaa', 'GGDDT');
+
 -- --------------------------------------------------------
 
 --
@@ -177,18 +211,8 @@ INSERT INTO `usuario` (`id`, `username`, `password`, `nombre`, `apellidos`, `ema
 (11, 'ffsf', 'ed35e4fac311eb3ddaac043e0bf12a39', 'sdsds', 'dsds', 'n@ffffff.com', '2018-11-04 11:13:45', 'img.jpg', 'ROLE_PROFI', 443322345),
 (13, 'adminGBDFG', '4943c668497795bb894ca5bfd8526ccd', 'FDFF', 'fdfdfd', 'nF@hotmail.com', '2018-11-04 19:21:49', 'img.jpg', 'ROLE_PROFE', 222),
 (14, 'admin2Q22', '1cd3f7c4095fb55de1d50f0fce236fb5', '323', '2323', '2@aaaaaaaaa.com', '2018-11-04 19:22:00', 'img.jpg', 'ROLE_PROFI', 3232),
-(15, 'adminTRTRE', '21232f297a57a5a743894a0e4a801fc3', 'HFGF', 'dddddddddddddR', 'jjdelrom2012@gmail.com', '2018-11-04 19:22:41', 'img.jpg', 'ROLE_PROFI', 44);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuario_titulacion`
---
-
-CREATE TABLE `usuario_titulacion` (
-  `usuario_id` int(11) NOT NULL,
-  `titulacion_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+(15, 'adminTRTRE', '21232f297a57a5a743894a0e4a801fc3', 'HFGF', 'dddddddddddddR', 'jjdelrom2012@gmail.com', '2018-11-04 19:22:41', 'img.jpg', 'ROLE_PROFI', 44),
+(16, 'ivhoiss', 'a947195af78490ae81b2e7e000579200', 'ttt', 'ttt', 'nttt@hotmail.com', '2018-11-17 11:08:10', 'img.jpg', 'ROLE_PROFI', 5443333);
 
 --
 -- Índices para tablas volcadas
@@ -215,14 +239,13 @@ ALTER TABLE `curso_titulacion`
 ALTER TABLE `encuesta`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_B25B6841F471CF55` (`titulacion_id`),
-  ADD KEY `IDX_B25B6841DB38439E` (`usuario_id`),
-  ADD KEY `IDX_B25B6841960057D3` (`evaluado_id`);
+  ADD KEY `IDX_B25B6841DB38439E` (`usuario_id`);
 
 --
 -- Indices de la tabla `encuesta_pregunta`
 --
 ALTER TABLE `encuesta_pregunta`
-  ADD PRIMARY KEY (`encuesta_id`,`pregunta_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_3C1707EE46844BA6` (`encuesta_id`),
   ADD KEY `IDX_3C1707EE31A5801E` (`pregunta_id`);
 
@@ -274,14 +297,6 @@ ALTER TABLE `usuario`
   ADD UNIQUE KEY `UNIQ_2265B05DF85E0677` (`username`);
 
 --
--- Indices de la tabla `usuario_titulacion`
---
-ALTER TABLE `usuario_titulacion`
-  ADD PRIMARY KEY (`usuario_id`,`titulacion_id`),
-  ADD KEY `IDX_740C5286DB38439E` (`usuario_id`),
-  ADD KEY `IDX_740C5286F471CF55` (`titulacion_id`);
-
---
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -289,11 +304,16 @@ ALTER TABLE `usuario_titulacion`
 -- AUTO_INCREMENT de la tabla `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `encuesta`
 --
 ALTER TABLE `encuesta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `encuesta_pregunta`
+--
+ALTER TABLE `encuesta_pregunta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `post`
@@ -309,7 +329,7 @@ ALTER TABLE `post_tag`
 -- AUTO_INCREMENT de la tabla `pregunta`
 --
 ALTER TABLE `pregunta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT de la tabla `resultado`
 --
@@ -324,12 +344,12 @@ ALTER TABLE `tag`
 -- AUTO_INCREMENT de la tabla `titulacion`
 --
 ALTER TABLE `titulacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- Restricciones para tablas volcadas
 --
@@ -345,7 +365,6 @@ ALTER TABLE `curso_titulacion`
 -- Filtros para la tabla `encuesta`
 --
 ALTER TABLE `encuesta`
-  ADD CONSTRAINT `FK_B25B6841960057D3` FOREIGN KEY (`evaluado_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_B25B6841DB38439E` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_B25B6841F471CF55` FOREIGN KEY (`titulacion_id`) REFERENCES `titulacion` (`id`);
 
@@ -353,8 +372,8 @@ ALTER TABLE `encuesta`
 -- Filtros para la tabla `encuesta_pregunta`
 --
 ALTER TABLE `encuesta_pregunta`
-  ADD CONSTRAINT `FK_3C1707EE31A5801E` FOREIGN KEY (`pregunta_id`) REFERENCES `pregunta` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_3C1707EE46844BA6` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `FK_3C1707EE31A5801E` FOREIGN KEY (`pregunta_id`) REFERENCES `pregunta` (`id`),
+  ADD CONSTRAINT `FK_3C1707EE46844BA6` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`);
 
 --
 -- Filtros para la tabla `post_tag`
@@ -362,13 +381,6 @@ ALTER TABLE `encuesta_pregunta`
 ALTER TABLE `post_tag`
   ADD CONSTRAINT `FK_5ACE3AF04B89032C` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`),
   ADD CONSTRAINT `FK_5ACE3AF0BAD26311` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`);
-
---
--- Filtros para la tabla `usuario_titulacion`
---
-ALTER TABLE `usuario_titulacion`
-  ADD CONSTRAINT `FK_740C5286DB38439E` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_740C5286F471CF55` FOREIGN KEY (`titulacion_id`) REFERENCES `titulacion` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

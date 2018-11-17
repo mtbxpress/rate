@@ -33,7 +33,7 @@
                       <li><a href="index3.html">Dashboard3</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
+           {#       <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="form.html">General Form</a></li>
                       <li><a href="form_advanced.html">Advanced Components</a></li>
@@ -77,12 +77,14 @@
                       <li><a href="fixed_footer.html">Fixed Footer</a></li>
                     </ul>
                   </li>
+                  #}
                 </ul>
               </div>
               <div class="menu_section">
                 <h3>{% trans %}Administrar{% endtrans %}</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
+
+ {#                 <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="e_commerce.html">E-commerce</a></li>
                       <li><a href="projects.html">Projects</a></li>
@@ -101,12 +103,12 @@
                       <li><a href="pricing_tables.html">Pricing Tables</a></li>
                     </ul>
                   </li>
-
+#}
                   <li><a> <i class="fa fa-users"></i> {% trans %}Usuarios{% endtrans %} <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{{ path('mostrar_usuarios')}}">{% trans %}Mostrar usuarios{% endtrans %}<span class="fa fa-users"></span></a>
                         <li><a href="{{ path('crear_usuario')}}">{% trans %}Crear usuario{% endtrans %}<span class="fa fa-user-plus"></span></a>
-                        <li><a>Level One<span class="fa fa-list"></span></a>
+                    {#    <li><a>Level One<span class="fa fa-list"></span></a>
                           <ul class="nav child_menu">
                             <li class="sub_menu"><a href="level2.html">Level Two</a>
                             </li>
@@ -117,7 +119,7 @@
                           </ul>
                         </li>
                         <li><a href="#level1_2">Level One</a>
-                        </li>
+                        </li>#}
                     </ul>
                   </li>
 
@@ -136,7 +138,14 @@
                     </ul>
                   </li>
 
-                  <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
+                  <li><a><i class="fa fa-question"></i>{% trans %}Preguntas{% endtrans %} <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{ path('crear_pregunta')}}">{% trans %}Crear{% endtrans %} {% trans %}Pregunta{% endtrans %}<span class="fa fa-plus"></span></a></li>
+                      <li><a href="{{ path('mostrar_preguntas')}}">{% trans %}Mostrar{% endtrans %} {% trans %}Preguntas{% endtrans %}<span class="fa fa-eye"></span></a></li>
+                    </ul>
+                  </li>
+
+                  {#<li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>#}
                 </ul>
               </div>
 

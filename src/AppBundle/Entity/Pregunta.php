@@ -31,7 +31,7 @@ class Pregunta
     /**
      * @var string
      *
-     * @ORM\Column(name="tipo", type="string", length=15)
+     * @ORM\Column(name="tipo", type="string", columnDefinition="enum('PROFESOR_INTERNO', 'PROFESOR_EXTERNO',  'ALUMNO')" , length=20, nullable=false)
      */
     private $tipo;
 
@@ -208,5 +208,29 @@ class Pregunta
     public function getEncuestapregunta()
     {
         return $this->encuestapregunta;
+    }
+
+    /**
+     * Add encuestapreguntum
+     *
+     * @param \AppBundle\Entity\EncuestaPregunta $encuestapreguntum
+     *
+     * @return Pregunta
+     */
+    public function addEncuestapreguntum(\AppBundle\Entity\EncuestaPregunta $encuestapreguntum)
+    {
+        $this->encuestapregunta[] = $encuestapreguntum;
+
+        return $this;
+    }
+
+    /**
+     * Remove encuestapreguntum
+     *
+     * @param \AppBundle\Entity\EncuestaPregunta $encuestapreguntum
+     */
+    public function removeEncuestapreguntum(\AppBundle\Entity\EncuestaPregunta $encuestapreguntum)
+    {
+        $this->encuestapregunta->removeElement($encuestapreguntum);
     }
 }

@@ -1,18 +1,7 @@
 {% extends 'base_menu.html.twig' %}
 
 
-{% block title %}{% trans %}Mostrar{% endtrans %} {% trans %}Titulaciones{% endtrans %}{% endblock %}
-
-
-{#% block cabecera %}{% trans %}Crear usuario {% endtrans %}<small>{% trans %}Inserte los datos{% endtrans %}:</small>  {% endblock %#}
-{#% block breadcrumb %}
-      <ol class="breadcrumb">
-        <li><a href="{{ path('inicio')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{ path('mostrar_usuarios')}}"><i class="fa fa-user"></i> {% trans %}Usuarios{% endtrans %}</a> </li>
-        <li class="active"><i class="fa fa-plus"></i> {% trans %}Crear{% endtrans %} </li>
-      </ol>
-{% endblock  %#}
-
+{% block title %}{% trans %}Crear{% endtrans %} {% trans %}Pregunta{% endtrans %}{% endblock %}
 
 {% block pageContent %}
 
@@ -21,7 +10,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>{% trans %}Mostrar{% endtrans %} {% trans %}Titulaciones{% endtrans %}</h3>
+                <h3>{% trans %}Crear{% endtrans %} {% trans %}Pregunta{% endtrans %}</h3>
               </div>
 
                 <form action="{{ path('buscar_general')}}">
@@ -45,7 +34,75 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>{% trans %}Tabla {% endtrans %} <small>{% trans %}Usuarios{% endtrans %}</small></h2>
+                    <h2>{% trans %}Formulario {% endtrans %} <small>{% trans %}Crear{% endtrans %} {% trans %}Pregunta{% endtrans %}</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <!-- Opciones superior derecha-->
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+<!-- <form class="form-horizontal form-label-left" novalidate>  -->
+					{#{ form_start(form, { 'enctype':"multipart/form-data",  'attr' : {'role' : 'form', 'class': 'form-label-left',novalidate: 'novalidate'} }) }#}
+         		{{ form_start(form, { 'enctype':"multipart/form-data",  'attr' : {'role' : 'form'} }) }}
+
+                      <div class="form-group">
+                        {{ form_label(form.descripcion)}}
+                         {{ form_widget(form.descripcion, { 'attr': {'class': 'form-control'} }) }}
+                        <span class="text-danger">{{ form_errors(form.descripcion)}}</span>
+                      </div>
+                      <div class="form-group">
+                          <label for="tipo">{% trans %}Tipo de pregunta{% endtrans %}</label>
+                                    <select name="tipo"  class="form-control select2" data-placeholder="Seleccione un tipo" style="width: 100%;" required="">
+                                    <option></option>
+                                    <option value="ALUMNO">Alumno</option>
+                                    <option value="PROFESOR_INTERNO">Prefosor interno</option>
+                                    <option value="PROFESOR_EXTERNO">Profesor externo</option>
+                                    </select>
+                      </div>
+                      <div class="form-group">
+                        {{ form_label(form.orden)}}
+                         {{ form_widget(form.orden, { 'attr': {'class': 'form-control'} }) }}
+                        <span class="text-danger">{{ form_errors(form.orden)}}</span>
+                      </div>
+                      <div class="ln_solid"></div>
+					<!--  Aceptar y Reset en la misma línea  -->
+					<div class="btn-toolbar" role="toolbar">
+					  <div class="btn-group">
+						<div class="btn pull-right">
+							 {{ form_widget(form.reset)}}
+							<span class="text-danger">{{ form_errors(form)}}</span>
+						</div>
+					  </div>
+						<div class="btn pull-left">
+							 {{ form_widget(form.aceptar)}}
+							<span class="text-danger">{{ form_errors(form)}}</span>
+						</div>
+					</div><!-- # FIN Aceptar y Reset -->
+						{{ form_end(form) }}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+           <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{% trans %}Tabla {% endtrans %} <small>{% trans %}Preguntas{% endtrans %} </small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -69,17 +126,19 @@
                 <table id="tabla_datatable" class="display responsive nowrap" cellspacing="0" width="100%">
                 <thead>
                 <tr>
-                  <th>{% trans %}Nombre{% endtrans %} {% trans %}Titulacion{% endtrans %}</th>
-                  <th>{% trans %}Codigo{% endtrans %} {% trans %}Titulacion{% endtrans %}</th>
+                  <th>{% trans %}Pregunta{% endtrans %}</th>
+                  <th>{% trans %}Tipo{% endtrans %}</th>
+                  <th>{% trans %}Orden{% endtrans %}</th>
                   <th>{% trans %}Opciones{% endtrans %}</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for titulacion in titulaciones %}
+                {% for pregunta in preguntas %}
 
                   <tr>
-                        <td>{{ titulacion.nombre }}</td>
-                        <td>{{ titulacion.codigo }}</td>
+                        <td>{{ pregunta.descripcion }}</td>
+                        <td>{{ pregunta.tipo }}</td>
+                        <td>{{ pregunta.orden }}</td>
                 <!--<td>
                   <div class="text-center">
                     <img src="{#{ asset('uploads/'~empresa.logo~'')}#}" alt="{#{ empresa.logo }#}" max-width="60" height="50">
@@ -88,7 +147,7 @@
                     <td>
                       <div class="text-center">
 
-                              <a href="{{ path('crear_titulacion')}}">
+                              <a href="{{ path('crear_pregunta')}}">
                                 <button type="button" class="btn btn-link btn-xs crear">
                                   <i class="fa fa-plus fa-2x" style="color: orange;"></i>
                                 </button>
@@ -100,14 +159,14 @@
                                 </button>
                               </a>
                               #}
-                              <a href="{{ path('editar_titulacion', {'idTitulacion': titulacion.id})}}">
+                              <a href="{{ path('editar_pregunta', {'idPregunta': pregunta.id})}}">
                                 <button type="button" class="btn btn-link btn-xs editar" id="aa">
                                   <i class="fa fa-pencil fa-2x" style="color: green;"></i>
                                 </button>
                               </a>
 
                               <a href="#">
-                                <button type="button" class="btn btn-link btn-xs eliminar" data-toggle="modal" data-target="#myModal" id="{{ titulacion.id }}" name="{{titulacion.nombre}}">
+                                <button type="button" class="btn btn-link btn-xs eliminar" data-toggle="modal" data-target="#myModal" id="{{ pregunta.id }}" name="{{pregunta.descripcion}}">
                                   <i class="fa fa-trash fa-2x" style="color: red;"></i>
                                 </button>
                               </a>
@@ -120,8 +179,9 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                  <th>{% trans %}Nombre{% endtrans %}</th>
-                  <th>{% trans %}Codigo{% endtrans %}</th>
+                  <th>{% trans %}Pregunta{% endtrans %}</th>
+                  <th>{% trans %}Tipo{% endtrans %}</th>
+                  <th>{% trans %}Orden{% endtrans %}</th>
                   <th>{% trans %}Opciones{% endtrans %}</th>
                 </tr>
                 </tfoot>
@@ -131,6 +191,9 @@
                 </div>
               </div>
             </div>
+
+
+
           </div>
         </div>
         <!-- page content -->
@@ -143,16 +206,16 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><b>{% trans %}Eliminar{% endtrans %} {% trans %} Titulacion{% endtrans %}</b></h4>
+        <h4 class="modal-title" id="myModalLabel"><b>{% trans %}Eliminar{% endtrans %} {% trans %} Pregunta{% endtrans %}</b></h4>
       </div>
       <div class="modal-body">
-        <div class="text-center"><h4>{% trans %}mensaje.titulacion{% endtrans %}</h4><div id="nombre"></div></div>
+        <div class="text-center"><h4>{% trans %}mensaje.pregunta{% endtrans %}</h4><div id="nombre"></div></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar">
           {% trans %}Cerrar{% endtrans %}</button>
 
-        <a id="enlace_eliminar" href="/admin/{{ urlActual[2] }}/eliminar/titulacion/">
+        <a id="enlace_eliminar" href="/admin/{{ urlActual[2] }}/eliminar/pregunta/">
           <button type="submit" class="btn btn-primary" name="aceptar" id="aceptar" >
             {% trans %}Aceptar{% endtrans %}
           </button>
@@ -190,10 +253,11 @@ $(document).ready(function() {
     $(".eliminar").on('click', function() {
       $("#nombre").html($(this).attr("name"));
       var hrf = $("#enlace_eliminar").attr("href").split("/");
-      var url = "/admin/"+hrf[2]+"/eliminar/titulacion/"+$(this).attr("id");
+      var url = "/admin/"+hrf[2]+"/eliminar/pregunta/"+$(this).attr("id");
       $("#enlace_eliminar").attr("href",url);
     });
   });
 </script>
 
 {% endblock %}
+

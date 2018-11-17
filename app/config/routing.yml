@@ -85,3 +85,43 @@ mostrar_titulaciones:
     defaults: { _controller: AppBundle:Titulacion:mostrarTitulaciones, _locale: es }
     requirements:
         _locale: 'en|es'
+
+eliminar_titulacion:
+    path:  /admin/{_locale}/eliminar/titulacion/{idTitulacion}
+    defaults: { _controller: AppBundle:Titulacion:eliminarTitulacion, _locale: es }
+    requirements:
+        _locale: 'en|es'
+        idTitulacion: \d+
+
+editar_titulacion:
+    path:  /admin/{_locale}/editar/titulacion/{idTitulacion}
+    defaults: { _controller: AppBundle:Titulacion:editarTitulacion, _locale: es }
+    requirements:
+        _locale: 'en|es'
+        idTitulacion: \d+
+
+mostrar_preguntas:
+    path:  /admin/{_locale}/mostrar/preguntas
+    defaults: { _controller: AppBundle:Pregunta:mostrarPreguntas, _locale: es }
+    requirements:
+        _locale: 'en|es'
+
+crear_pregunta:
+    path:  /admin/{_locale}/crear/pregunta/
+    defaults: { _controller: AppBundle:Pregunta:crearPregunta, _locale: es }
+    requirements:
+        _locale: 'en|es'
+
+editar_pregunta:
+    path:  /admin/{_locale}/editar/pregunta/{idPregunta}
+    defaults: { _controller: AppBundle:Pregunta:editarPregunta, _locale: es }
+    requirements:
+        _locale: 'en|es'
+        idPregunta: \d+
+
+eliminar_pregunta:
+    path:  /admin/{_locale}/eliminar/pregunta/{idPregunta}
+    defaults: { _controller: AppBundle:Pregunta:eliminarPregunta, _locale: es }
+    requirements:
+        _locale: 'en|es'
+        idPregunta: \d+

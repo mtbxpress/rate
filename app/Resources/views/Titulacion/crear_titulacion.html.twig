@@ -91,9 +91,162 @@
                 </div>
               </div>
             </div>
+
+
+           <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{% trans %}Tabla {% endtrans %} <small>{% trans %}Titulaciones{% endtrans %} </small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <!-- Opciones superior derecha-->
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                <table id="tabla_datatable" class="display responsive nowrap" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                  <th>{% trans %}Nombre{% endtrans %} {% trans %}Titulacion{% endtrans %}</th>
+                  <th>{% trans %}Codigo{% endtrans %} {% trans %}Titulacion{% endtrans %}</th>
+                  <th>{% trans %}Opciones{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for titulacion in titulaciones %}
+
+                  <tr>
+                        <td>{{ titulacion.nombre }}</td>
+                        <td>{{ titulacion.codigo }}</td>
+                <!--<td>
+                  <div class="text-center">
+                    <img src="{#{ asset('uploads/'~empresa.logo~'')}#}" alt="{#{ empresa.logo }#}" max-width="60" height="50">
+                  </div>
+                </td>-->
+                    <td>
+                      <div class="text-center">
+
+                              <a href="{{ path('crear_titulacion')}}">
+                                <button type="button" class="btn btn-link btn-xs crear">
+                                  <i class="fa fa-plus fa-2x" style="color: orange;"></i>
+                                </button>
+                              </a>
+
+                             {# <a href="{{ path('ver_empresa', {'idEmpresa': empresa.id})}}">
+                                <button type="button" class="btn btn-link btn-xs ver"><!-- btn-danger -->
+                                  <i class="fa fa-eye fa-2x" style="color: blue;"></i>
+                                </button>
+                              </a>
+                              #}
+                              <a href="{{ path('editar_titulacion', {'idTitulacion': titulacion.id})}}">
+                                <button type="button" class="btn btn-link btn-xs editar" id="aa">
+                                  <i class="fa fa-pencil fa-2x" style="color: green;"></i>
+                                </button>
+                              </a>
+
+                              <a href="#">
+                                <button type="button" class="btn btn-link btn-xs eliminar" data-toggle="modal" data-target="#myModal" id="{{ titulacion.id }}" name="{{titulacion.nombre}}">
+                                  <i class="fa fa-trash fa-2x" style="color: red;"></i>
+                                </button>
+                              </a>
+
+                      </div>
+
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>{% trans %}Nombre{% endtrans %}</th>
+                  <th>{% trans %}Codigo{% endtrans %}</th>
+                  <th>{% trans %}Opciones{% endtrans %}</th>
+                </tr>
+                </tfoot>
+              </table>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
           </div>
         </div>
         <!-- page content -->
+     {% set urlActual =  path(app.request.attributes.get('_route'),  app.request.attributes.get('_route_params'))  %}
+      {% set urlActual = urlActual|split('/') %}
+<!-- VENTANA MODAL -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><b>{% trans %}Eliminar{% endtrans %} {% trans %} Titulacion{% endtrans %}</b></h4>
+      </div>
+      <div class="modal-body">
+        <div class="text-center"><h4>{% trans %}mensaje.titulacion{% endtrans %}</h4><div id="nombre"></div></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar">
+          {% trans %}Cerrar{% endtrans %}</button>
 
+        <a id="enlace_eliminar" href="/admin/{{ urlActual[2] }}/eliminar/titulacion/">
+          <button type="submit" class="btn btn-primary" name="aceptar" id="aceptar" >
+            {% trans %}Aceptar{% endtrans %}
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /VENTANA MODAL -->
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+
+ {% if app.request.getLocale() == 'es' %}
+      <script>var url = "{{ asset('template/build/mi_datatable/traduciones_datatables/Spanish.json') }}";</script>
+  {% elseif app.request.getLocale() == 'en' %}
+      <script>var url = "{{ asset('template/build/mi_datatable/traduciones_datatables/English.json') }}";</script>
+  {% else %}
+      <script>var url = "{{ asset('template/build/mi_datatable/traduciones_datatables/Spanish.json') }}";</script>
+  {% endif %}
+
+<script>
+$(document).ready(function() {
+    $('#tabla_datatable').DataTable( {
+      "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        "language": {
+     //       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+             "url": url
+        }
+    } );
+} );
+
+  $( document ).ready(function() {
+    $(".eliminar").on('click', function() {
+      $("#nombre").html($(this).attr("name"));
+      var hrf = $("#enlace_eliminar").attr("href").split("/");
+      var url = "/admin/"+hrf[2]+"/eliminar/titulacion/"+$(this).attr("id");
+      $("#enlace_eliminar").attr("href",url);
+    });
+  });
+</script>
+
+{% endblock %}

@@ -16,6 +16,7 @@ class TitulacionController extends Controller
             $titulacion = new Titulacion();
             $form = $this->createForm(\AppBundle\Form\TitulacionType::class, $titulacion);
             $form->handleRequest($request);
+            $em = $this->getDoctrine()->getManager();
 
             if($form->isSubmitted() && $form->isValid()){
 
@@ -25,13 +26,15 @@ class TitulacionController extends Controller
 
                 $this->addFlash('success', 'Registro creado correctamente' );
                 $titulacion = new Titulacion();
-                $form = $this->createForm(\AppBundle\Form\TitulacionType::class, $titulacion);
-            return $this->render('Titulacion/crear_titulacion.html.twig', array('form' => $form->createView() ));
+                ///$form = $this->createForm(\AppBundle\Form\TitulacionType::class, $titulacion);
+                //return $this->render('Titulacion/crear_titulacion.html.twig', array('form' => $form->createView() ));
             }
         }catch (Exception $ex) {
                 echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
-        return $this->render('Titulacion/crear_titulacion.html.twig', array('form' => $form->createView() ));
+        $rep = $em->getRepository('AppBundle:Titulacion');
+        $titulaciones = $rep->findAll();
+        return $this->render('Titulacion/crear_titulacion.html.twig', array('form' => $form->createView(), 'titulaciones'=>$titulaciones ));
     }
 
     public function mostrarTitulacionesAction(){
@@ -49,4 +52,62 @@ class TitulacionController extends Controller
 
     }
 
+    public function eliminarTitulacionAction(Request $request, $idTitulacion){
+        try{
+            $m = $this->getDoctrine()->getManager();
+            $titulacion = $m->getRepository('AppBundle:Titulacion')->find($idTitulacion);
+            if(!$titulacion){
+                throw $this->createNotFoundException('La titulacion con id: '.$idTitulacion.' no existe.');
+            }
+//            $idLogado = $this->getuser()->getId();
+             if( in_array("ROLE_ADMIN", $this->getuser()->getRoles(), FALSE) ){
+
+                $m->remove($titulacion);
+                $m->flush();
+                $this->addFlash('success', 'Registro eliminado correctamente' );
+             }
+             else{
+                $this->addFlash('danger', 'No puede eliminarse así mismo' );
+             }
+        //     $_SERVER['PHP_SELF']
+      //        $request = $this->container->get('request'); $routeName = $request->get('_route');  die($this->get('kernel')->getRootDir());
+            return $this->redirectToRoute('mostrar_titulaciones');
+        }
+        catch (Exception $ex) {
+            $this->addFlash('danger', 'Registro no se ha eliminado correctamente' );
+            echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
+        }
+    }
+
+public function editarTitulacionAction(Request $request, $idTitulacion){
+
+  try{
+   $m = $this->getDoctrine()->getManager();
+   $titulacion = $m->getRepository('AppBundle:Titulacion')->find($idTitulacion);
+
+ /*  foreach ($titulacion->getCursos() as $key => $value) {
+     echo $value->getDescripcion();
+   }
+   die("aqui");*/
+   $form = $this->createForm(\AppBundle\Form\TitulacionType::class, $titulacion);
+   $form->handleRequest($request);
+
+   if($form->isSubmitted() && $form->isValid()){
+        $titulacion = $form->getData();
+        $man = $this->getDoctrine()->getManager();
+        $man->persist($titulacion);
+        $man->flush();
+        $this->addFlash('success', 'Registro modificado correctamente' );
+
+        return $this->redirectToRoute('mostrar_titulaciones');
+   }
+    $rep = $m->getRepository('AppBundle:Titulacion');
+    $titulaciones = $rep->findAll();
+  }
+  catch(Excepcition $ex){
+   echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
+  }
+  return $this->render('Titulacion/editar_titulacion.html.twig', array('form' => $form->createView(), 'titulaciones'=>$titulaciones) );
+ }
 }
+
