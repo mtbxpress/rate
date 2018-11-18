@@ -196,6 +196,65 @@
           </div>
         </div>
         <!-- page content -->
+      {% set urlActual =  path(app.request.attributes.get('_route'),  app.request.attributes.get('_route_params'))  %}
+      {% set urlActual = urlActual|split('/') %}
+<!-- VENTANA MODAL -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><b>{% trans %}Eliminar{% endtrans %} {% trans %} Pregunta{% endtrans %}</b></h4>
+      </div>
+      <div class="modal-body">
+        <div class="text-center"><h4>{% trans %}mensaje.pregunta{% endtrans %}</h4><div id="nombre"></div></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="cerrar">
+          {% trans %}Cerrar{% endtrans %}</button>
 
+        <a id="enlace_eliminar" href="/admin/{{ urlActual[2] }}/eliminar/pregunta/">
+          <button type="submit" class="btn btn-primary" name="aceptar" id="aceptar" >
+            {% trans %}Aceptar{% endtrans %}
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /VENTANA MODAL -->
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+
+ {% if app.request.getLocale() == 'es' %}
+      <script>var url = "{{ asset('template/build/mi_datatable/traduciones_datatables/Spanish.json') }}";</script>
+  {% elseif app.request.getLocale() == 'en' %}
+      <script>var url = "{{ asset('template/build/mi_datatable/traduciones_datatables/English.json') }}";</script>
+  {% else %}
+      <script>var url = "{{ asset('template/build/mi_datatable/traduciones_datatables/Spanish.json') }}";</script>
+  {% endif %}
+
+<script>
+$(document).ready(function() {
+    $('#tabla_datatable').DataTable( {
+      "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+        "language": {
+     //       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+             "url": url
+        }
+    } );
+} );
+
+  $( document ).ready(function() {
+    $(".eliminar").on('click', function() {
+      $("#nombre").html($(this).attr("name"));
+      var hrf = $("#enlace_eliminar").attr("href").split("/");
+      var url = "/admin/"+hrf[2]+"/eliminar/pregunta/"+$(this).attr("id");
+      $("#enlace_eliminar").attr("href",url);
+    });
+  });
+</script>
+
+{% endblock %}
