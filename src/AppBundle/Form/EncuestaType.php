@@ -16,12 +16,21 @@ class EncuestaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('descripcion')
             ->add('evaluado',EntityType::class, array(
                 'class'=> 'AppBundle:Usuario',
                 'label'=> 'usuario.evaluado',
                 'placeholder' => 'Seleccionar' ,
-                'choice_label'=> 'username'
+                //'choice_label'=> 'username'
+                'choice_label' => function ($usuario) {
+                        $strOption=$usuario->getNombre();
+                    //    if ($usuario->getNombre()) {
+                    //      $strOption.='  '.$usuario->getNombre();
+                          if ($usuario->getApellidos()) {
+                            $strOption.=' '.$usuario->getApellidos();
+                          }
+                    //    }
+                        return $strOption;
+                      }
             ))
             ->add('titulacion',EntityType::class, array(
                 'class'=> 'AppBundle:Titulacion',
@@ -33,7 +42,16 @@ class EncuestaType extends AbstractType
                 'class'=> 'AppBundle:Usuario',
                 'label'=> 'usuario.usuario',
                 'placeholder' => 'Seleccionar' ,
-                'choice_label'=> 'username'
+                'choice_label' => function ($usuario) {
+                        $strOption=$usuario->getNombre();
+              //          if ($usuario->getNombre()) {
+              //            $strOption.=' - '.$usuario->getNombre();
+                          if ($usuario->getApellidos()) {
+                            $strOption.=' '.$usuario->getApellidos();
+                          }
+             //           }
+                        return $strOption;
+                      }
             ))
             ->add('reset',ResetType::class, array('attr' => array( 'class' => 'btn btn-success'  )))
             ->add('aceptar',SubmitType::class, array('attr' => array( 'class' => 'btn btn-primary'  )));

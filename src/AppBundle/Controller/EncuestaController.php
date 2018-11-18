@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Encuesta;
+use AppBundle\Entity\Curso;
 
 class EncuestaController extends Controller
 {
@@ -21,20 +22,31 @@ class EncuestaController extends Controller
 
             if($form->isSubmitted() && $form->isValid()){
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($encuesta);
-                $em->flush();
+	   	//   $evaluado= $form['evaluado']->getData();
+            	   if($encuesta->getEvaluado() != $encuesta->getUsuario() ){
+	            	   $na = $encuesta->getEvaluado()->getNombre().' '.$encuesta->getEvaluado()->getApellidos() ;
+	            	   $encuesta->setNaevaluado($na);
+	           //     $em = $this->getDoctrine()->getManager();
+	            	   $rep = $em->getRepository('AppBundle:Curso');
+	                $cursoActivo = $rep->findBy(	array('activo' => 1));
+	                $cursoActivo[0]->addTitulacione($encuesta->getTitulacion());
+	                $em->persist($encuesta);
+	                $em->flush();
 
-                $this->addFlash('success', 'Registro creado correctamente' );
-                $encuesta = new Encuesta();
-                ///$form = $this->createForm(\AppBundle\Form\TitulacionType::class, $titulacion);
-                //return $this->render('Titulacion/crear_titulacion.html.twig', array('form' => $form->createView() ));
+
+
+ 		   }
+ 		   else { $this->addFlash('success', 'Un usuario no puede evaluarse así mismo' ); }
+
+
             }
         }catch (Exception $ex) {
                 echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
         $rep = $em->getRepository('AppBundle:Encuesta');
-    //    $encuestas = $rep->mostarEncuestasAnyoActivo();
-        return $this->render('Encuesta/crear_encuesta.html.twig', array('form' => $form->createView()/*, 'encuestas'=>$encuestas*/ ));
+        $encuestas = $rep->mostarEncuestasCursoActivo();
+
+
+        return $this->render('Encuesta/crear_encuesta.html.twig', array('form' => $form->createView(), 'encuestas'=>$encuestas ));
     }
 }

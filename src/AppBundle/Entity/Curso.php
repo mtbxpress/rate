@@ -123,8 +123,15 @@ class Curso
      */
     public function addTitulacione(\AppBundle\Entity\Titulacion $titulacione)
     {
-        $this->titulaciones[] = $titulacione;
-
+        $existe = 0;
+        foreach ($this->titulaciones as $tit) {
+            if ($tit->getId() == $titulacione->getId()) {
+                $existe = 1;
+            }
+        }
+        if(!$existe){
+            $this->titulaciones[] = $titulacione;
+        }
         return $this;
     }
 

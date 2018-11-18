@@ -33,7 +33,7 @@ class TitulacionController extends Controller
                 echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
         $rep = $em->getRepository('AppBundle:Titulacion');
-        $titulaciones = $rep->mostarTitulacionesAnyoActivo();
+        $titulaciones = $rep->mostarTitulacionesCursoActivo();
         return $this->render('Titulacion/crear_titulacion.html.twig', array('form' => $form->createView(), 'titulaciones'=>$titulaciones ));
     }
 
@@ -43,7 +43,7 @@ class TitulacionController extends Controller
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Titulacion');
        //     $titulaciones = $rep->findAll();
-            $titulaciones = $rep->mostarTitulacionesAnyoActivo();
+            $titulaciones = $rep->mostarTitulacionesCursoActivo();
 
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
@@ -103,7 +103,7 @@ public function editarTitulacionAction(Request $request, $idTitulacion){
         return $this->redirectToRoute('mostrar_titulaciones');
    }
     $rep = $m->getRepository('AppBundle:Titulacion');
-    $titulaciones = $rep->mostarTitulacionesAnyoActivo();
+    $titulaciones = $rep->mostarTitulacionesCursoActivo();
   }
   catch(Excepcition $ex){
    echo 'Excepción capturada: ',  $ex->getMessage(), "\n";

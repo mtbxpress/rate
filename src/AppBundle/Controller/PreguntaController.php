@@ -30,7 +30,7 @@ class PreguntaController extends Controller
                 $this->addFlash('success', 'Registro creado correctamente' );
                 $pregunta = new Pregunta();
                 $form = $this->createForm(\AppBundle\Form\PreguntaType::class, $pregunta);
-                $rep = $em->getRepository('AppBundle:Pregunta');
+              //  $rep = $em->getRepository('AppBundle:Pregunta');
   //              $preguntas = $rep->findAll();
     //            return $this->render('Pregunta/crear_pregunta.html.twig', array('form' => $form->createView(), 'preguntas'=>$preguntas ));
             }

@@ -77,10 +77,10 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 		return $res;
 	}
 
-	public function mostarUsuariosAnyoActivo()	{
+	public function mostarUsuariosCursoActivo()	{
 
 		try {
-			$query = "SELECT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, tit.nombre as titulacion, tit.codigo
+			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, tit.nombre as titulacion, tit.codigo
 					from usuario usu
 					INNER JOIN encuesta enc on usu.id = enc.usuario_id
 					INNER JOIN titulacion tit on tit.id = enc.titulacion_id
@@ -99,10 +99,10 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 		return $res;
 	}
 
-	public function mostarUsuarioAnyoActivo($idUsuario)	{
+	public function mostarUsuarioCursoActivo($idUsuario)	{
 
 		try {
-			$query = "SELECT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, tit.nombre as titulacion, tit.codigo
+			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, tit.nombre as titulacion, tit.codigo
 					from usuario usu
 					INNER JOIN encuesta enc on usu.id = enc.usuario_id
 					INNER JOIN titulacion tit on tit.id = enc.titulacion_id

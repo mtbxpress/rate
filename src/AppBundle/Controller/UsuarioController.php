@@ -38,7 +38,7 @@ class UsuarioController extends Controller
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Usuario');
             $usuarios = $rep->findAll();
-            $usuarios = $rep->mostarUsuariosAnyoActivo();
+            $usuarios = $rep->mostarUsuariosCursoActivo();
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
@@ -51,13 +51,13 @@ class UsuarioController extends Controller
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Usuario');
      //       $usuario = $rep->find($idUsuario);
-            $usuario = $rep->mostarUsuarioAnyoActivo($idUsuario);
+            $usuario = $rep->mostarUsuarioCursoActivo($idUsuario);
 
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
         if(!$usuario){
-            $usuarios = $rep->mostarUsuariosAnyoActivo();
+            $usuarios = $rep->mostarUsuariosCursoActivo();
            return $this->render('Usuario/mostrar_usuarios.html.twig', array('usuarios'=>$usuarios ));
         }
         return $this->render('Usuario/mostrar_usuario.html.twig', array('usuario'=>$usuario ));

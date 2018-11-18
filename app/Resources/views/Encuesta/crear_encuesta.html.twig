@@ -30,6 +30,7 @@
             </div>
             <div class="clearfix"></div>
 
+{# inicio del formulario  #}
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
@@ -73,7 +74,7 @@
 							 {{ form_widget(form.evaluado, { 'attr': {'class': 'form-control'} }) }}
 							<span class="text-danger">{{ form_errors(form.evaluado)}}</span>
 						</div>
-
+{#
 						<div class="form-group">
 						    <label for="Rol">Rol</label>
 			                		<select name="roles"  class="form-control select2" data-placeholder="Seleccione un rol" style="width: 100%;" required="">
@@ -84,7 +85,7 @@
         						<option value="ROLE_ADMIN">Administrador</option>
 			                		</select>
 						</div>
-
+#}
                       <div class="ln_solid"></div>
 					<!--  Aceptar y Reset en la misma línea  -->
 					<div class="btn-toolbar" role="toolbar">
@@ -105,6 +106,93 @@
                 </div>
               </div>
             </div>
+{# fin del formulario #}
+{# inicio de la tabla  #}
+          <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{% trans %}Tabla {% endtrans %} <small>{% trans %}Encuestas{% endtrans %} </small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <!-- Opciones superior derecha-->
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                <table id="tabla_datatable" class="display responsive nowrap" cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                  <th>{% trans %}Titulacion{% endtrans %}</th>
+                  <th>{% trans %}usuario.usuario{% endtrans %}</th>
+                  <th>{% trans %}usuario.evaluado{% endtrans %}</th>
+                  <th>{% trans %}Opciones{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for encuesta in encuestas %}
+
+                  <tr>
+                        <td>{{ encuesta.titulacion }}</td>
+                        <td>{{ encuesta.nombre_usuario }} {{ encuesta.apellidos }}</td>
+                        <td>{{ encuesta.naevaluado }}</td>
+
+                    <td>
+                      <div class="text-center">
+
+                              <a href="{{ path('crear_encuesta')}}">
+                                <button type="button" class="btn btn-link btn-xs crear">
+                                  <i class="fa fa-plus fa-2x" style="color: orange;"></i>
+                                </button>
+                              </a>
+
+                              <a href="{#{ path('editar_pregunta', {'idPregunta': pregunta.id})}#}">
+                                <button type="button" class="btn btn-link btn-xs editar" id="aa">
+                                  <i class="fa fa-pencil fa-2x" style="color: green;"></i>
+                                </button>
+                              </a>
+
+                              <a href="#">
+                                <button type="button" class="btn btn-link btn-xs eliminar" data-toggle="modal" data-target="#myModal" id="{{ encuesta.id }}" name="{{encuesta.usuario}} - {{encuesta.evaluado}}">
+                                  <i class="fa fa-trash fa-2x" style="color: red;"></i>
+                                </button>
+                              </a>
+
+                      </div>
+
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                  <th>{% trans %}Titulacion{% endtrans %}</th>
+                  <th>{% trans %}usuario.usuario{% endtrans %}</th>
+                  <th>{% trans %}usuario.evaluado{% endtrans %}</th>
+                  <th>{% trans %}Opciones{% endtrans %}</th>
+                </tr>
+                </tfoot>
+              </table>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+{# fin de la tabla#}
+
           </div>
         </div>
         <!-- page content -->

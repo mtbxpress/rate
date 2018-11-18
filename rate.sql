@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 17-11-2018 a las 20:04:00
+-- Tiempo de generación: 18-11-2018 a las 20:52:43
 -- Versión del servidor: 5.7.24-0ubuntu0.16.04.1
 -- Versión de PHP: 7.2.7-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -30,8 +30,8 @@ USE `rate`;
 
 CREATE TABLE `curso` (
   `id` int(11) NOT NULL,
-  `descripcion` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `activo` smallint(6) NOT NULL
+  `descripcion` varchar(7) COLLATE utf8_unicode_ci NOT NULL,
+  `activo` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -40,7 +40,8 @@ CREATE TABLE `curso` (
 
 INSERT INTO `curso` (`id`, `descripcion`, `activo`) VALUES
 (1, '2015/16', 0),
-(2, '2016/17', 1);
+(62, '2015/18', 1),
+(73, '2016/36', 0);
 
 -- --------------------------------------------------------
 
@@ -58,8 +59,8 @@ CREATE TABLE `curso_titulacion` (
 --
 
 INSERT INTO `curso_titulacion` (`curso_id`, `titulacion_id`) VALUES
-(1, 1),
-(2, 1);
+(62, 1),
+(62, 23);
 
 -- --------------------------------------------------------
 
@@ -69,11 +70,24 @@ INSERT INTO `curso_titulacion` (`curso_id`, `titulacion_id`) VALUES
 
 CREATE TABLE `encuesta` (
   `id` int(11) NOT NULL,
-  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `titulacion_id` int(11) DEFAULT NULL,
   `usuario_id` int(11) DEFAULT NULL,
-  `evaluado` int(11) NOT NULL
+  `evaluado_id` int(11) DEFAULT NULL,
+  `naevaluado` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `encuesta`
+--
+
+INSERT INTO `encuesta` (`id`, `titulacion_id`, `usuario_id`, `evaluado_id`, `naevaluado`) VALUES
+(24, 1, 1, 9, 'czcz czxczx'),
+(27, 1, 1, 15, 'HFGF dddddddddddddR'),
+(28, 1, 1, 15, 'HFGF dddddddddddddR'),
+(29, 1, 1, 15, 'HFGF dddddddddddddR'),
+(30, 23, 14, 9, 'czcz czxczx'),
+(31, 23, 1, 14, '323 2323'),
+(32, 23, 1, 14, '323 2323');
 
 -- --------------------------------------------------------
 
@@ -130,7 +144,8 @@ CREATE TABLE `pregunta` (
 INSERT INTO `pregunta` (`id`, `descripcion`, `tipo`, `orden`) VALUES
 (21, 'LLEGA A SU HORAO', 'PROFESOR_INTERNO', 4),
 (26, 'YYYYY', 'ALUMNO', 5),
-(30, 'PO', 'PROFESOR_INTERNO', 9);
+(30, 'PO', 'PROFESOR_INTERNO', 9),
+(31, 'sjfsuo', 'PROFESOR_EXTERNO', 5);
 
 -- --------------------------------------------------------
 
@@ -180,7 +195,8 @@ CREATE TABLE `titulacion` (
 
 INSERT INTO `titulacion` (`id`, `nombre`, `codigo`) VALUES
 (1, 'Informatica', 'INF'),
-(22, 'sdaa', 'GGDDT');
+(22, 'sdaa', 'GGDDT'),
+(23, 'tttttttt', '0');
 
 -- --------------------------------------------------------
 
@@ -212,7 +228,8 @@ INSERT INTO `usuario` (`id`, `username`, `password`, `nombre`, `apellidos`, `ema
 (13, 'adminGBDFG', '4943c668497795bb894ca5bfd8526ccd', 'FDFF', 'fdfdfd', 'nF@hotmail.com', '2018-11-04 19:21:49', 'img.jpg', 'ROLE_PROFE', 222),
 (14, 'admin2Q22', '1cd3f7c4095fb55de1d50f0fce236fb5', '323', '2323', '2@aaaaaaaaa.com', '2018-11-04 19:22:00', 'img.jpg', 'ROLE_PROFI', 3232),
 (15, 'adminTRTRE', '21232f297a57a5a743894a0e4a801fc3', 'HFGF', 'dddddddddddddR', 'jjdelrom2012@gmail.com', '2018-11-04 19:22:41', 'img.jpg', 'ROLE_PROFI', 44),
-(16, 'ivhoiss', 'a947195af78490ae81b2e7e000579200', 'ttt', 'ttt', 'nttt@hotmail.com', '2018-11-17 11:08:10', 'img.jpg', 'ROLE_PROFI', 5443333);
+(16, 'ivhoiss', 'a947195af78490ae81b2e7e000579200', 'ttt', 'ttt', 'nttt@hotmail.com', '2018-11-17 11:08:10', 'img.jpg', 'ROLE_PROFI', 5443333),
+(17, 'admingfgf', '3b542fdcd44331364f0dc93a88dd7f37', 'dffdf', 'fdff', 'cccn@f.com', '2018-11-18 19:15:36', 'img.jpg', 'ROLE_PROFI', 44444);
 
 --
 -- Índices para tablas volcadas
@@ -239,7 +256,8 @@ ALTER TABLE `curso_titulacion`
 ALTER TABLE `encuesta`
   ADD PRIMARY KEY (`id`),
   ADD KEY `IDX_B25B6841F471CF55` (`titulacion_id`),
-  ADD KEY `IDX_B25B6841DB38439E` (`usuario_id`);
+  ADD KEY `IDX_B25B6841DB38439E` (`usuario_id`),
+  ADD KEY `IDX_B25B6841960057D3` (`evaluado_id`);
 
 --
 -- Indices de la tabla `encuesta_pregunta`
@@ -304,12 +322,12 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 --
 -- AUTO_INCREMENT de la tabla `encuesta`
 --
 ALTER TABLE `encuesta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT de la tabla `encuesta_pregunta`
 --
@@ -329,7 +347,7 @@ ALTER TABLE `post_tag`
 -- AUTO_INCREMENT de la tabla `pregunta`
 --
 ALTER TABLE `pregunta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT de la tabla `resultado`
 --
@@ -365,6 +383,7 @@ ALTER TABLE `curso_titulacion`
 -- Filtros para la tabla `encuesta`
 --
 ALTER TABLE `encuesta`
+  ADD CONSTRAINT `FK_B25B6841960057D3` FOREIGN KEY (`evaluado_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_B25B6841DB38439E` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `FK_B25B6841F471CF55` FOREIGN KEY (`titulacion_id`) REFERENCES `titulacion` (`id`);
 

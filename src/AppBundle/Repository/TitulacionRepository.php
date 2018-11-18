@@ -10,7 +10,7 @@ namespace AppBundle\Repository;
  */
 class TitulacionRepository extends \Doctrine\ORM\EntityRepository
 {
-	public function mostarTitulacionesAnyoActivo()	{
+	public function mostarTitulacionesCursoActivo()	{
 
 		try {
 			$query = "SELECT tit.*
@@ -30,7 +30,7 @@ class TitulacionRepository extends \Doctrine\ORM\EntityRepository
 		return $res;
 	}
 
-	public function mostarTitulacionAnyoActivo($idUsuario)	{
+	public function mostarTitulacionCursoActivo($idUsuario)	{
 
 		try {
 			$query = "SELECT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, tit.nombre as titulacion, tit.codigo

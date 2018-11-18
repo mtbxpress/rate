@@ -22,13 +22,13 @@ class Encuesta
      */
     private $id;
 
-    /*
+    /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string", length=255, nullable=true)
+     * @ORM\Column(name="naevaluado", type="string", length=255, nullable=true)
+     */
+    private $naevaluado;
 
-    private $descripcion;
-*/
     /**
      * Many encuestas have one titulacion. This is the owning side.
      * @ORM\ManyToOne(targetEntity="Titulacion", inversedBy="encuestas")
@@ -49,11 +49,6 @@ class Encuesta
      */
     private $encuestapregunta;
 
-
-
-
-
-
     /**
      * Many encuestas have one usuario. This is the owning side.
      * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="encuestas")
@@ -66,11 +61,18 @@ class Encuesta
      * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="encuestas")
      * @ORM\JoinColumn(name="evaluado_id", referencedColumnName="id")
      */
-    /**
-      * @var \AppBundle\Entity\Usuario
+    //      * @var  \AppBundle\Entity\Usuario
+    /*
+      * @var int
       *
       * @ORM\Column(name="evaluado", type="integer")
       */
+
+    /**
+     * Many encuestas have one usuario. This is the owning side.
+     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="encuestas")
+     * @ORM\JoinColumn(name="evaluado_id", referencedColumnName="id")
+     */
     private $evaluado;
 
     public function __construct() {
@@ -88,30 +90,30 @@ class Encuesta
         return $this->id;
     }
 
-    /*
-     * Set descripcion
+    /**
+     * Set naevaluado
      *
-     * @param string $descripcion
+     * @param string $naevaluado
      *
      * @return Encuesta
-     *
-    public function setDescripcion($descripcion)
+     */
+    public function setNaevaluado($naevaluado)
     {
-        $this->descripcion = $descripcion;
+        $this->naevaluado = $naevaluado;
 
         return $this;
     }
 
-    /*
-     * Get descripcion
+    /**
+     * Get naevaluado
      *
      * @return string
-     *
-    public function getDescripcion()
+     */
+    public function getNaevaluado()
     {
-        return $this->descripcion;
+        return $this->naevaluado;
     }
-*/
+
     /**
      * Set titulacion
      *
@@ -159,6 +161,8 @@ class Encuesta
     {
         return $this->usuario;
     }
+
+//     * @param \AppBundle\Entity\Usuario $usuario
 
     /**
      * Set evaluado
