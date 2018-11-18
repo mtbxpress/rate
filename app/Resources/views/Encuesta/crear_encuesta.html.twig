@@ -1,18 +1,7 @@
 {% extends 'base_menu.html.twig' %}
 
 
-{% block title %}{% trans %}Crear usuario{% endtrans %}{% endblock %}
-
-
-{% block cabecera %}{% trans %}Crear usuario {% endtrans %}<small>{% trans %}Inserte los datos{% endtrans %}:</small>  {% endblock %}
-{#% block breadcrumb %}
-      <ol class="breadcrumb">
-        <li><a href="{{ path('inicio')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{ path('mostrar_usuarios')}}"><i class="fa fa-user"></i> {% trans %}Usuarios{% endtrans %}</a> </li>
-        <li class="active"><i class="fa fa-plus"></i> {% trans %}Crear{% endtrans %} </li>
-      </ol>
-{% endblock  %#}
-
+{% block title %}{% trans %}Crear{% endtrans %} {% trans %}Encuesta{% endtrans %}{% endblock %}
 
 {% block pageContent %}
 
@@ -21,7 +10,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>{% trans %}Crear nuevo usuario{% endtrans %}</h3>
+                <h3>{% trans %}Crear{% endtrans %} {% trans %}Encuesta{% endtrans %}</h3>
               </div>
 
                 <form action="{{ path('buscar_general')}}">
@@ -45,7 +34,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>{% trans %}Formulario {% endtrans %} <small>{% trans %}Nuevo usuario{% endtrans %}</small></h2>
+                    <h2>{% trans %}Formulario {% endtrans %} <small>{% trans %}Nueva{% endtrans %}  {% trans %}Encuesta{% endtrans %}</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -70,35 +59,21 @@
 					{{ form_start(form, { 'enctype':"multipart/form-data",  'attr' : {'role' : 'form'} }) }}
 
 						<div class="form-group">
-							{{ form_label(form.username)}}
-							 {{ form_widget(form.username, { 'attr': {'class': 'form-control'} }) }}
-							<span class="text-danger">{{ form_errors(form.username)}}</span>
+							{{ form_label(form.titulacion)}}
+							 {{ form_widget(form.titulacion, { 'attr': {'class': 'form-control'} }) }}
+							<span class="text-danger">{{ form_errors(form.titulacion)}}</span>
 						</div>
 						<div class="form-group ">
-							{{ form_label(form.password)}}
-							 {{ form_widget(form.password, { 'attr': {'class': 'form-control'} }) }}
-							<span class="text-danger">{{ form_errors(form.password)}}</span>
+							{{ form_label(form.usuario)}}
+							 {{ form_widget(form.usuario, { 'attr': {'class': 'form-control'} }) }}
+							<span class="text-danger">{{ form_errors(form.usuario)}}</span>
 						</div>
 						<div class="form-group">
-							{{ form_label(form.nombre)}}
-							 {{ form_widget(form.nombre, { 'attr': {'class': 'form-control'} }) }}
-							<span class="text-danger">{{ form_errors(form.nombre)}}</span>
+							{{ form_label(form.evaluado)}}
+							 {{ form_widget(form.evaluado, { 'attr': {'class': 'form-control'} }) }}
+							<span class="text-danger">{{ form_errors(form.evaluado)}}</span>
 						</div>
-						<div class="form-group">
-							{{ form_label(form.apellidos)}}
-							 {{ form_widget(form.apellidos, { 'attr': {'class': 'form-control'} }) }}
-							<span class="text-danger">{{ form_errors(form.apellidos)}}</span>
-						</div>
-						<div class="form-group">
-							{{ form_label(form.email)}}
-							 {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
-							<span class="text-danger">{{ form_errors(form.email)}}</span>
-						</div>
-						<div class="form-group">
-							{{ form_label(form.telefono)}}
-							 {{ form_widget(form.telefono, { 'attr': {'class': 'form-control'} }) }}
-							<span class="text-danger">{{ form_errors(form.telefono)}}</span>
-						</div>
+
 						<div class="form-group">
 						    <label for="Rol">Rol</label>
 			                		<select name="roles"  class="form-control select2" data-placeholder="Seleccione un rol" style="width: 100%;" required="">

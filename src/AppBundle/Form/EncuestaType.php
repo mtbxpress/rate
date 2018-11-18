@@ -5,7 +5,9 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ResetType;
 class EncuestaType extends AbstractType
 {
     /**
@@ -13,7 +15,28 @@ class EncuestaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('descripcion')->add('evaluado')->add('titulacion')->add('usuario');
+        $builder
+            ->add('descripcion')
+            ->add('evaluado',EntityType::class, array(
+                'class'=> 'AppBundle:Usuario',
+                'label'=> 'usuario.evaluado',
+                'placeholder' => 'Seleccionar' ,
+                'choice_label'=> 'username'
+            ))
+            ->add('titulacion',EntityType::class, array(
+                'class'=> 'AppBundle:Titulacion',
+                'label'=> 'Titulacion',
+                'placeholder' => 'Seleccionar' ,
+                'choice_label'=> 'nombre'
+            ))
+            ->add('usuario',EntityType::class, array(
+                'class'=> 'AppBundle:Usuario',
+                'label'=> 'usuario.usuario',
+                'placeholder' => 'Seleccionar' ,
+                'choice_label'=> 'username'
+            ))
+            ->add('reset',ResetType::class, array('attr' => array( 'class' => 'btn btn-success'  )))
+            ->add('aceptar',SubmitType::class, array('attr' => array( 'class' => 'btn btn-primary'  )));
     }/**
      * {@inheritdoc}
      */

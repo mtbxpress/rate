@@ -127,10 +127,10 @@ function funcion(){
                             <h3 class="brief text-center" style='color: black;' ><i>{{ usuario.username }}</i></h3>
                             <div class="left col-xs-7">
                               <h2>{{ usuario.nombre }}  {{ usuario.apellidos }}</h2>
-                              <p><strong>About: </strong> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                              <p><strong>{{ usuario.codigo }}: </strong> {{ usuario.titulacion }} </p>
                               <ul class="list-unstyled">
-                                <li><i class="fa fa-building"></i> {% trans %}Email{% endtrans %}: {{ usuario.email }}</li>
-                                <li><i class="fa fa-phone"></i> {% trans %}Telefono{% endtrans %}: {{ usuario.telefono }}</li>
+                                <li><i class="fa fa-envelope"></i> {#% trans %}Email{% endtrans %#}: {{ usuario.email }}</li>
+                                <li><i class="fa fa-phone"></i> {#% trans %}Telefono{% endtrans %#}: {{ usuario.telefono }}</li>
                               </ul>
                             </div>
                             <div class="right col-xs-5 text-center">

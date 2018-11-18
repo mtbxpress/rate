@@ -64,7 +64,6 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 				FROM usuario u
 				WHERE  u.nombre LIKE  '%$busqueda%' OR u.apellidos LIKE '%$busqueda%' OR  u.username LIKE '%$busqueda%'
 				OR  u.email LIKE '%$busqueda%' or u.telefono LIKE '%$busqueda%' ORDER BY u.roles";
-echo "string";
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
 			$stmt = $db->prepare($query);
@@ -78,9 +77,52 @@ echo "string";
 		return $res;
 	}
 
+	public function mostarUsuariosAnyoActivo()	{
 
+		try {
+			$query = "SELECT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, tit.nombre as titulacion, tit.codigo
+					from usuario usu
+					INNER JOIN encuesta enc on usu.id = enc.usuario_id
+					INNER JOIN titulacion tit on tit.id = enc.titulacion_id
+					INNER JOIN curso_titulacion ct on ct.titulacion_id = tit.id
+					INNER JOIN curso cu on ct.curso_id = cu.id
+					WHERE cu.activo = 1";
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+		return $res;
+	}
 
+	public function mostarUsuarioAnyoActivo($idUsuario)	{
 
+		try {
+			$query = "SELECT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, tit.nombre as titulacion, tit.codigo
+					from usuario usu
+					INNER JOIN encuesta enc on usu.id = enc.usuario_id
+					INNER JOIN titulacion tit on tit.id = enc.titulacion_id
+					INNER JOIN curso_titulacion ct on ct.titulacion_id = tit.id
+					INNER JOIN curso cu on ct.curso_id = cu.id
+					WHERE cu.activo = 1 and usu.id = $idUsuario";
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+//echo "<pre>"; print_r($res);  echo "</pre>";die();
+	    if($res){
+		return $res[0];
+	    }
+	}
 
 }
 

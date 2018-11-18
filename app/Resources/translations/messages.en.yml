@@ -53,3 +53,11 @@ Tipo de pregunta: Type question
 Orden: Order
 Tipo: Type
 mensaje.pregunta: Are you sure delete question?
+Cursos: Academic years
+Curso: Academic year
+Descripcion: Description
+mensaje.curso : Are you sure delete academic year?
+Activo: Active
+Formato incorrecto: Incorrect format
+usuario.evaluado: User that will be evaluated
+usuario.usuario: User who will complete the survey

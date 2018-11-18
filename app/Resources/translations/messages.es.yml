@@ -53,3 +53,11 @@ Tipo de pregunta: Tipo de pregunta
 Orden: Orden
 Tipo: Tipo
 mensaje.pregunta: ¿Está seguro de eliminar la pregunta?
+Cursos: Cursos
+Curso: Curso
+Descripcion: Descripcion
+mensaje.curso : ¿Está seguro de eliminar el curso?
+Activo: Activo
+Formato incorrecto: Formato incorrecto
+usuario.evaluado: Usuario que será evaluado
+usuario.usuario: Usuario que realizará la encuesta

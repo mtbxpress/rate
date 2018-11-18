@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Entity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,18 +21,27 @@ class Curso
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+//@Assert\Regex("/^\w+/")  ([0][1-9]|[12][0-9]|3[01])       *     pattern="/^[a-z]/",       message="Formato incorrecto"
+
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="descripcion", type="string", length=10, unique=true)
+     * @Assert\Regex(
+     *     pattern="/([2]\d{3}\/\d{2})/",
+     *     match=true,
+     * )
+     * @Assert\Length(
+     *      min = "7",
+     *      max = "7",
+     * )
+     * @ORM\Column(name="descripcion", type="string", length=7, unique=true)
      */
     private $descripcion;
 
     /**
-     * @var int
+     * @var boolean
      *
-     * @ORM\Column(name="activo", type="smallint")
+     * @ORM\Column(name="activo", type="boolean")
      */
     private $activo;
 
@@ -83,7 +93,7 @@ class Curso
     /**
      * Set activo
      *
-     * @param integer $activo
+     * @param boolean $activo
      *
      * @return Curso
      */

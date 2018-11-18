@@ -104,6 +104,12 @@
                     </ul>
                   </li>
 #}
+                 <li><a><i class="fa fa-calendar"></i>{% trans %}Cursos{% endtrans %} <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{ path('crear_curso')}}">{% trans %}Crear{% endtrans %} {% trans %}Curso{% endtrans %}<span class="fa fa-plus"></span></a></li>
+                      <li><a href="{{ path('mostrar_cursos')}}">{% trans %}Mostrar{% endtrans %} {% trans %}Curso{% endtrans %}<span class="fa fa-hand-o-right"></span></a></li>
+                    </ul>
+                  </li>
                   <li><a> <i class="fa fa-users"></i> {% trans %}Usuarios{% endtrans %} <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{{ path('mostrar_usuarios')}}">{% trans %}Mostrar usuarios{% endtrans %}<span class="fa fa-users"></span></a>
@@ -125,7 +131,7 @@
 
                   <li><a><i class="fa fa-list-alt"></i>{% trans %}Encuestas{% endtrans %} <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="#">{% trans %}Crear{% endtrans %} {% trans %}Encuestas{% endtrans %}<span class="fa fa-plus"></span></a></li>
+                      <li><a href="{{ path('crear_encuesta')}}">{% trans %}Crear{% endtrans %} {% trans %}Encuestas{% endtrans %}<span class="fa fa-plus"></span></a></li>
                       <li><a href="#">{% trans %}Asignar{% endtrans %} {% trans %}Encuestas{% endtrans %}<span class="fa fa-hand-o-right"></span></a></li>
                       <li><a href="#">{% trans %}Mostrar{% endtrans %} {% trans %}Encuestas{% endtrans %}<span class="fa fa-eye"></span></a></li>
                     </ul>

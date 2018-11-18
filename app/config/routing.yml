@@ -125,3 +125,36 @@ eliminar_pregunta:
     requirements:
         _locale: 'en|es'
         idPregunta: \d+
+
+crear_curso:
+    path:  /admin/{_locale}/crear/curso/
+    defaults: { _controller: AppBundle:Curso:crearCurso, _locale: es }
+    requirements:
+        _locale: 'en|es'
+
+editar_curso:
+    path:  /admin/{_locale}/crear/curso/{idCurso}
+    defaults: { _controller: AppBundle:Curso:editarCurso, _locale: es }
+    requirements:
+        _locale: 'en|es'
+        idCurso: \d+
+
+eliminar_curso:
+    path:  /admin/{_locale}/eliminar/curso/{idCurso}
+    defaults: { _controller: AppBundle:Curso:eliminarCurso, _locale: es }
+    requirements:
+        _locale: 'en|es'
+        idCurso: \d+
+
+mostrar_cursos:
+    path:  /admin/{_locale}/mostrar/cursos
+    defaults: { _controller: AppBundle:Curso:mostrarCursos, _locale: es }
+    requirements:
+        _locale: 'en|es'
+
+crear_encuesta:
+    path:  /admin/{_locale}/crear/encuesta/
+    defaults: { _controller: AppBundle:Encuesta:crearEncuesta, _locale: es }
+    requirements:
+        _locale: 'en|es'
+

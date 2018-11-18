@@ -10,4 +10,21 @@ namespace AppBundle\Repository;
  */
 class CursoRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function desactivarOtrosCursos($idCurso)	{
+
+		try {
+			$query = "UPDATE curso SET activo = 0 WHERE id <> $idCurso";
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			/*$res = $stmt->fetch();*/
+
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+	//	return $res;
+	}
 }

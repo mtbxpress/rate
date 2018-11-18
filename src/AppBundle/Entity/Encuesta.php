@@ -22,13 +22,13 @@ class Encuesta
      */
     private $id;
 
-    /**
+    /*
      * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=255, nullable=true)
-     */
-    private $descripcion;
 
+    private $descripcion;
+*/
     /**
      * Many encuestas have one titulacion. This is the owning side.
      * @ORM\ManyToOne(targetEntity="Titulacion", inversedBy="encuestas")
@@ -88,13 +88,13 @@ class Encuesta
         return $this->id;
     }
 
-    /**
+    /*
      * Set descripcion
      *
      * @param string $descripcion
      *
      * @return Encuesta
-     */
+     *
     public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
@@ -102,16 +102,16 @@ class Encuesta
         return $this;
     }
 
-    /**
+    /*
      * Get descripcion
      *
      * @return string
-     */
+     *
     public function getDescripcion()
     {
         return $this->descripcion;
     }
-
+*/
     /**
      * Set titulacion
      *
