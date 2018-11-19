@@ -19,7 +19,7 @@ class EncuestaType extends AbstractType
             ->add('evaluado',EntityType::class, array(
                 'class'=> 'AppBundle:Usuario',
                 'label'=> 'usuario.evaluado',
-                'placeholder' => 'Seleccionar' ,
+                'placeholder' => '' ,
                 //'choice_label'=> 'username'
                 'choice_label' => function ($usuario) {
                         $strOption=$usuario->getNombre();
@@ -35,13 +35,13 @@ class EncuestaType extends AbstractType
             ->add('titulacion',EntityType::class, array(
                 'class'=> 'AppBundle:Titulacion',
                 'label'=> 'Titulacion',
-                'placeholder' => 'Seleccionar' ,
+                'placeholder' => '' ,
                 'choice_label'=> 'nombre'
             ))
             ->add('usuario',EntityType::class, array(
                 'class'=> 'AppBundle:Usuario',
                 'label'=> 'usuario.usuario',
-                'placeholder' => 'Seleccionar' ,
+                'placeholder' => '' ,
                 'choice_label' => function ($usuario) {
                         $strOption=$usuario->getNombre();
               //          if ($usuario->getNombre()) {

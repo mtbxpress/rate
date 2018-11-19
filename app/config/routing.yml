@@ -158,3 +158,16 @@ crear_encuesta:
     requirements:
         _locale: 'en|es'
 
+eliminar_encuesta:
+    path:  /admin/{_locale}/eliminar/encuesta/{idEncuesta}
+    defaults: { _controller: AppBundle:Encuesta:eliminarEncuesta, _locale: es }
+    requirements:
+        _locale: 'en|es'
+        idEncuesta: \d+
+
+editar_encuesta:
+    path:  /admin/{_locale}/crear/encuesta/{idEncuesta}
+    defaults: { _controller: AppBundle:Encuesta:editarEncuesta, _locale: es }
+    requirements:
+        _locale: 'en|es'
+        idEncuesta: \d+

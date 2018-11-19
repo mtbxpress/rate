@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 18-11-2018 a las 20:52:43
+-- Tiempo de generación: 19-11-2018 a las 21:36:20
 -- Versión del servidor: 5.7.24-0ubuntu0.16.04.1
 -- Versión de PHP: 7.2.7-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `rate`
 --
-CREATE DATABASE IF NOT EXISTS `rate` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `rate`;
 
 -- --------------------------------------------------------
 
@@ -60,6 +58,7 @@ CREATE TABLE `curso_titulacion` (
 
 INSERT INTO `curso_titulacion` (`curso_id`, `titulacion_id`) VALUES
 (62, 1),
+(62, 22),
 (62, 23);
 
 -- --------------------------------------------------------
@@ -81,13 +80,19 @@ CREATE TABLE `encuesta` (
 --
 
 INSERT INTO `encuesta` (`id`, `titulacion_id`, `usuario_id`, `evaluado_id`, `naevaluado`) VALUES
-(24, 1, 1, 9, 'czcz czxczx'),
-(27, 1, 1, 15, 'HFGF dddddddddddddR'),
-(28, 1, 1, 15, 'HFGF dddddddddddddR'),
-(29, 1, 1, 15, 'HFGF dddddddddddddR'),
-(30, 23, 14, 9, 'czcz czxczx'),
-(31, 23, 1, 14, '323 2323'),
-(32, 23, 1, 14, '323 2323');
+(37, 1, 14, 11, 'sdsds dsds'),
+(40, 1, 9, 13, 'FDFF fdfdfd'),
+(41, 1, 13, 15, 'HFGF dddddddddddddR'),
+(42, 1, 13, 1, 'JJ Delgado Romero'),
+(43, 23, 13, 14, '323 2323'),
+(44, 23, 13, 9, 'czcz czxczx'),
+(45, 23, 13, 9, 'czcz czxczx'),
+(46, 22, 9, 11, 'sdsds dsds'),
+(47, 22, 9, 11, 'sdsds dsds'),
+(48, 1, 13, 9, 'czcz czxczx'),
+(49, 23, 11, 9, 'czcz czxczx'),
+(50, 23, 11, 9, 'czcz czxczx'),
+(51, 22, 13, 1, 'JJ Delgado Romero');
 
 -- --------------------------------------------------------
 
@@ -100,6 +105,13 @@ CREATE TABLE `encuesta_pregunta` (
   `encuesta_id` int(11) DEFAULT NULL,
   `pregunta_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `encuesta_pregunta`
+--
+
+INSERT INTO `encuesta_pregunta` (`id`, `encuesta_id`, `pregunta_id`) VALUES
+(5, 37, 30);
 
 -- --------------------------------------------------------
 
@@ -322,17 +334,17 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 --
 -- AUTO_INCREMENT de la tabla `encuesta`
 --
 ALTER TABLE `encuesta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 --
 -- AUTO_INCREMENT de la tabla `encuesta_pregunta`
 --
 ALTER TABLE `encuesta_pregunta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `post`
 --
