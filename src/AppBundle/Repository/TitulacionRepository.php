@@ -10,6 +10,25 @@ namespace AppBundle\Repository;
  */
 class TitulacionRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function existeTitulacion(/*$nombre,*/ $codigo)	{
+
+		try {
+			$query = "SELECT tit.*
+				from titulacion tit
+				WHERE /*tit.nombre = '$nombre' OR*/ tit.codigo = '$codigo'";
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+	    echo$query;die();
+		return $res;
+	}
+
 	public function mostarTitulacionesCursoActivo()	{
 
 		try {
@@ -29,6 +48,7 @@ class TitulacionRepository extends \Doctrine\ORM\EntityRepository
 	    }
 		return $res;
 	}
+
 
 	public function mostarTitulacionCursoActivo($idUsuario)	{
 

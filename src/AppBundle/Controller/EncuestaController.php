@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Encuesta;
 use AppBundle\Entity\Curso;
 use AppBundle\Entity\Pregunta;
+use AppBundle\Entity\EncuestaPregunta;
 
 class EncuestaController extends Controller
 {
@@ -27,16 +28,34 @@ class EncuestaController extends Controller
             	   if($encuesta->getEvaluado() != $encuesta->getUsuario() ){
 	            	   $na = $encuesta->getEvaluado()->getNombre().' '.$encuesta->getEvaluado()->getApellidos() ;
 	            	   $encuesta->setNaevaluado($na);
-	           //     $em = $this->getDoctrine()->getManager();
 	            	   $rep = $em->getRepository('AppBundle:Curso');
 	                $cursoActivo = $rep->findBy(	array('activo' => 1));
 	                $cursoActivo[0]->addTitulacione($encuesta->getTitulacion());
-	                $em->persist($encuesta);
-	                $em->flush();
+
+                             $rep = $em->getRepository('AppBundle:Pregunta');
+                             if($encuesta->getUsuario()->getRoles()[0] == 'ROLE_PROFE'){
+                                $tipoPregunta = 'PROFESOR_EXTERNO';
+                             }
+                             else if($encuesta->getUsuario()->getRoles()[0] == 'ROLE_PROFI'){
+                                $tipoPregunta = 'PROFESOR_INTERNO';
+                             }
+                             else if($encuesta->getUsuario()->getRoles()[0] == 'ROLE_ALU'){
+                                $tipoPregunta = 'ALUMNO';
+                             }
+                             else { $tipoPregunta = 'PROFESOR_INTERNO'; }
+                             $preguntas = $rep->findByTipo(['tipo' => $tipoPregunta ]);
+
+                             foreach ($preguntas as $key => $value) {
+                                $encPre = new EncuestaPregunta();
+                                $encPre->setEncuesta($encuesta);
+                                $encPre->setPregunta($value);
+                                $encuesta->addEncuestapregunta($encPre);
+                             }
+                            $em->persist($encuesta);
+                            $em->flush();
+
                 }
  	  else { $this->addFlash('success', 'Un usuario no puede evaluarse así mismo' ); }
-
-
             }
         }catch (Exception $ex) {
                 echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
@@ -75,7 +94,7 @@ class EncuestaController extends Controller
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
     }
-
+/*
 public function editarEncuestaAction(Request $request, $idEncuesta){
 
   try{
@@ -98,26 +117,6 @@ public function editarEncuestaAction(Request $request, $idEncuesta){
    }
     $rep = $m->getRepository('AppBundle:Encuesta');
     $encuestas = $rep->mostarEncuestasCursoActivo();
-  }
-  catch(Excepcition $ex){
-   echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
-  }
-  return $this->render('Encuesta/editar_encuesta.html.twig', array('form' => $form->createView(), 'encuestas'=>$encuestas) );
- }
-/*
- public function asignaPreguntasAEncuestaSegunUsuario($encuesta){
-
-  try{
-       $m = $this->getDoctrine()->getManager();
-
-
-    //   $service = $repository->findBy(array('name' => 'Registration'),array('name' => 'ASC'),1 ,0)[0];
-
-        if($encuesta->getUsuario()->getRoles()[] == "ROLE_PROFE"){
-            $preguntas = $m->getRepository('AppBundle:Pregunta')->find(array('tipo' => 'PROFESOR_EXTERNO'),array('orden' => 'ASC') ) ;
-        }
-        echo $encuesta->getUsuario()->getRoles() ;die();
-        echo count($encuestas); die("DDD");
   }
   catch(Excepcition $ex){
    echo 'Excepción capturada: ',  $ex->getMessage(), "\n";

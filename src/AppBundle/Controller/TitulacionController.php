@@ -21,13 +21,33 @@ class TitulacionController extends Controller
             if($form->isSubmitted() && $form->isValid()){
 
                 $em = $this->getDoctrine()->getManager();
+
+                $nombre= $form['nombre']->getData();
+                $codigo= $form['codigo']->getData();
+
+                $rep = $em->getRepository('AppBundle:Titulacion');
+               // $existe = $rep->existeTitulacion($nombre,$codigo);
+PROBAR SI EXISTE Y SI EXISTE EN CURSO TITULACION PARA ENVIAR MENSAJES FLASH
+                $existe = $rep->findByCodigo(array('codigo' => $codigo)/*,array('nombre' => $nombre)*/);
+                if(isset($existe[0])){
+                     $titulacion = $em->getRepository('AppBundle:Titulacion')->find($existe[0]->getId());
+                }
+
+                $rep = $em->getRepository('AppBundle:Curso');
+                $cursoActivo = $rep->findBy(array('activo' => true));
+                $titulacion->addCurso($cursoActivo[0]);
+                $cursoActivo[0]->addTitulacion($titulacion);
+
+                $em->persist($cursoActivo[0]);
                 $em->persist($titulacion);
                 $em->flush();
 
-                $this->addFlash('success', 'Registro creado correctamente' );
-                $titulacion = new Titulacion();
-                ///$form = $this->createForm(\AppBundle\Form\TitulacionType::class, $titulacion);
-                //return $this->render('Titulacion/crear_titulacion.html.twig', array('form' => $form->createView() ));
+                if(null != $titulacion->getId()) {
+                   $this->addFlash('success', 'Registro creado correctamente' );
+                }
+                else{
+                  $this->addFlash('danger', 'Registro no se ha eliminado correctamente' );
+                }
             }
         }catch (Exception $ex) {
                 echo 'Excepción capturada: ',  $ex->getMessage(), "\n";

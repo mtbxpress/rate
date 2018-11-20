@@ -115,13 +115,13 @@ class Curso
     }
 
     /**
-     * Add titulacione
+     * Add titulacion
      *
      * @param \AppBundle\Entity\Titulacion $titulacione
      *
      * @return Curso
      */
-    public function addTitulacione(\AppBundle\Entity\Titulacion $titulacione)
+    public function addTitulacion(\AppBundle\Entity\Titulacion $titulacione)
     {
         $existe = 0;
         foreach ($this->titulaciones as $tit) {
@@ -136,11 +136,11 @@ class Curso
     }
 
     /**
-     * Remove titulacione
+     * Remove titulacion
      *
      * @param \AppBundle\Entity\Titulacion $titulacione
      */
-    public function removeTitulacione(\AppBundle\Entity\Titulacion $titulacione)
+    public function removeTitulacion(\AppBundle\Entity\Titulacion $titulacione)
     {
         $this->titulaciones->removeElement($titulacione);
     }

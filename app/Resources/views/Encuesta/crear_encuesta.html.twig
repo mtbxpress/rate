@@ -147,13 +147,13 @@
                                   <i class="fa fa-plus fa-2x" style="color: orange;"></i>
                                 </button>
                               </a>
-
+{#
                               <a href="{{ path('editar_encuesta', {'idEncuesta': encuesta.id})}}">
                                 <button type="button" class="btn btn-link btn-xs editar" id="aa">
                                   <i class="fa fa-pencil fa-2x" style="color: green;"></i>
                                 </button>
                               </a>
-
+#}
                               <a href="#">
                                 <button type="button" class="btn btn-link btn-xs eliminar" data-toggle="modal" data-target="#myModal" id="{{ encuesta.id }}" name="{{ encuesta.nombre_usuario }} {{encuesta.apellidos}}  <b>{% trans %}Sobre{% endtrans %}</b>  {{ encuesta.naevaluado }}">
                                   <i class="fa fa-trash fa-2x" style="color: red;"></i>
