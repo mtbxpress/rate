@@ -31,6 +31,13 @@ class Pregunta
     /**
      * @var string
      *
+     * @ORM\Column(name="descripcionIngles", type="string", length=255)
+     */
+    private $descripcionIngles;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="tipo", type="string", columnDefinition="enum('PROFESOR_INTERNO', 'PROFESOR_EXTERNO',  'ALUMNO')" , length=20, nullable=false)
      */
     private $tipo;
@@ -185,8 +192,10 @@ class Pregunta
      */
     public function addEncuestapreguna(\AppBundle\Entity\EncuestaPregunta $encuestapreguna)
     {
-        $this->encuestapregunta[] = $encuestapreguna;
-
+ //       $this->encuestapregunta[] = $encuestapreguna;
+        if (!$this->encuestapregunta->contains($encuestapreguna)) {
+            $this->encuestapregunta[] = $encuestapreguna;
+        }
         return $this;
     }
 
@@ -219,8 +228,10 @@ class Pregunta
      */
     public function addEncuestapreguntum(\AppBundle\Entity\EncuestaPregunta $encuestapreguntum)
     {
-        $this->encuestapregunta[] = $encuestapreguntum;
-
+  //      $this->encuestapregunta[] = $encuestapreguntum;
+        if (!$this->encuestapregunta->contains($encuestapreguntum)) {
+            $this->encuestapregunta[] = $encuestapreguntum;
+        }
         return $this;
     }
 
@@ -232,5 +243,29 @@ class Pregunta
     public function removeEncuestapreguntum(\AppBundle\Entity\EncuestaPregunta $encuestapreguntum)
     {
         $this->encuestapregunta->removeElement($encuestapreguntum);
+    }
+
+    /**
+     * Set descripcionIngles
+     *
+     * @param string $descripcionIngles
+     *
+     * @return Pregunta
+     */
+    public function setDescripcionIngles($descripcionIngles)
+    {
+        $this->descripcionIngles = $descripcionIngles;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcionIngles
+     *
+     * @return string
+     */
+    public function getDescripcionIngles()
+    {
+        return $this->descripcionIngles;
     }
 }

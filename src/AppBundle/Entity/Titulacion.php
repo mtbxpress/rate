@@ -167,8 +167,10 @@ class Titulacion
      */
     public function addCurso(\AppBundle\Entity\Curso $curso)
     {
-        $this->cursos[] = $curso;
-
+        //$this->cursos[] = $curso;
+        if (!$this->cursos->contains($curso)) {
+            $this->cursos[] = $curso;
+        }
         return $this;
     }
 
@@ -201,8 +203,10 @@ class Titulacion
      */
     public function addEncuesta(\AppBundle\Entity\Encuesta $encuesta)
     {
-        $this->encuestas[] = $encuesta;
-
+  //      $this->encuestas[] = $encuesta;
+        if (!$this->encuestas->contains($encuesta)) {
+            $this->encuestas[] = $encuesta;
+        }
         return $this;
     }
 

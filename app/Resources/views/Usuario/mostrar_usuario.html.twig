@@ -78,7 +78,11 @@ function funcion(){
                         <li>
                           <i class="fa fa-briefcase user-profile-icon"></i> Titulacion
                         </li>
-
+{#
+                              {% if  usuario.codigor is defined %}
+                                    <p><strong>{{ usuario.codigo }}: </strong> {{ usuario.titulacion }} </p>
+                              {% endif %}
+  #}
                         <li class="m-top-xs">
                           <i class="fa fa-external-link user-profile-icon"></i>
                           <a href="http://www.kimlabs.com/profile/" target="_blank">Empresa</a>

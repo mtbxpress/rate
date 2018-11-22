@@ -27,7 +27,7 @@ class TitulacionController extends Controller
 
                 $rep = $em->getRepository('AppBundle:Titulacion');
                // $existe = $rep->existeTitulacion($nombre,$codigo);
-PROBAR SI EXISTE Y SI EXISTE EN CURSO TITULACION PARA ENVIAR MENSAJES FLASH
+//PROBAR SI EXISTE Y SI EXISTE EN CURSO TITULACION PARA ENVIAR MENSAJES FLASH
                 $existe = $rep->findByCodigo(array('codigo' => $codigo)/*,array('nombre' => $nombre)*/);
                 if(isset($existe[0])){
                      $titulacion = $em->getRepository('AppBundle:Titulacion')->find($existe[0]->getId());

@@ -24,6 +24,7 @@ class PreguntaType extends AbstractType
     {
         $builder
             ->add('descripcion', TextType::class,array('required' => true, 'label' => 'Pregunta'))
+            ->add('descripcionIngles', TextType::class,array('required' => true, 'label' => 'Pregunta en ingles'))
    //         ->add('tipo')
             ->add('orden', IntegerType::class,array('required' => true, 'label' => 'Orden'))
             ->add('reset',ResetType::class, array('attr' => array( 'class' => 'btn btn-success'  )))

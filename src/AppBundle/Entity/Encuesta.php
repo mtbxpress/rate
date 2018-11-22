@@ -197,8 +197,10 @@ class Encuesta
      */
     public function addEncuestapregunta(\AppBundle\Entity\EncuestaPregunta $encuestapregunta)
     {
-        $this->encuestapregunta[] = $encuestapregunta;
-
+    //    $this->encuestapregunta[] = $encuestapregunta;
+        if (!$this->encuestapregunta->contains($encuestapregunta)) {
+            $this->encuestapregunta[] = $encuestapregunta;
+        }
         return $this;
     }
 

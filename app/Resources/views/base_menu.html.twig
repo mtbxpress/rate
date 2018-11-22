@@ -47,12 +47,48 @@
 
 {% block classBody %}class="nav-md"{% endblock %}
 {% block body %}
+
 	<div class="container body">
 		<div class="main_container">
+
+
+
         {{ include('menu_lateral.html.twig') }}
         {{ include('barra_superior.html.twig') }}
 
 {% block pageContent %}
+
+    {% block mensajes %}
+
+          <script>//FUNCION QUE ELIMINARA A LOS 2,5 SEGUNDOS LOS MENSAJES CREADOS
+            function ocultarMensajes(){
+                setTimeout(function() {
+                  $('.alert').hide()
+                }, 4500);
+              }
+            </script>
+
+            {#  FORMAR GENERICA RECORRE TODOS LOS MENSAJES  #}
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                  <div class="row alert">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="alert alert-{{label}} alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                          <div class="text-center">
+                            <h4>
+                              {{ message|trans }}
+                            </h4>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+                {% endfor %}
+            <!-- /FIN BUCLE PARA MOSTRAR LOS MENSAJES  -->
+            {% endfor %}
+            <script> ocultarMensajes(); </script>
+
+    {% endblock %}
 
 {% endblock %}
 
@@ -66,9 +102,6 @@
            </footer>
            <!-- /footer content -->
    {% endblock %}
-
-
-
 
 			</div>
 		</div>

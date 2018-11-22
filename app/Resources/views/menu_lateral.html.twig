@@ -23,6 +23,9 @@
 
  <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="text-center">
+                    <a href="" class="site_title"><b>{% trans %}Anyo{% endtrans %} 2018/19</b></a>
+              </div>
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
@@ -112,7 +115,8 @@
                   </li>
                   <li><a> <i class="fa fa-users"></i> {% trans %}Usuarios{% endtrans %} <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li><a href="{{ path('mostrar_usuarios')}}">{% trans %}Mostrar usuarios{% endtrans %}<span class="fa fa-users"></span></a>
+                        <li><a href="{{ path('mostrar_usuarios', {'m':  1 }) }}">{% trans %}Mostrar usuarios curso{% endtrans %}<span class="fa fa-users"></span></a>
+                        <li><a href="{{ path('mostrar_usuarios', {'m':  2 }) }}">{% trans %}Mostrar usuarios encuestas{% endtrans %}<span class="fa fa-users"></span></a>
                         <li><a href="{{ path('crear_usuario')}}">{% trans %}Crear usuario{% endtrans %}<span class="fa fa-user-plus"></span></a>
                     {#    <li><a>Level One<span class="fa fa-list"></span></a>
                           <ul class="nav child_menu">

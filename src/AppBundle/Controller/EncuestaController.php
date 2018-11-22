@@ -30,7 +30,7 @@ class EncuestaController extends Controller
 	            	   $encuesta->setNaevaluado($na);
 	            	   $rep = $em->getRepository('AppBundle:Curso');
 	                $cursoActivo = $rep->findBy(	array('activo' => 1));
-	                $cursoActivo[0]->addTitulacione($encuesta->getTitulacion());
+	                $cursoActivo[0]->addTitulacion($encuesta->getTitulacion());
 
                              $rep = $em->getRepository('AppBundle:Pregunta');
                              if($encuesta->getUsuario()->getRoles()[0] == 'ROLE_PROFE'){

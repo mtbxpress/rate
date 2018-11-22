@@ -127,7 +127,10 @@ function funcion(){
                             <h3 class="brief text-center" style='color: black;' ><i>{{ usuario.username }}</i></h3>
                             <div class="left col-xs-7">
                               <h2>{{ usuario.nombre }}  {{ usuario.apellidos }}</h2>
-                              <p><strong>{{ usuario.codigo }}: </strong> {{ usuario.titulacion }} </p>
+                              {% if  usuario.codigor is defined %}
+                                    <p><strong>{{ usuario.codigo }}: </strong> {{ usuario.titulacion }} </p>
+                              {% endif %}
+
                               <ul class="list-unstyled">
                                 <li><i class="fa fa-envelope"></i> {#% trans %}Email{% endtrans %#}: {{ usuario.email }}</li>
                                 <li><i class="fa fa-phone"></i> {#% trans %}Telefono{% endtrans %#}: {{ usuario.telefono }}</li>
@@ -163,7 +166,7 @@ function funcion(){
                                 {% endif %}
                                {% endif %#}
 
-                               <button type="button" class="{{ claseBtn }}">{{ nomRol }} </button>
+                               <button type="button" class="{{ claseBtn }}">{{ nomRol|trans }} </button>
 
                               {#% if usuario.roles == 'ROLE_ADMIN' or usuario.roles[0]  == 'ROLE_ADMIN'  %}
                                   <button type="button" class="{{ claseBtn }}">Admin </button>

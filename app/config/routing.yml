@@ -24,10 +24,11 @@ inicio:
     defaults: { _controller: AppBundle:Inicio:inicio }
 
 mostrar_usuarios:
-    path: /admin/{_locale}/usuarios
+    path: /admin/{_locale}/usuarios/{m}
     defaults: { _controller: AppBundle:Usuario:mostrarUsuarios,_locale: es }
     requirements:
         _locale: 'en|es'
+        m: \d+
 
 mostrar_usuario:
     path:  /admin/{_locale}/mostrar/usuario/{idUsuario}

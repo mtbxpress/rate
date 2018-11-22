@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 use AppBundle\Form\UsuarioType;
 
-
+use AppBundle\Entity\Curso;
 use AppBundle\Entity\Encuesta;
 use AppBundle\Entity\Resultado;
 
@@ -33,12 +33,17 @@ class UsuarioController extends Controller
      * @return Response HTML
      */
 
-    public function mostrarUsuariosAction(Request $request){
+    public function mostrarUsuariosAction(Request $request, $m){
         try{
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Usuario');
             $usuarios = $rep->findAll();
-            $usuarios = $rep->mostarUsuariosCursoActivo();
+            if($m == 1){
+                $usuarios = $rep->mostarUsuariosConCursoActivo();
+            }
+            else if($m == 2){
+                $usuarios = $rep->mostarUsuariosConEncuestasEnCursoActivo();
+            }
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
@@ -51,17 +56,21 @@ class UsuarioController extends Controller
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Usuario');
      //       $usuario = $rep->find($idUsuario);
-            $usuario = $rep->mostarUsuarioCursoActivo($idUsuario);
+            $usuario = $rep->mostarUsuarioEncuestaConCursoActivo($idUsuario);
+            if(!isset($usuario) ){
+                $usuario = $rep->mostarUsuarioCursoActivo($idUsuario);
+            }
 
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
         if(!$usuario){
-            $usuarios = $rep->mostarUsuariosCursoActivo();
+            $usuarios = $rep->mostarUsuariosConCursoActivo();
            return $this->render('Usuario/mostrar_usuarios.html.twig', array('usuarios'=>$usuarios ));
         }
         return $this->render('Usuario/mostrar_usuario.html.twig', array('usuario'=>$usuario ));
     }
+
     public function crearUsuarioAction(Request $request, ValidatorInterface $validator, UserPasswordEncoderInterface $passwordEncoder){
         try{
 
@@ -72,14 +81,27 @@ class UsuarioController extends Controller
             $form->handleRequest($request);
 
             if($form->isSubmitted() && $form->isValid()){
+                $em = $this->getDoctrine()->getManager();
+
                 $roles = $request->request->get('roles');
                 $usuario->setRoles($roles);
                 $passNoCodificada = $usuario->getPassword();
                 //Codificamos la contraseña antes de guardarla
                 $password = $passwordEncoder->encodePassword($usuario, $usuario->getPassword());
                 $usuario->setPassword($password);
-                $em = $this->getDoctrine()->getManager();
+
+
+                $usuarioExiste =$em->getRepository('AppBundle:Usuario')->findByUsername($usuario->getusername());
+                if(isset($usuarioExiste[0])){
+                      $usuario = $em->getRepository('AppBundle:Usuario')->find($usuarioExiste[0]->getId());
+                }
+                $rep = $em->getRepository('AppBundle:Curso');
+                $cursoActivo = $rep->findBy(array('activo' => true));
+                $cursoActivo[0]->addUsuario($usuario);
+                $usuario->addCurso($cursoActivo[0]);
+
                 $em->persist($usuario);
+                $em->persist($cursoActivo[0]);
                 $em->flush();
 
              /*   $message = (new \Swift_Message("Envío de Password"))
@@ -133,7 +155,7 @@ class UsuarioController extends Controller
     $man->flush();
     $this->addFlash('success', 'Registro modificado correctamente' );
 
-    return $this->redirectToRoute('mostrar_usuarios');
+    return $this->redirectToRoute('mostrar_usuarios' , array('m' => 1));
    }
 
   }
@@ -160,7 +182,7 @@ class UsuarioController extends Controller
              else{
                 $this->addFlash('danger', 'No puede eliminarse así mismo' );
              }
-            return $this->redirectToRoute('mostrar_usuarios');
+            return $this->redirectToRoute('mostrar_usuarios', array('m' => 1));
         }
         catch (Exception $ex) {
             $this->addFlash('danger', 'Registro no se ha eliminado correctamente' );
@@ -177,7 +199,7 @@ class UsuarioController extends Controller
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Usuario');
             $usuarios = $rep->buscaUsarioLetra($letra);
-
+//echo count($usuarios); die("ñlkhf");
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }

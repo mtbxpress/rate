@@ -52,6 +52,13 @@ class Curso
      */
     private $titulaciones;
 
+    /**
+     * Many cursos have Many usuarios.
+     * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="usuarios")
+     * @ORM\JoinTable(name="curso_usuario")
+     */
+    private $usuarios;
+
     public function __construct() {
         $this->titulaciones = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -123,7 +130,12 @@ class Curso
      */
     public function addTitulacion(\AppBundle\Entity\Titulacion $titulacione)
     {
-        $existe = 0;
+        if (!$this->titulaciones->contains($titulacione)) {
+            $this->titulaciones[] = $titulacione;
+           // $titulacione->setCliente($this);
+        }
+
+/*        $existe = 0;
         foreach ($this->titulaciones as $tit) {
             if ($tit->getId() == $titulacione->getId()) {
                 $existe = 1;
@@ -131,7 +143,7 @@ class Curso
         }
         if(!$existe){
             $this->titulaciones[] = $titulacione;
-        }
+        }*/
         return $this;
     }
 
@@ -153,5 +165,70 @@ class Curso
     public function getTitulaciones()
     {
         return $this->titulaciones;
+    }
+
+    /**
+     * Add titulacione
+     *
+     * @param \AppBundle\Entity\Titulacion $titulacione
+     *
+     * @return Curso
+     */
+    public function addTitulacione(\AppBundle\Entity\Titulacion $titulacione)
+    {
+        $this->titulaciones[] = $titulacione;
+
+        return $this;
+    }
+
+    /**
+     * Remove titulacione
+     *
+     * @param \AppBundle\Entity\Titulacion $titulacione
+     */
+    public function removeTitulacione(\AppBundle\Entity\Titulacion $titulacione)
+    {
+        $this->titulaciones->removeElement($titulacione);
+    }
+
+    /**
+     * Add usuario
+     *
+     * @param \AppBundle\Entity\Usuario $usuario
+     *
+     * @return Curso
+     */
+    public function addUsuario(\AppBundle\Entity\Usuario $usuario)
+    {
+    /*    $this->usuarios[] = $usuario;
+
+        return $this;*/
+        if (!$this->usuarios->contains($usuario)) {
+            $this->usuarios[] = $usuario;
+            //$usuario->setCurso($this);
+        }
+
+        return $this;
+
+    }
+
+    /**
+     * Remove usuario
+     *
+     * @param \AppBundle\Entity\Usuario $usuario
+     */
+    public function removeUsuario(\AppBundle\Entity\Usuario $usuario)
+    {
+        $this->usuarios->removeElement($usuario);
+    }
+
+    /**
+     * Get usuarios
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsuarios()
+    {
+        return $this->usuarios;
     }
 }

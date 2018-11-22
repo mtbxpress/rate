@@ -90,6 +90,12 @@ class Usuario implements UserInterface
      */
     private $telefono;
 
+    /**
+     * Many titulaciones have Many cursos.
+     * @ORM\ManyToMany(targetEntity="Curso", mappedBy="usuarios")
+     */
+    private $cursos;
+
     /* COMENTADO
      * Many Users have Many Titulaciones.
      * @ORM\ManyToMany(targetEntity="Titulacion", inversedBy="usuarios")

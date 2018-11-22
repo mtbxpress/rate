@@ -65,6 +65,11 @@
                         <span class="text-danger">{{ form_errors(form.descripcion)}}</span>
                       </div>
                       <div class="form-group">
+                        {{ form_label(form.descripcionIngles)}}
+                         {{ form_widget(form.descripcionIngles, { 'attr': {'class': 'form-control'} }) }}
+                        <span class="text-danger">{{ form_errors(form.descripcionIngles)}}</span>
+                      </div>
+                      <div class="form-group">
                           <label for="tipo">{% trans %}Tipo de pregunta{% endtrans %}</label>
                                     <select name="tipo"  class="form-control select2" data-placeholder="Seleccione un tipo" style="width: 100%;" required="">
                                     <option value="{{ tipo }}">{{ tipo }}</option>
@@ -128,6 +133,7 @@
                 <thead>
                 <tr>
                   <th>{% trans %}Pregunta{% endtrans %}</th>
+                  <th>{% trans %}Ingles{% endtrans %}</th>
                   <th>{% trans %}Tipo{% endtrans %}</th>
                   <th>{% trans %}Orden{% endtrans %}</th>
                   <th>{% trans %}Opciones{% endtrans %}</th>
@@ -138,6 +144,7 @@
 
                   <tr>
                         <td>{{ pregunta.descripcion }}</td>
+                        <td>{{ pregunta.descripcionIngles }}</td>
                         <td>{{ pregunta.tipo }}</td>
                         <td>{{ pregunta.orden }}</td>
                 <!--<td>
@@ -181,6 +188,7 @@
                 <tfoot>
                 <tr>
                   <th>{% trans %}Pregunta{% endtrans %}</th>
+                  <th>{% trans %}Ingles{% endtrans %}</th>
                   <th>{% trans %}Tipo{% endtrans %}</th>
                   <th>{% trans %}Orden{% endtrans %}</th>
                   <th>{% trans %}Opciones{% endtrans %}</th>

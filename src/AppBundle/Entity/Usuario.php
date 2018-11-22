@@ -90,6 +90,12 @@ class Usuario implements UserInterface
      */
     private $telefono;
 
+    /**
+     * Many titulaciones have Many cursos.
+     * @ORM\ManyToMany(targetEntity="Curso", mappedBy="usuarios")
+     */
+    private $cursos;
+
     /* COMENTADO
      * Many Users have Many Titulaciones.
      * @ORM\ManyToMany(targetEntity="Titulacion", inversedBy="usuarios")
@@ -420,8 +426,11 @@ class Usuario implements UserInterface
      */
     public function addEncuesta(\AppBundle\Entity\Encuesta $encuesta)
     {
-        $this->encuestas[] = $encuesta;
-
+     //   $this->encuestas[] = $encuesta;
+        if (!$this->encuestas->contains($encuesta)) {
+            $this->encuestas[] = $encuesta;
+           // $titulacione->setCliente($this);
+        }
         return $this;
     }
 
@@ -443,5 +452,40 @@ class Usuario implements UserInterface
     public function getEncuestas()
     {
         return $this->encuestas;
+    }
+
+    /**
+     * Add curso
+     *
+     * @param \AppBundle\Entity\Curso $curso
+     *
+     * @return Usuario
+     */
+    public function addCurso(\AppBundle\Entity\Curso $curso)
+    {
+        if (!$this->cursos->contains($curso)) {
+            $this->cursos[] = $curso;
+        }
+        return $this;
+    }
+
+    /**
+     * Remove curso
+     *
+     * @param \AppBundle\Entity\Curso $curso
+     */
+    public function removeCurso(\AppBundle\Entity\Curso $curso)
+    {
+        $this->cursos->removeElement($curso);
+    }
+
+    /**
+     * Get cursos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCursos()
+    {
+        return $this->cursos;
     }
 }

@@ -3,22 +3,14 @@
 
 {% block title %}{% trans %}Crear usuario{% endtrans %}{% endblock %}
 
-
-{#% block cabecera %}{% trans %}Crear usuario {% endtrans %}<small>{% trans %}Inserte los datos{% endtrans %}:</small>  {% endblock %#}
-{#% block breadcrumb %}
-      <ol class="breadcrumb">
-        <li><a href="{{ path('inicio')}}"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="{{ path('mostrar_usuarios')}}"><i class="fa fa-user"></i> {% trans %}Usuarios{% endtrans %}</a> </li>
-        <li class="active"><i class="fa fa-plus"></i> {% trans %}Crear{% endtrans %} </li>
-      </ol>
-{% endblock  %#}
-
-
 {% block pageContent %}
+{#{ parent() }#}
+
 
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
+
             <div class="page-title">
               <div class="title_left">
                 <h3>{% trans %}Crear nuevo usuario{% endtrans %}</h3>
@@ -41,10 +33,16 @@
             </div>
             <div class="clearfix"></div>
 
+              {% block mensajes %}
+              {{ parent() }}
+              {% endblock %}
+
+
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
+
                     <h2>{% trans %}Formulario {% endtrans %} <small>{% trans %}Nuevo usuario{% endtrans %}</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -65,8 +63,8 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-<!-- <form class="form-horizontal form-label-left" novalidate>  -->
-					{#{ form_start(form, { 'enctype':"multipart/form-data",  'attr' : {'role' : 'form', 'class': 'form-label-left',novalidate: 'novalidate'} }) }#}
+
+
 					{{ form_start(form, { 'enctype':"multipart/form-data",  'attr' : {'role' : 'form'} }) }}
 
 						<div class="form-group">
