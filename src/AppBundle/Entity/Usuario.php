@@ -91,7 +91,7 @@ class Usuario implements UserInterface
     private $telefono;
 
     /**
-     * Many titulaciones have Many cursos.
+     * Many usuarios have Many cursos.
      * @ORM\ManyToMany(targetEntity="Curso", mappedBy="usuarios")
      */
     private $cursos;

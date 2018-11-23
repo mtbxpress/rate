@@ -7,7 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Pregunta;
-
+use AppBundle\Entity\EncuestaPregunta;
 class PreguntaController extends Controller
 {
 
@@ -26,13 +26,31 @@ class PreguntaController extends Controller
                 $pregunta->setTipo($tipo);
                 $em->persist($pregunta);
                 $em->flush();
-
+                if($tipo == 'ALUMNO'){
+                  $role = 'ROLE_ALU';
+                }
+                else if($tipo == 'PROFESOR_INTERNO'){
+                   $role = 'ROLE_PROFI';
+                }
+                else if($tipo == 'PROFESOR_EXTERNO'){
+                   $role = 'ROLE_PROFE';
+                }
+                //Asigno a todas las encuestas segun el tipo, la nueva pregunta
+          //       $em = $this->getDoctrine()->getManager();
+             //    $encuestas = $em->getRepository('AppBundle:Encuesta')->obtenerEncuestasSegunRol($role);
+                  $encuestas = $em->getRepository('AppBundle:Encuesta')->findAll();
+                 if($encuestas){
+                     foreach ($encuestas as $key => $value) {
+                          if($value->getEvaluado()->getRoles()[0]  == $role  ){
+                                $encuestapregunta =  new EncuestaPregunta();
+                                 $encuestapregunta->setEncuesta($value);
+                                 $encuestapregunta->setPregunta($pregunta);
+                                 $em->persist($encuestapregunta);
+                                 $em->flush();
+                         }
+                     }
+                }
                 $this->addFlash('success', 'Registro creado correctamente' );
-                $pregunta = new Pregunta();
-                $form = $this->createForm(\AppBundle\Form\PreguntaType::class, $pregunta);
-              //  $rep = $em->getRepository('AppBundle:Pregunta');
-  //              $preguntas = $rep->findAll();
-    //            return $this->render('Pregunta/crear_pregunta.html.twig', array('form' => $form->createView(), 'preguntas'=>$preguntas ));
             }
         }catch (Exception $ex) {
                 echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
@@ -48,7 +66,7 @@ public function editarPreguntaAction(Request $request, $idPregunta){
   try{
    $m = $this->getDoctrine()->getManager();
    $pregunta = $m->getRepository('AppBundle:Pregunta')->find($idPregunta);
-
+   $tipo = $pregunta->getTipo();
    $form = $this->createForm(\AppBundle\Form\PreguntaType::class, $pregunta);
    $form->handleRequest($request);
 
@@ -71,7 +89,7 @@ public function editarPreguntaAction(Request $request, $idPregunta){
   }
     $rep = $m->getRepository('AppBundle:Pregunta');
    $preguntas = $rep->findAll();
-  return $this->render('Pregunta/editar_pregunta.html.twig', array('form' => $form->createView(), 'preguntas'=>$preguntas, 'tipo' => $pregunta->getTipo()) );
+  return $this->render('Pregunta/editar_pregunta.html.twig', array('form' => $form->createView(), 'preguntas'=>$preguntas, 'tipo' => $pregunta->getTipo()  ) );
  }
 
     public function mostrarPreguntasAction(Request $request){
@@ -97,9 +115,17 @@ public function editarPreguntaAction(Request $request, $idPregunta){
 //            $idLogado = $this->getuser()->getId();
              if( in_array("ROLE_ADMIN", $this->getuser()->getRoles(), FALSE) ){
 
+                $m = $this->getDoctrine()->getManager();
+               $encuestapreguntas = $m->getRepository('AppBundle:EncuestaPregunta')->findByPregunta($idPregunta);
+
+               if($encuestapreguntas){
+                    foreach ($encuestapreguntas as $key => $encpreg) {
+                        $m->remove($encpreg);
+                        $m->flush();
+                     }
+              }
                 $m->remove($pregunta);
                 $m->flush();
-                $this->addFlash('success', 'Registro eliminado correctamente' );
              }
 
         //     $_SERVER['PHP_SELF']

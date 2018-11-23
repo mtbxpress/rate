@@ -24,9 +24,9 @@
  <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="text-center">
-                    <a href="" class="site_title"><b>{% trans %}Anyo{% endtrans %} 2018/19</b></a>
+                    <a href="" class="site_title"><b>{% trans %}Anyo{% endtrans %} {{ app.session.get('cursoActivo') }}</b></a>
               </div>
-              <div class="menu_section">
+             <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
@@ -81,6 +81,14 @@
                     </ul>
                   </li>
                   #}
+                </ul>
+              </div>
+
+
+              <div class="menu_section">
+                <h3>{% trans %}Encuestas{% endtrans %}</h3>
+                <ul class="nav side-menu">
+                  <li><a href="{{ path('mostrar_encuestas_signadas') }}"><i class="fa fa-home"></i> {% trans %}Mostrar{% endtrans %} {% trans %}Encuestas{% endtrans %}<span class="fa fa-chevron-down"></span></a>
                 </ul>
               </div>
               <div class="menu_section">

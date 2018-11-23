@@ -94,6 +94,52 @@ class EncuestaController extends Controller
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
     }
+    public function mostrarEncuestasAsignadasAction(){
+
+        try{
+            $usuario = $this->getUser();
+            $em = $this->getDoctrine()->getManager();
+            $rep = $em->getRepository('AppBundle:Encuesta');
+            $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
+           if(count( $encuestasAsignadas) > 0){
+                return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
+           }
+           else{
+                  return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('sinEncuestas'=>"sinEncuestas" ));
+           }
+
+        } catch (Exception $ex) {
+            echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
+        }
+            return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
+    }
+
+    public function realizarEncuestaAction($idEncuesta){
+
+        try{
+
+            $usuario = $this->getUser();
+            $em = $this->getDoctrine()->getManager();
+            $rep = $em->getRepository('AppBundle:Encuesta');
+            $encuesta = $rep->find($idEncuesta);
+
+            if($encuesta){
+                if($encuesta->getUsuario()->getId() == $usuario->getId()){
+#POR HACER
+                }
+            }
+            $em = $this->getDoctrine()->getManager();
+            $rep = $em->getRepository('AppBundle:Encuesta');
+            $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
+
+        } catch (Exception $ex) {
+            echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
+        }
+            return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
+
+
+    }
+
 /*
 public function editarEncuestaAction(Request $request, $idEncuesta){
 

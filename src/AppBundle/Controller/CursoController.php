@@ -25,6 +25,8 @@ class CursoController extends Controller
                 $em->flush();
                 if($curso->getActivo()){
                     $rep->desactivarOtrosCursos($curso->getId());
+                    $session = $request->getSession();
+                    $session->set('cursoActivo', $curso->getDescripcion());
                 }
 
                 $this->addFlash('success', 'Registro creado correctamente' );
@@ -56,6 +58,8 @@ public function editarCursoAction(Request $request, $idCurso){
         $man->flush();
         if($curso->getActivo()){
              $rep->desactivarOtrosCursos($curso->getId());
+              $session = $request->getSession();
+              $session->set('cursoActivo', $curso->getDescripcion());
         }
         $this->addFlash('success', 'Registro modificado correctamente' );
 
@@ -79,10 +83,14 @@ public function editarCursoAction(Request $request, $idCurso){
             }
 //            $idLogado = $this->getuser()->getId();
              if( in_array("ROLE_ADMIN", $this->getuser()->getRoles(), FALSE) ){
-
-                $m->remove($curso);
-                $m->flush();
-                $this->addFlash('success', 'Registro eliminado correctamente' );
+                if($curso->getActivo()){
+                    $this->addFlash('success', 'No puede eliminar el curso activo' );
+                }
+                else{
+                  $m->remove($curso);
+                  $m->flush();
+                  $this->addFlash('success', 'Registro eliminado correctamente' );
+                }
              }
 
         //     $_SERVER['PHP_SELF']

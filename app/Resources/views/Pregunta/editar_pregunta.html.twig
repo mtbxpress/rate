@@ -71,7 +71,7 @@
                       </div>
                       <div class="form-group">
                           <label for="tipo">{% trans %}Tipo de pregunta{% endtrans %}</label>
-                                    <select name="tipo"  class="form-control select2" data-placeholder="Seleccione un tipo" style="width: 100%;" required="">
+                                    <select name="tipo"  class="form-control select2" data-placeholder="Seleccione un tipo" style="width: 100%;" required="" readonly disabled="disabled">
                                     <option value="{{ tipo }}">{{ tipo }}</option>
                                     <option value="ALUMNO">ALUMNO</option>
                                     <option value="PROFESOR_INTERNO">PROFESOR_INTERNO</option>

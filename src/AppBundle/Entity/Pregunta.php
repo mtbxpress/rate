@@ -57,6 +57,7 @@ class Pregunta
     */
 
 
+
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\EncuestaPregunta", mappedBy="pregunta", cascade={"persist"})
      */

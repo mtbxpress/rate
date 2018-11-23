@@ -10,4 +10,5 @@ namespace AppBundle\Repository;
  */
 class PreguntaRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }

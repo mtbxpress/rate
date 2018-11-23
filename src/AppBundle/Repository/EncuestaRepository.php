@@ -32,4 +32,25 @@ class EncuestaRepository extends \Doctrine\ORM\EntityRepository
 	    }
 		return $res;
 	}
+
+	public function obtenerEncuestasSegunRol($rol)	{
+
+		try {
+			$query = "SELECT enc.id
+				from encuesta enc
+                        			INNER JOIN usuario usu on usu.id = enc.usuario_id
+                        			WHERE  usu.roles = '$rol'";
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+		return $res;
+	}
+
+
 }

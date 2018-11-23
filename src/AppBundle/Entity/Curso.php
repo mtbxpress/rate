@@ -54,7 +54,7 @@ class Curso
 
     /**
      * Many cursos have Many usuarios.
-     * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="usuarios")
+     * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="cursos")
      * @ORM\JoinTable(name="curso_usuario")
      */
     private $usuarios;
