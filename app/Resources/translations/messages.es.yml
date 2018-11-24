@@ -74,3 +74,9 @@ Estado: Estado
 Completar: Completar
 Rol: Rol
 Sin encuestas: No tiene ninguna encuesta asignada
+P: P
+1est: Muy poco
+2est: Poco
+3est: Normal
+4est: Bastante
+5est: Mucho

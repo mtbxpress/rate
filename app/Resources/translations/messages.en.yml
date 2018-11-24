@@ -31,7 +31,7 @@ Crear: Create
 Editar: Edit
 Eliminar: Delete
 Mostrar: Show
-Encuesta: Surveys
+Encuesta: Survey
 Nombre Usuario: User Name
 Password: Password
 Nombre usuario: User name
@@ -74,3 +74,12 @@ Estado: Status
 Completar: To do
 Rol: Role
 Sin encuestas: No assigned surveys
+P: Q
+1est: Very little
+2est: Little bit
+3est: Normal
+4est: Quite
+5est: Much
+
+
+

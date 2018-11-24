@@ -1,0 +1,238 @@
+{% extends 'base_menu.html.twig' %}
+
+
+{% block title %}{% trans %}Crear{% endtrans %} {% trans %}Encuesta{% endtrans %}{% endblock %}
+{% block stylesheets %}
+  <script>
+  /*  $('#wizard').smartWizard({
+  // Properties
+    selected: 0,  // Selected Step, 0 = first step
+    keyNavigation: true, // Enable/Disable key navigation(left and right keys are used if enabled)
+    enableAllSteps: false,  // Enable/Disable all steps on first load
+    transitionEffect: 'fade', // Effect on navigation, none/fade/slide/slideleft
+    contentURL:null, // specifying content url enables ajax content loading
+    contentURLData:null, // override ajax query parameters
+    contentCache:true, // cache step contents, if false content is fetched always from ajax url
+    cycleSteps: false, // cycle step navigation
+    enableFinishButton: false, // makes finish button enabled always
+  hideButtonsOnDisabled: false, // when the previous/next/finish buttons are disabled, hide them instead
+    errorSteps:[],    // array of step numbers to highlighting as error steps
+    labelNext:'Next', // label for Next button
+    labelPrevious:'Previous', // label for Previous button
+    labelFinish:'Finish',  // label for Finish button
+    noForwardJumping:false,
+    ajaxType: 'POST',
+  // Events
+    onLeaveStep: null, // triggers when leaving a step
+    onShowStep: null,  // triggers when showing a step
+    onFinish: null,  // triggers when Finish button is clicked
+    buttonOrder: ['finish', 'next', 'prev']  // button order, to hide a button remove it from the list
+});*/
+  </script>
+
+<style type="text/css">
+  .rating {
+    margin: auto;
+    width: 50%;
+    padding: 8px;
+  /*  border: 3px solid green;*/
+    max-width: 160px;
+}
+
+/* :not(:checked) is a filter, so that browsers that don’t support :checked don’t
+   follow these rules. Every browser that supports :checked also supports :not(), so
+   it doesn’t make the test unnecessarily selective */
+.rating:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+    clip:rect(0,0,0,0);
+}
+
+.rating:not(:checked) > label {
+    float:right;
+    width:1em;
+    padding:0 .1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:200%;
+    line-height:1.2;
+    color:#ddd;
+    text-shadow:1px 1px #bbb, 2px 2px #666, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating:not(:checked) > label:before {
+    content: '★ ';
+}
+
+.rating > input:checked ~ label {
+    color: #f70;
+    text-shadow:1px 1px #c60, 2px 2px #940, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: gold;
+    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #ea0;
+    text-shadow:1px 1px goldenrod, 2px 2px #B57340, .1em .1em .2em rgba(0,0,0,.5);
+}
+
+.rating > label:active {
+    position:relative;
+    top:2px;
+    left:2px;
+}
+.centro{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+</style>{# border: 3px solid green;#}
+{% endblock %}
+{% block pageContent %}
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>{% trans %}Completar{% endtrans %} {% trans %}Encuesta{% endtrans %}</h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                              <button class="btn btn-default" type="button">Go!</button>
+                          </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="row">
+
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>{% trans %}Formulario{% endtrans %} <small>{% trans %}Completar{% endtrans %} {% trans %}Encuesta{% endtrans %}</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+      {% set urlActual =  path(app.request.attributes.get('_route'),  app.request.attributes.get('_route_params'))  %}
+      {% set urlActual = urlActual|split('/') %}
+
+            {#        <p>This is a basic form wizard example that inherits the colors from the selected scheme.</p>  #}
+                    <div id="wizard" class="form_wizard wizard_horizontal">
+                      <ul class="wizard_steps">
+                        {% if encuPregs is defined %}
+                          {% set cnt = 0 %}
+                          {% for encuPreg in encuPregs %}
+                           <li>
+                                  {% set cnt  = cnt + 1 %}
+                                       <a href="#step-{{ cnt }}">
+                                        <span class="step_no">{{ cnt }}</span>
+                                        <span class="step_descr">
+                                                          {% trans %}P{% endtrans %}{{ cnt }}<br />
+                                                          <small>Step {{ cnt }} description</small>
+                                        </span>
+                                      </a>
+                           </li>
+                        {% endfor %}
+                      {% endif %}
+                      </ul>
+                      {% if encuPregs is defined %}
+                         {% set cnt = 0 %}
+                          <form action="index.html" method="post" id="form1">
+                          {% for encuPreg in encuPregs %}
+                            {% set cnt  = cnt + 1 %}
+                                  <div id="step-{{cnt}}">
+                                      <div class="form-group text-center">
+                                        <div class="centro">
+                                          <h1>
+                                        {% if urlActual[2] == 'es' %}
+                                            {{ encuPreg.pregunta.descripcion}}
+                                        {% elseif urlActual[2] == 'en' %}
+                                          {{ encuPreg.pregunta.descripcionIngles}}
+                                        {% endif %}
+                                          </h1>
+
+                                        <fieldset class="rating centro">
+                                            <input type="radio" id="p{{encuPreg.pregunta.id}}5" name="p{{encuPreg.pregunta.id}}" value="5" /><label for="p{{encuPreg.pregunta.id}}5" title="{% trans %}5est{% endtrans %}">5 stars</label>
+                                            <input type="radio" id="p{{encuPreg.pregunta.id}}4" name="p{{encuPreg.pregunta.id}}" value="4" /><label for="p{{encuPreg.pregunta.id}}4" title="{% trans %}4est{% endtrans %}">4 stars</label>
+                                            <input type="radio" id="p{{encuPreg.pregunta.id}}3" name="p{{encuPreg.pregunta.id}}" value="3" /><label for="p{{encuPreg.pregunta.id}}3" title="{% trans %}3est{% endtrans %}">3 stars</label>
+                                            <input type="radio" id="p{{encuPreg.pregunta.id}}2" name="p{{encuPreg.pregunta.id}}" value="2" /><label for="p{{encuPreg.pregunta.id}}2" title="{% trans %}2est{% endtrans %}">2 stars</label>
+                                            <input type="radio" id="p{{encuPreg.pregunta.id}}1" name="p{{encuPreg.pregunta.id}}" value="1" /><label for="p{{encuPreg.pregunta.id}}1" title="{% trans %}1est{% endtrans %}">1 star</label>
+                                        </fieldset>
+                                        </div>
+                                      </div>
+                                      <br>
+                                  </div>
+                                {% endfor %}
+                                <button type="submit" form="form1" value="Submit">Submit</button>
+
+                              </form>
+                          {% endif %}
+
+                    </div> {# Fin formulario #}
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+  <script type="text/javascript">
+
+  $(document).ready(function() {
+      $( ".buttonFinish" ).click(function() {
+        $( "#form1" ).submit();
+      });
+  });
+
+  $('#form1').submit(function() {
+    if ( /*$('input:checkbox', this).is(':checked') &&  */$('input:radio', this).is(':checked')   ) {
+        // everything's fine...
+    } else {
+        alert('Please select something!');
+        return false;
+    }
+});
+</script>
+
+{% endblock %}

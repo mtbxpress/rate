@@ -125,10 +125,12 @@ class EncuestaController extends Controller
 
             if($encuesta){
                 if($encuesta->getUsuario()->getId() == $usuario->getId()){
-#POR HACER
+                    $encuPregs = $encuesta->getEncuestapregunta();
+                    return $this->render('Encuesta/realizar_encuesta.html.twig', array('encuPregs'=>$encuPregs ));
                 }
+            }else{
+                $this->addFlash('danger', 'No tiene encuestas asignadas' );
             }
-            $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Encuesta');
             $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
 
