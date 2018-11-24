@@ -150,7 +150,7 @@
       {% set urlActual = urlActual|split('/') %}
 
             {#        <p>This is a basic form wizard example that inherits the colors from the selected scheme.</p>  #}
-                    <div id="wizard" class="form_wizard wizard_horizontal">
+                    <div id="wizard" class="form_wizard wizard_horizontal visible-lg">
                       <ul class="wizard_steps">
                         {% if encuPregs is defined %}
                           {% set cnt = 0 %}
@@ -161,7 +161,7 @@
                                         <span class="step_no">{{ cnt }}</span>
                                         <span class="step_descr">
                                                           {% trans %}P{% endtrans %}{{ cnt }}<br />
-                                                          <small>Step {{ cnt }} description</small>
+                                                      {#    <small>Step {{ cnt }} description</small>  #}
                                         </span>
                                       </a>
                            </li>
@@ -170,8 +170,9 @@
                       </ul>
                       {% if encuPregs is defined %}
                          {% set cnt = 0 %}
-                          <form action="index.html" method="post" id="form1">
+                          <form action="{{ path('insertar_datos_encuesta', {'idEncuesta': encuPregs[0].encuesta.id})}}" method="post" id="form1" name="form1">
                           {% for encuPreg in encuPregs %}
+
                             {% set cnt  = cnt + 1 %}
                                   <div id="step-{{cnt}}">
                                       <div class="form-group text-center">
@@ -185,23 +186,93 @@
                                           </h1>
 
                                         <fieldset class="rating centro">
-                                            <input type="radio" id="p{{encuPreg.pregunta.id}}5" name="p{{encuPreg.pregunta.id}}" value="5" /><label for="p{{encuPreg.pregunta.id}}5" title="{% trans %}5est{% endtrans %}">5 stars</label>
-                                            <input type="radio" id="p{{encuPreg.pregunta.id}}4" name="p{{encuPreg.pregunta.id}}" value="4" /><label for="p{{encuPreg.pregunta.id}}4" title="{% trans %}4est{% endtrans %}">4 stars</label>
-                                            <input type="radio" id="p{{encuPreg.pregunta.id}}3" name="p{{encuPreg.pregunta.id}}" value="3" /><label for="p{{encuPreg.pregunta.id}}3" title="{% trans %}3est{% endtrans %}">3 stars</label>
-                                            <input type="radio" id="p{{encuPreg.pregunta.id}}2" name="p{{encuPreg.pregunta.id}}" value="2" /><label for="p{{encuPreg.pregunta.id}}2" title="{% trans %}2est{% endtrans %}">2 stars</label>
-                                            <input type="radio" id="p{{encuPreg.pregunta.id}}1" name="p{{encuPreg.pregunta.id}}" value="1" /><label for="p{{encuPreg.pregunta.id}}1" title="{% trans %}1est{% endtrans %}">1 star</label>
+                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.pregunta.id}}5" name="p{{encuPreg.pregunta.id}}" value="5" />
+                                                  <label for="p{{encuPreg.pregunta.id}}5" title="{% trans %}5est{% endtrans %}">5 stars</label>
+                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.pregunta.id}}4" name="p{{encuPreg.pregunta.id}}" value="4" />
+                                                  <label for="p{{encuPreg.pregunta.id}}4" title="{% trans %}4est{% endtrans %}">4 stars</label>
+                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.pregunta.id}}3" name="p{{encuPreg.pregunta.id}}" value="3" />
+                                                  <label for="p{{encuPreg.pregunta.id}}3" title="{% trans %}3est{% endtrans %}">3 stars</label>
+                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.pregunta.id}}2" name="p{{encuPreg.pregunta.id}}" value="2" />
+                                                  <label for="p{{encuPreg.pregunta.id}}2" title="{% trans %}2est{% endtrans %}">2 stars</label>
+                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.pregunta.id}}1" name="p{{cnt}}" value="1"  required="" />
+                                                  <label for="p{{encuPreg.pregunta.id}}1" title="{% trans %}1est{% endtrans %}">1 star</label>
                                         </fieldset>
                                         </div>
                                       </div>
                                       <br>
                                   </div>
                                 {% endfor %}
-                                <button type="submit" form="form1" value="Submit">Submit</button>
+
+                        {#        <button type="submit" form="form1" value="Submit">Submit</button>#}
 
                               </form>
-                          {% endif %}
 
+                          {% endif %}
                     </div> {# Fin formulario #}
+
+
+
+
+                    <!-- Tabs -->
+                    <div id="wizard_verticle" class="form_wizard wizard_verticle visible-md visible-sm visible-xs">
+                    <h2>{% trans %}Formulario{% endtrans %} <small>{% trans %}Completar{% endtrans %} {% trans %}Encuesta{% endtrans %}</small></h2>
+                      <ul class="list-unstyled wizard_steps">
+                        {% if encuPregs is defined %}
+                          {% set cnt = 0 %}
+                          {% for encuPreg in encuPregs %}
+                            {% set cnt  = cnt + 1 %}
+                        <li>
+                          <a href="#step-{{cnt}}{{cnt}}">
+                            <span class="step_no">{{cnt}}</span>
+                          </a>
+                        </li>
+                        {% endfor %}
+                      {% endif %}
+                      </ul>
+
+
+                        {% if encuPregs is defined %}
+                          <form class="form-horizontal form-label-left" action="{{ path('insertar_datos_encuesta', {'idEncuesta': encuPregs[0].encuesta.id})}}" method="post" id="form2" name="form2">
+                          {% set cnt = 0 %}
+                          {% for encuPreg in encuPregs %}
+                          {% set cnt  = cnt + 1 %}
+                      <div id="step-{{cnt}}{{cnt}}">
+
+                                      <div class="form-group text-center">
+                                        <div class="centro">
+                                          <h1>
+                                        {% if urlActual[2] == 'es' %}
+                                            {{ encuPreg.pregunta.descripcion}}
+                                        {% elseif urlActual[2] == 'en' %}
+                                          {{ encuPreg.pregunta.descripcionIngles}}
+                                        {% endif %}
+                                          </h1>
+
+                                        <fieldset class="rating centro">
+                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.pregunta.id}}5" name="v{{encuPreg.pregunta.id}}" value="5" />
+                                                  <label for="v{{encuPreg.pregunta.id}}5" title="{% trans %}5est{% endtrans %}">5 stars</label>
+                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.pregunta.id}}4" name="v{{encuPreg.pregunta.id}}" value="4" />
+                                                  <label for="v{{encuPreg.pregunta.id}}4" title="{% trans %}4est{% endtrans %}">4 stars</label>
+                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.pregunta.id}}3" name="v{{encuPreg.pregunta.id}}" value="3" />
+                                                  <label for="v{{encuPreg.pregunta.id}}3" title="{% trans %}3est{% endtrans %}">3 stars</label>
+                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.pregunta.id}}2" name="v{{encuPreg.pregunta.id}}" value="2" />
+                                                  <label for="v{{encuPreg.pregunta.id}}2" title="{% trans %}2est{% endtrans %}">2 stars</label>
+                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.pregunta.id}}1" name="v{{encuPreg.pregunta.id}}" value="1" />
+                                                  <label for="v{{encuPreg.pregunta.id}}1" title="{% trans %}1est{% endtrans %}">1 star</label>
+                                        </fieldset>
+                                        </div>
+                                      </div>
+                                      <br>
+
+                      </div>
+
+                      {% endfor %}
+                      </form>
+                      {% endif %}
+
+
+                    </div>
+                    <!-- End SmartWizard Content -->
 
                   </div>
                 </div>
@@ -210,7 +281,6 @@
           </div>
         </div>
         <!-- /page content -->
-
 
 {% endblock %}
 
@@ -221,18 +291,34 @@
 
   $(document).ready(function() {
       $( ".buttonFinish" ).click(function() {
-        $( "#form1" ).submit();
+        var nc = [];
+         if($('#wizard').is(":visible")){
+            var tipo = 'p';
+        }
+        else if($('#wizard_verticle').is(":visible")){
+          var tipo = 'v';
+        }
+        var i = 0;
+         {% for encuPreg in encuPregs %}
+              i++;
+               if(!$("input:radio[data-idp="+tipo+i+"]").is(':checked')){
+                    nc.push(i);
+               }
+         {% endfor %}
+            /*for (i = 1; i <= {{ encuPregs|length}}; i++) {
+               if(!$("input:radio[name="+tipo+i+"]").is(':checked')){
+                nc.push(i);
+               }
+            }*/
+            if(nc.length != 0){
+             alert("{% trans %}No ha contestado las preguntas{% endtrans %} "+nc);
+            }
+            else {
+               $('#form1').submit();
+            }
       });
   });
 
-  $('#form1').submit(function() {
-    if ( /*$('input:checkbox', this).is(':checked') &&  */$('input:radio', this).is(':checked')   ) {
-        // everything's fine...
-    } else {
-        alert('Please select something!');
-        return false;
-    }
-});
 </script>
 
 {% endblock %}

@@ -114,6 +114,26 @@ class EncuestaController extends Controller
             return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
     }
 
+    public function insertarDatosEncuestaAction(Request $request, $idEncuesta){
+        echo "<pre>"; print_r($request);  echo "</pre>"; die();
+   /*     try{
+            $usuario = $this->getUser();
+            $em = $this->getDoctrine()->getManager();
+            $rep = $em->getRepository('AppBundle:Encuesta');
+            $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
+           if(count( $encuestasAsignadas) > 0){
+                return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
+           }
+           else{
+                  return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('sinEncuestas'=>"sinEncuestas" ));
+           }
+
+        } catch (Exception $ex) {
+            echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
+        }*/
+            return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
+    }
+
     public function realizarEncuestaAction($idEncuesta){
 
         try{

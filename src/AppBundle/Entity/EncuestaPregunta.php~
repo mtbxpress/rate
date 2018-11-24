@@ -107,28 +107,5 @@ class EncuestaPregunta
     {
         return $this->pregunta;
     }
-
-    /**
-     * Set resultado
-     *
-     * @param \AppBundle\Entity\Resultado $resultado
-     *
-     * @return EncuestaPregunta
-     */
-    public function setResultado(\AppBundle\Entity\Resultado $resultado = null)
-    {
-        $this->resultado = $resultado;
-
-        return $this;
-    }
-
-    /**
-     * Get resultado
-     *
-     * @return \AppBundle\Entity\Resultado
-     */
-    public function getResultado()
-    {
-        return $this->resultado;
-    }
 }
+

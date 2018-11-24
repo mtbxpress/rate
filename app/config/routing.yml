@@ -179,6 +179,13 @@ realizar_encuesta:
         _locale: 'en|es'
         idEncuesta: \d+
 
+insertar_datos_encuesta:
+    path:  /admin/{_locale}/insertar/{idEncuesta}
+    defaults: { _controller: AppBundle:Encuesta:insertarDatosEncuesta, _locale: es }
+    requirements:
+        _locale: 'en|es'
+        idEncuesta: \d+
+
 
 #editar_encuesta:
 #    path:  /admin/{_locale}/crear/encuesta/{idEncuesta}
