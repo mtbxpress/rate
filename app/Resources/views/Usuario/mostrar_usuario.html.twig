@@ -71,12 +71,12 @@ function funcion(){
                       <h3>{{ usuario.nombre }}  {{ usuario.apellidos }}</h3>
 
                       <ul class="list-unstyled user_data">
-                        <li><i class="fa fa-user"></i> {{ usuario.username }}
-                        <li><i class="fa fa-map-marker user-profile-icon"></i> San Francisco, California, USA
+                        <li><i class="fa fa-user"></i> &nbsp;{{ usuario.username }}
+                        <li><i class="fa fa-calendar user-profile-icon"></i> &nbsp;{{ usuario.fechaAlta }}
                         </li>
 
                         <li>
-                          <i class="fa fa-briefcase user-profile-icon"></i> Titulacion
+                          <i class="fa fa-info-circle user-profile-icon"></i> &nbsp;{{ usuario.roles }}
                         </li>
 {#
                               {% if  usuario.codigor is defined %}
@@ -84,15 +84,15 @@ function funcion(){
                               {% endif %}
   #}
                         <li class="m-top-xs">
-                          <i class="fa fa-external-link user-profile-icon"></i>
-                          <a href="http://www.kimlabs.com/profile/" target="_blank">Empresa</a>
+                          <i class="fa fa-phone user-profile-icon"></i>
+                          &nbsp;{{ usuario.telefono }}
                         </li>
                       </ul>
 
-                      <a href="{{ path('editar_usuario', {'idUsuario': ' usuario.id '})}}" class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>{% trans %}Editar usuario{% endtrans %}</a>
+                      <a href="{{ path('editar_usuario', {'idUsuario': usuario.id })}}" class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>{% trans %}Editar usuario{% endtrans %}</a>
                       <br />
 
-                      <!-- start skills -->
+ {#                     <!-- start skills -->
                       <h4>Skills</h4>
                       <ul class="list-unstyled user_data">
                         <li>
@@ -121,13 +121,18 @@ function funcion(){
                         </li>
                       </ul>
                       <!-- end of skills -->
-
+#}
                     </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
 
                       <div class="profile_title">
                         <div class="col-md-6">
-                          <h2>{% trans %}Resutados obtenidos{% endtrans %}</h2>
+                          <h2>
+                            {% trans %}Resutados obtenidos{% endtrans %}
+                            {% if encResultados == 0 %}
+                                  ///  {% trans %}Sin datos{% endtrans %}
+                              {%  endif %}
+                            </h2>
                         </div>
                         <div class="col-md-6">
 {#                          <div id="reportrange" class="pull-right" style="margin-top: 5px; background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #E6E9ED">
@@ -140,168 +145,80 @@ function funcion(){
                       <!-- start of user-activity-graph -->
                       <div id="graph_bar" style="width:100%; height:280px;"></div>
                       <!-- end of user-activity-graph -->
+{#{ dump(encResultados) }}
+{% set myArray = [] %}
+          {% for encResultado in encResultados %}
+                {% for er in encResultado %}
+                    {% set clave = er.pregunta.id %}
+                    {{ clave }}
+                    {% set myArray = {'clave' : 1} %}
+                {% endfor %}
+          {% endfor %}
+
+{{ dump(myArray) }#}
 
                       <div class="" role="tabpanel" data-example-id="togglable-tabs">
                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                          <li role="presentation" class="active"><a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">NOMBRE EVALUADOR</a>
-                          </li>
-                          <li role="presentation" class=""><a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">NOMBRE EVALUADOR</a>
-                          </li>
-                         {# <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Profile</a>
-                          </li>#}
+
+                          {% set cnt, active = 0, 'active' %}
+                          {% for encResultado in encResultados %}
+                                <li role="presentation" class="{{active}}">
+                                    <a href="#tab_content{{cnt+1}}" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">{{ encResultado[cnt].encuesta.usuario.nombre }} {{ encResultado[cnt].encuesta.usuario.apellidos }}</a>
+                                </li>
+                                {% set cnt , active = cnt+1, '' %}
+                          {% endfor %}
+
                         </ul>
-                        <div id="myTabContent" class="tab-content">
-                          <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+
+                          <div id="myTabContent" class="tab-content">
+
+                          {% set cnt, active = 0, 'active in' %}
+                          {% for encResultado in encResultados %}
+                            {% set cnt = cnt+1 %}
+                              <div role="tabpanel" class="tab-pane fade {{active}}" id="tab_content{{cnt}}" aria-labelledby="home-tab">
+
 
                             <!-- start recent activity -->
                             <ul class="messages">
-                              <li>
-                                <img src="{{ asset('template/build/images/img.jpg') }}" class="avatar" alt="Avatar">
-                                <div class="message_date">
-                                  <h3 class="date text-info">24</h3>
-                                  <p class="month">May</p>
-                                </div>
-                                <div class="message_wrapper">
-                                  <h4 class="heading">CUESTION 1</h4>
-                                  <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                  <br />
-                                  <p class="url">
-                                    <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                    <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
-                                  </p>
-                                </div>
-                              </li>
-                              <li>
-                                <img src="{{ asset('template/build/images/img.jpg') }}" class="avatar" alt="Avatar">
-                                <div class="message_date">
-                                  <h3 class="date text-error">21</h3>
-                                  <p class="month">May</p>
-                                </div>
-                                <div class="message_wrapper">
-                                  <h4 class="heading">CUESTION 2</h4>
-                                  <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                  <br />
-                                  <p class="url">
-                                    <span class="fs1" aria-hidden="true" data-icon=""></span>
-                                    <a href="#" data-original-title="">Download</a>
-                                  </p>
-                                </div>
-                              </li>
-                              <li>
-                                <img src="{{ asset('template/build/images/img.jpg') }}" class="avatar" alt="Avatar">
-                                <div class="message_date">
-                                  <h3 class="date text-info">24</h3>
-                                  <p class="month">May</p>
-                                </div>
-                                <div class="message_wrapper">
-                                  <h4 class="heading">CUESTION 3</h4>
-                                  <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                  <br />
-                                  <p class="url">
-                                    <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                    <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
-                                  </p>
-                                </div>
-                              </li>
-                              <li>
-                                <img src="{{ asset('template/build/images/img.jpg') }}" class="avatar" alt="Avatar">
-                                <div class="message_date">
-                                  <h3 class="date text-error">21</h3>
-                                  <p class="month">May</p>
-                                </div>
-                                <div class="message_wrapper">
-                                  <h4 class="heading">CUESTION 4</h4>
-                                  <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                  <br />
-                                  <p class="url">
-                                    <span class="fs1" aria-hidden="true" data-icon=""></span>
-                                    <a href="#" data-original-title="">Download</a>
-                                  </p>
-                                </div>
-                              </li>
+                              {% set cntp = 0 %}
+                              {% for resultado in encResultado %}
+                                  {% set cntp = cntp+1 %}
+                                  <li>
+                                    <img src="{{ asset('template/build/images/img.jpg') }}" class="avatar" alt="Avatar">
+                                   {# <img src="{{ asset('uploads/'~empresa.logo~'')}}" alt="{{ empresa.logo }}" max-width="60" height="50">#}
+                                    <div class="message_date">
+                                      <h3 class="date text-info">
+                                        {% if resultado.resultado.valor is defined %}
+                                            {{ resultado.resultado.valor }}&nbsp;<span class="fa fa-star"></span>
+                                        {% else %}
+                                            {% trans %}Sin datos{% endtrans %}
+                                          {% endif %}
 
+                                      </h3>
+                                    </div>
+                                    <div class="message_wrapper">
+                                      <h4 class="heading">{% trans %}Pregunta{% endtrans %} {{ cntp }}</h4>
+                                      <blockquote class="message">{{ resultado.pregunta.descripcion }}</blockquote>
+                                      <br />
+                                      {#<p class="url">
+                                        <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
+                                        <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
+                                      </p>#}
+                                    </div>
+                                  </li>
+                                  {% set active = '' %}
+                              {% endfor %}
                             </ul>
                             <!-- end recent activity -->
 
-                          </div>
-                          <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                              </div>
+                          {% set cntp , active = cntp+1, '' %}
+                          {% endfor %}
 
-                            <!-- start recent activity -->
-                            <ul class="messages">
-                              <li>
-                                <img src="{{ asset('template/build/images/img.jpg') }}" class="avatar" alt="Avatar">
-                                <div class="message_date">
-                                  <h3 class="date text-info">24</h3>
-                                  <p class="month">May</p>
-                                </div>
-                                <div class="message_wrapper">
-                                  <h4 class="heading">CUESTION 1</h4>
-                                  <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                  <br />
-                                  <p class="url">
-                                    <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                    <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
-                                  </p>
-                                </div>
-                              </li>
-                              <li>
-                                <img src="{{ asset('template/build/images/img.jpg') }}" class="avatar" alt="Avatar">
-                                <div class="message_date">
-                                  <h3 class="date text-error">21</h3>
-                                  <p class="month">May</p>
-                                </div>
-                                <div class="message_wrapper">
-                                  <h4 class="heading">CUESTION 2</h4>
-                                  <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                  <br />
-                                  <p class="url">
-                                    <span class="fs1" aria-hidden="true" data-icon=""></span>
-                                    <a href="#" data-original-title="">Download</a>
-                                  </p>
-                                </div>
-                              </li>
-                              <li>
-                                <img src="{{ asset('template/build/images/img.jpg') }}" class="avatar" alt="Avatar">
-                                <div class="message_date">
-                                  <h3 class="date text-info">24</h3>
-                                  <p class="month">May</p>
-                                </div>
-                                <div class="message_wrapper">
-                                  <h4 class="heading">CUESTION 3</h4>
-                                  <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                  <br />
-                                  <p class="url">
-                                    <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
-                                    <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
-                                  </p>
-                                </div>
-                              </li>
-                              <li>
-                                <img src="{{ asset('template/build/images/img.jpg') }}" class="avatar" alt="Avatar">
-                                <div class="message_date">
-                                  <h3 class="date text-error">21</h3>
-                                  <p class="month">May</p>
-                                </div>
-                                <div class="message_wrapper">
-                                  <h4 class="heading">CUESTION 4</h4>
-                                  <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
-                                  <br />
-                                  <p class="url">
-                                    <span class="fs1" aria-hidden="true" data-icon=""></span>
-                                    <a href="#" data-original-title="">Download</a>
-                                  </p>
-                                </div>
-                              </li>
-
-                            </ul>
-                            <!-- end recent activity -->
-
-                          </div>
-                          <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
-                            <p>xxFood truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui
-                              photo booth letterpress, commodo enim craft beer mlkshk </p>
-                          </div>
                         </div>
+
+
+
                       </div>
                     </div>
                   </div>
@@ -313,39 +230,52 @@ function funcion(){
         <!-- /page content -->
 {% endblock %}
 
-{#% block javascripts %}
+{% block javascripts %}
   {{ parent() }}
-{% if app.request.getLocale() == 'es' %}
-      <script>var url = "{{ asset('traduciones_datatables/Spanish.json') }}";</script>
-  {% elseif app.request.getLocale() == 'en' %}
-      <script>var url = "{{ asset('traduciones_datatables/English.json') }}";</script>
-  {% else %}
-      <script>var url = "{{ asset('traduciones_datatables/Spanish.json') }}";</script>
-  {% endif %}
-
 <script>
-/*$(document).ready(function() {
-    $('table.display').DataTable( {
-       "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-        "language": {
-     //       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-             "url": url
-        }
-    } );
-} );
-*/
-  $( document ).ready(function() {
-    $(".eliminar").on('click', function() {
-      $("#nombre").html($(this).attr("name"));
-      var hrf = $("#enlace_eliminar").attr("href").split("/");
-      var url = "/admin/"+hrf[2]+"/eliminar/usuario/"+$(this).attr("id");
-      $("#enlace_eliminar").attr("href",url);
-    });
-  });
-/*
- $(window).on('load',function(){
-     $(".loader").fadeOut( "slow" );
-});
-*/
+      function init_morris_charts() {
+
+      if( typeof (Morris) === 'undefined'){ return; }
+      console.log('init_morris_charts');
+
+      if ($('#graph_bar').length){
+
+        Morris.Bar({
+          element: 'graph_bar',
+          data: [
+
+          {% set cnt = 1 %}
+          {% for media in medias %}
+               {pregunta: '{% trans %}P{% endtrans %}{{cnt}}', Resultado: {{ media }} },
+              {% set cnt = cnt+1 %}
+          {% endfor %}
+    //      {pregunta: '{% trans %}P{% endtrans %}1', Resultado: {{ encResultados|length }} },
+        /*  {pregunta: '{% trans %}P{% endtrans %}2', Resultado: 1},
+          {pregunta: '{% trans %}P{% endtrans %}3', Resultado: 2},
+          {pregunta: '{% trans %}P{% endtrans %}4', Resultado: 1},
+          {pregunta: '{% trans %}P{% endtrans %}5', Resultado: 3},
+          {pregunta: '{% trans %}P{% endtrans %}6', Resultado: 4},
+          {pregunta: '{% trans %}P{% endtrans %}7', Resultado: 4},
+          {pregunta: '{% trans %}P{% endtrans %}8', Resultado: 3},
+          {pregunta: '{% trans %}P{% endtrans %}9', Resultado: 1},
+          {pregunta: '{% trans %}P{% endtrans %}10', Resultado: 5}
+          */
+          ],
+          xkey: 'pregunta',
+          ykeys: ['Resultado'],
+          ymax: 5,
+          ymin: 0,
+          labels: ['{% trans %}Media{% endtrans %}'],
+          barRatio: 0.4,
+          barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+          xLabelAngle: 35,
+          hideHover: 'auto',
+          resize: true
+        });
+
+      }
+
+
+    };
 </script>
-{% endblock %#}
+{% endblock %}

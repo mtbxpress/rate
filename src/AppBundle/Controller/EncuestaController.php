@@ -25,7 +25,16 @@ class EncuestaController extends Controller
             if($form->isSubmitted() && $form->isValid()){
 
 	   	//   $evaluado= $form['evaluado']->getData();
+                    $rolUsuario = $encuesta->getUsuario()->getRoles()[0];
+                    $rolEvaluado = $encuesta->getEvaluado()->getRoles()[0];
             	   if($encuesta->getEvaluado() != $encuesta->getUsuario() ){
+
+                    if(
+                        ($rolUsuario == 'ROLE_ALU' && ($rolEvaluado == 'ROLE_PROFI' || $rolEvaluado == 'ROLE_PROFE') ) ||
+                        ($rolUsuario == 'ROLE_PROFI' && ($rolEvaluado == 'ROLE_ALU' ) )  ||
+                        ($rolUsuario == 'ROLE_PROFE' && ($rolEvaluado == 'ROLE_ALU' ) )
+                    ){
+
 	            	   $na = $encuesta->getEvaluado()->getNombre().' '.$encuesta->getEvaluado()->getApellidos() ;
 	            	   $encuesta->setNaevaluado($na);
 	            	   $rep = $em->getRepository('AppBundle:Curso');
@@ -53,9 +62,12 @@ class EncuestaController extends Controller
                              }
                             $em->persist($encuesta);
                             $em->flush();
+                            $this->addFlash('success', 'Registro eliminado correctamente' );
+                    }
+                        else { $this->addFlash('danger', 'Este tipo usuario no puede realizar esa encuesta' ); }
 
                 }
- 	  else { $this->addFlash('success', 'Un usuario no puede evaluarse así mismo' ); }
+ 	  else { $this->addFlash('danger', 'Un usuario no puede evaluarse así mismo' ); }
             }
         }catch (Exception $ex) {
                 echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
@@ -115,12 +127,43 @@ class EncuestaController extends Controller
     }
 
     public function insertarDatosEncuestaAction(Request $request, $idEncuesta){
-        echo "<pre>"; print_r($request);  echo "</pre>"; die();
-   /*     try{
+
+        try{
             $usuario = $this->getUser();
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Encuesta');
             $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
+            $encuesta = $em->getRepository('AppBundle:Encuesta')->find($idEncuesta);
+
+            if( $encuesta->getCompletada() == 'NO' && $encuesta->getUsuario()->getId() == $usuario->getId()){
+
+                    $respuestas = $request->request; //devuelve tipo parameterbag
+                    $respuestas = $respuestas->all();
+                     $encuPreg = $em->getRepository('AppBundle:EncuestaPregunta')->findBy(  array('encuesta' => $idEncuesta) );
+
+                     if( count($encuPreg) == count($respuestas)){
+
+                            foreach ($encuPreg as $key => $value) {
+
+                                $resultado = $em->getRepository('AppBundle:Resultado')->findOneBy(  array('valor' => $respuestas[$value->getPregunta()->getId()]) );
+                                $value->setResultado($resultado);
+                                $em->persist($value);
+                                $em->flush();
+                            }
+
+                            $encuesta->setCompletada('SI');
+                            $em->persist($encuesta);
+                            $em->flush();
+                     }
+                     else{
+                          $this->addFlash('danger', 'No se han respondido todas las preguntas' );
+                     }
+            }
+            else{
+                $this->addFlash('danger', 'No puede realizar esta encuesta' );
+            }
+
+
            if(count( $encuestasAsignadas) > 0){
                 return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
            }
@@ -130,7 +173,7 @@ class EncuestaController extends Controller
 
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
-        }*/
+        }
             return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
     }
 

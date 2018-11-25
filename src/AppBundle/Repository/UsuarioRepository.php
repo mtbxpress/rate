@@ -184,11 +184,69 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 	    } catch (\Doctrine\ORM\NoResultException $exception) {
 	        return null;
 	    }
-//echo "<pre>"; print_r($res);  echo "</pre>";die();
 	    if($res){
 		return $res[0];
 	    }
 	}
+/* CALCULA LA MEDIA TOTAL
+SELECT SUM(valor)/COUNT(r.id)
+FROM encuesta_pregunta ep
+INNER JOIN encuesta e ON e.id = ep.encuesta_id
+INNER JOIN resultado r ON ep.resultado_id = r.id
+WHERE e.evaluado_id = 35 and e.completada = 'SI'
+*/
+
+	public function calcularMedias($idUsuario)	{
+
+		try {
+			$query = "SELECT ep.* , e.*, res.valor
+				FROM encuesta_pregunta ep
+				INNER JOIN encuesta e on ep.encuesta_id = e.id
+				INNER JOIN resultado res on ep.resultado_id = res.id
+				WHERE e.evaluado_id = $idUsuario AND e.completada = 'SI' ";
+
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+
+			$query2 = "SELECT DISTINCT COUNT(id) as numEnc
+				FROM encuesta enc
+				WHERE enc.completada = 'SI' and enc.evaluado_id = $idUsuario ";
+
+			$stmt = $db->prepare($query2);
+			$param = array();
+			$stmt->execute($param);
+			$res2 = $stmt->fetchAll();
+//echo "<pre>"; print_r($res2[0]);  echo "</pre>";die();
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+	    $array = [];
+	    foreach ($res as $key => $row) {
+	    	if(isset($array[$row['pregunta_id']])){
+			$array[$row['pregunta_id']] +=  $row['valor'];
+	    	}
+	    	else{
+	    		$array[$row['pregunta_id']] =  $row['valor'];
+	    	}
+	    }
+	    foreach ($array as $key => $row) {
+	    	$array[$key]  = $row /  $res2[0]['numEnc'];
+	    }
+//echo $res2[0]['numEnc'];
+//echo "<pre>"; print_r($array);  echo "</pre>"; die();
+//echo "<pre>"; print_r($res);  echo "</pre>";die();
+	    if($array){
+		return $array;
+	    }
+	}
+
+
+
+
 }
 
 

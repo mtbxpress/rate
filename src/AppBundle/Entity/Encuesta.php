@@ -75,9 +75,17 @@ class Encuesta
      */
     private $evaluado;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="completada", type="string", length=2, nullable=true , columnDefinition="enum('SI', 'NO')")
+     */
+    private $completada = 'NO';
+
     public function __construct() {
         //$this->preguntas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->encuestapregunta = new \Doctrine\Common\Collections\ArrayCollection();
+    //    $completada = 'NO';
     }
 
     /**
@@ -224,4 +232,52 @@ class Encuesta
         return $this->encuestapregunta;
     }
 
+
+    /**
+     * Set completada
+     *
+     * @param string $completada
+     *
+     * @return Encuesta
+     */
+    public function setCompletada($completada)
+    {
+        $this->completada = $completada;
+
+        return $this;
+    }
+
+    /**
+     * Get completada
+     *
+     * @return string
+     */
+    public function getCompletada()
+    {
+        return $this->completada;
+    }
+
+    /**
+     * Add encuestapreguntum
+     *
+     * @param \AppBundle\Entity\EncuestaPregunta $encuestapreguntum
+     *
+     * @return Encuesta
+     */
+    public function addEncuestapreguntum(\AppBundle\Entity\EncuestaPregunta $encuestapreguntum)
+    {
+        $this->encuestapregunta[] = $encuestapreguntum;
+
+        return $this;
+    }
+
+    /**
+     * Remove encuestapreguntum
+     *
+     * @param \AppBundle\Entity\EncuestaPregunta $encuestapreguntum
+     */
+    public function removeEncuestapreguntum(\AppBundle\Entity\EncuestaPregunta $encuestapreguntum)
+    {
+        $this->encuestapregunta->removeElement($encuestapreguntum);
+    }
 }

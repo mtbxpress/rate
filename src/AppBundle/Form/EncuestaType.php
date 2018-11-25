@@ -26,7 +26,7 @@ class EncuestaType extends AbstractType
                     //    if ($usuario->getNombre()) {
                     //      $strOption.='  '.$usuario->getNombre();
                           if ($usuario->getApellidos()) {
-                            $strOption.=' '.$usuario->getApellidos();
+                            $strOption.=' '.$usuario->getApellidos().'    //    '.$usuario->getRoles()[0];
                           }
                     //    }
                         return $strOption;
@@ -47,7 +47,7 @@ class EncuestaType extends AbstractType
               //          if ($usuario->getNombre()) {
               //            $strOption.=' - '.$usuario->getNombre();
                           if ($usuario->getApellidos()) {
-                            $strOption.=' '.$usuario->getApellidos();
+                            $strOption.=' '.$usuario->getApellidos().'    //    '.$usuario->getRoles()[0];
                           }
              //           }
                         return $strOption;

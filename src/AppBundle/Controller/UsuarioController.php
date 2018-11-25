@@ -55,12 +55,27 @@ class UsuarioController extends Controller
         try{
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Usuario');
-     //       $usuario = $rep->find($idUsuario);
+            $medias = $rep->calcularMedias($idUsuario);
+
+
             $usuario = $rep->mostarUsuarioEncuestaConCursoActivo($idUsuario);
             if(!isset($usuario) ){
                 $usuario = $rep->mostarUsuarioCursoActivo($idUsuario);
             }
+            if(isset($usuario) ){
+                $encsDelUsuarioEvaluado = $em->getRepository('AppBundle:Encuesta')->findByEvaluado($usuario);
 
+                foreach ($encsDelUsuarioEvaluado as $key => $value) {
+
+                    $encResultados[$value->getId()] = $em->getRepository('AppBundle:EncuestaPregunta')->findByEncuesta($value->getId());
+                }
+                if(!isset($encResultados) ){
+                    $encResultados = 0;
+                }
+
+                return $this->render('Usuario/mostrar_usuario.html.twig', array('usuario'=>$usuario, 'encResultados' => $encResultados ,'medias' => $medias));
+
+            }
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
@@ -224,6 +239,23 @@ class UsuarioController extends Controller
         }
         return $this->render('Usuario/mostrar_usuarios.html.twig', array('usuarios'=>$usuarios ));
     }
+
+ /*  public function calcularMediasAction($idUsuario){
+        try{
+
+            $em = $this->getDoctrine()->getManager();
+            $rep = $em->getRepository('AppBundle:Usuario');
+            $medias = $rep->calcularMedias($idUsuario);
+
+        } catch (Exception $ex) {
+            echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
+        }
+        return $medias;
+        //return $this->render('Usuario/mostrar_usuarios.html.twig', array('usuarios'=>$usuarios ));
+    }*/
+
+
+
 /*##############################################################################*/
     /**
      * Lógica de la pantalla donde se muestra todos los usuarios permitiendo hacer búsquedas.

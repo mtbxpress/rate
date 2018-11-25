@@ -3,7 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 /**
  * Encuesta
  *
@@ -24,9 +25,9 @@ class Encuesta
     /**
      * @var string
      *
-     * @ORM\Column(name="descripcion", type="string", length=255, nullable=true)
+     * @ORM\Column(name="naevaluado", type="string", length=255, nullable=true)
      */
-    private $descripcion;
+    private $naevaluado;
 
     /**
      * Many encuestas have one titulacion. This is the owning side.
@@ -48,11 +49,6 @@ class Encuesta
      */
     private $encuestapregunta;
 
-
-
-
-
-
     /**
      * Many encuestas have one usuario. This is the owning side.
      * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="encuestas")
@@ -65,14 +61,31 @@ class Encuesta
      * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="encuestas")
      * @ORM\JoinColumn(name="evaluado_id", referencedColumnName="id")
      */
-    /**
-      * @var \AppBundle\Entity\Usuario
+    //      * @var  \AppBundle\Entity\Usuario
+    /*
+      * @var int
+      *
+      * @ORM\Column(name="evaluado", type="integer")
       */
+
+    /**
+     * Many encuestas have one usuario. This is the owning side.
+     * @ORM\ManyToOne(targetEntity="Usuario", inversedBy="encuestas")
+     * @ORM\JoinColumn(name="evaluado_id", referencedColumnName="id")
+     */
     private $evaluado;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="completada", type="string", length=2, nullable=true , columnDefinition="enum('SI', 'NO')")
+     */
+    private $completada = 'NO';
 
     public function __construct() {
         //$this->preguntas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->encuestapregunta = new \Doctrine\Common\Collections\ArrayCollection();
+    //    $completada = 'NO';
     }
 
     /**
@@ -86,27 +99,27 @@ class Encuesta
     }
 
     /**
-     * Set descripcion
+     * Set naevaluado
      *
-     * @param string $descripcion
+     * @param string $naevaluado
      *
      * @return Encuesta
      */
-    public function setDescripcion($descripcion)
+    public function setNaevaluado($naevaluado)
     {
-        $this->descripcion = $descripcion;
+        $this->naevaluado = $naevaluado;
 
         return $this;
     }
 
     /**
-     * Get descripcion
+     * Get naevaluado
      *
      * @return string
      */
-    public function getDescripcion()
+    public function getNaevaluado()
     {
-        return $this->descripcion;
+        return $this->naevaluado;
     }
 
     /**
@@ -157,6 +170,8 @@ class Encuesta
         return $this->usuario;
     }
 
+//     * @param \AppBundle\Entity\Usuario $usuario
+
     /**
      * Set evaluado
      *
@@ -190,8 +205,10 @@ class Encuesta
      */
     public function addEncuestapregunta(\AppBundle\Entity\EncuestaPregunta $encuestapregunta)
     {
-        $this->encuestapregunta[] = $encuestapregunta;
-
+    //    $this->encuestapregunta[] = $encuestapregunta;
+        if (!$this->encuestapregunta->contains($encuestapregunta)) {
+            $this->encuestapregunta[] = $encuestapregunta;
+        }
         return $this;
     }
 
@@ -213,5 +230,54 @@ class Encuesta
     public function getEncuestapregunta()
     {
         return $this->encuestapregunta;
+    }
+
+
+    /**
+     * Set completada
+     *
+     * @param string $completada
+     *
+     * @return Encuesta
+     */
+    public function setCompletada($completada)
+    {
+        $this->completada = $completada;
+
+        return $this;
+    }
+
+    /**
+     * Get completada
+     *
+     * @return string
+     */
+    public function getCompletada()
+    {
+        return $this->completada;
+    }
+
+    /**
+     * Add encuestapreguntum
+     *
+     * @param \AppBundle\Entity\EncuestaPregunta $encuestapreguntum
+     *
+     * @return Encuesta
+     */
+    public function addEncuestapreguntum(\AppBundle\Entity\EncuestaPregunta $encuestapreguntum)
+    {
+        $this->encuestapregunta[] = $encuestapreguntum;
+
+        return $this;
+    }
+
+    /**
+     * Remove encuestapreguntum
+     *
+     * @param \AppBundle\Entity\EncuestaPregunta $encuestapreguntum
+     */
+    public function removeEncuestapreguntum(\AppBundle\Entity\EncuestaPregunta $encuestapreguntum)
+    {
+        $this->encuestapregunta->removeElement($encuestapreguntum);
     }
 }
