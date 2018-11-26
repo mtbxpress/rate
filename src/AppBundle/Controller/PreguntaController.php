@@ -53,6 +53,7 @@ class PreguntaController extends Controller
                 $this->addFlash('success', 'Registro creado correctamente' );
             }
         }catch (Exception $ex) {
+                $this->addFlash('danger', 'Error al crear el registro' );
                 echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
 
@@ -85,6 +86,7 @@ public function editarPreguntaAction(Request $request, $idPregunta){
 
   }
   catch(Excepcition $ex){
+    $this->addFlash('danger', 'Error al modificar el registro' );
    echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
   }
     $rep = $m->getRepository('AppBundle:Pregunta');
@@ -126,6 +128,7 @@ public function editarPreguntaAction(Request $request, $idPregunta){
               }
                 $m->remove($pregunta);
                 $m->flush();
+                $this->addFlash('success', 'Registro eliminado correctamente' );
              }
 
         //     $_SERVER['PHP_SELF']
@@ -133,7 +136,7 @@ public function editarPreguntaAction(Request $request, $idPregunta){
             return $this->redirectToRoute('mostrar_preguntas');
         }
         catch (Exception $ex) {
-            $this->addFlash('danger', 'Registro no se ha eliminado correctamente' );
+            $this->addFlash('danger', 'Error al eliminar el registro' );
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
     }

@@ -161,7 +161,9 @@ function funcion(){
                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
 
                           {% set cnt, active = 0, 'active' %}
+                            {{ dump(encResultados) }}
                           {% for encResultado in encResultados %}
+
                                 <li role="presentation" class="{{active}}">
                                     <a href="#tab_content{{cnt+1}}" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">{{ encResultado[cnt].encuesta.usuario.nombre }} {{ encResultado[cnt].encuesta.usuario.apellidos }}</a>
                                 </li>

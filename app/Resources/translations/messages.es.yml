@@ -84,3 +84,18 @@ No ha contestado las preguntas: No ha contestado las preguntas
 Media: Media
 Resultado: Resultado
 Sin datos: Sin datos
+Registro creado correctamente: Registro creado correctamente
+Registro modificado correctamente: Registro modificado correctamente
+Registro eliminado correctamente: Registro eliminado correctamente
+
+Error al crear el registro: Error al crear el registro
+Error al modificar el registro: Error al modificar el registro
+Error al eliminar el registro: Error al eliminar el registro
+No existe esa encuesta asignadas: No existe esa encuesta asignadas
+Esta encuesta no le ha sido asignada: Esta encuesta no le ha sido asignada
+Esta encuesta ya ha sido completada: Esta encuesta ya ha sido completada
+Este tipo usuario no puede realizar esa encuesta: Este tipo usuario no puede realizar esa encuesta
+Un usuario no puede evaluarse así mismo: Un usuario no puede evaluarse así mismo
+No se han respondido todas las preguntas: No se han respondido todas las preguntas
+No puede realizar esta encuesta: No puede realizar esta encuesta
+No puede eliminarse así mismo: No puede eliminarse así mismo

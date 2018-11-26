@@ -112,6 +112,8 @@ class UsuarioController extends Controller
                 }
                 $rep = $em->getRepository('AppBundle:Curso');
                 $cursoActivo = $rep->findBy(array('activo' => true));
+    //            echo $cursoActivo[0]->getId(); die();
+   //             echo "<pre>"; print_r($cursoActivo[0]);  echo "</pre>";die("sldjh");
                 $cursoActivo[0]->addUsuario($usuario);
                 $usuario->addCurso($cursoActivo[0]);
 
@@ -200,7 +202,7 @@ class UsuarioController extends Controller
             return $this->redirectToRoute('mostrar_usuarios', array('m' => 1));
         }
         catch (Exception $ex) {
-            $this->addFlash('danger', 'Registro no se ha eliminado correctamente' );
+            $this->addFlash('danger', 'Error al eliminar el registro' );
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
     }
@@ -255,116 +257,6 @@ class UsuarioController extends Controller
     }*/
 
 
-
-/*##############################################################################*/
-    /**
-     * Lógica de la pantalla donde se muestra todos los usuarios permitiendo hacer búsquedas.
-     * @return Response HTML
-     */
-
-    public function lista_usuariosAction(Request $request){
-        try{
-            $em = $this->getDoctrine()->getManager();
-            $rep = $em->getRepository('AppBundle:Usuario');
-            $usuarios = $rep->findAll();
-
-        } catch (Exception $ex) {
-            echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
-        }
-
-        return $this->render('@App/Usuarios/lista_usuarios.html.twig', array('usuarios'=>$usuarios ));
-    }
-
-    /**
-     * Lógica de la pantalla para crear un nuevo usuario
-     * @return Response HTML
-     */
-
-    public function nuevo_usuarioAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, ValidatorInterface $validator){
-        $usuario = new Usuario();
-        $errors = $validator->validate($usuario);
-        // Valores por defecto
-        $usuario->setActivo(true);
-        //Fecha de alta será la fecha actual
-        $usuario->setFechaAlta(new \DateTime());
-        $form = $this->createForm(\AppBundle\Form\UsuarioType::class, $usuario)
-                ->add('save',SubmitType::class);
-
-        $form->handleRequest($request);
-
-
-        if($form->isSubmitted() && $form->isValid()){
-            //Codificamos la contraseña antes de guardarla
-            $password = $passwordEncoder->encodePassword($usuario, $usuario->getPassword());
-            $usuario->setPassword($password);
-            //
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($usuario);
-            $em->flush();
-
-
-            return $this->redirectToRoute('lista_usuarios');
-        }
-        return $this->render('@App/Usuarios/nuevo_usuario.html.twig', array('form' => $form->createView() ));
-    }
-
-    /**
-     * Lógica de la pantalla que muestra la ficha de un usuario.
-     * @param  Request $request
-     * @param  int  $usuario_id
-     * @return Response HTML
-     */
-
-    public function ver_usuarioAction($idUsuario){
-
-	try{
-            $m = $this->getDoctrine()->getManager();
-            $rep = $m->getRepository('AppBundle:Usuario');
-            $usuario = $rep->find($idUsuario);
-
-                return $this->render('@App/Usuarios/ver_usuario.html.twig',
-                    array('usuario'  => $usuario));
-        }
-        catch (Exception $ex) {
-            echo 'Excepción capturada: Ver usuario:',  $ex->getMessage(), "\n";
-	}
-
-        return $this->render('@App/Usuarios/ver_usuario.html.twig');
-    }
-
-    /**
-     * Lógica de la pantalla que posibilita editar los datos de un usuario.
-     * @param  Request $request
-     * @param  int  $usuario_id
-     * @return Response HTML
-     */
-    public function editar_usuarioAction(Request $request, $idUsuario, UserPasswordEncoderInterface $passwordEncoder)
-    {
-        $repository = $this->getDoctrine()->getRepository('AppBundle:Usuario');
-        $usuario = $repository->find($idUsuario);
-
-        $form = $this->createForm(\AppBundle\Form\UsuarioType::class, $usuario)
-            ->add('fechaAlta',DateType::class)
-            ->add('fechaBaja',DateType::class)
-            ->add('activo',CheckboxType::class, array(
-                'label'=>'Activo',
-                'required'=> false
-            ))
-            ->add('save',SubmitType::class);
-
-        $form->handleRequest($request);
-            if($form->isSubmitted() && $form->isValid()){
-                //Codificamos la contraseña antes de guardarla
-                $password = $passwordEncoder->encodePassword($usuario, $usuario->getPassword());
-                $usuario->setPassword($password);
-                //
-                $em = $this->getDoctrine()->getManager();
-                $em->flush();
-                return $this->redirectToRoute('lista_usuarios');
-            }
-
-        return $this->render('@App/Usuarios/editar_usuario.html.twig', array('form' => $form->createView(), 'usuario' => $usuario, 'idUsuario' => $idUsuario));
-    }
 
 
 }

@@ -463,9 +463,9 @@ class Usuario implements UserInterface
      */
     public function addCurso(\AppBundle\Entity\Curso $curso)
     {
-        if (!$this->cursos->contains($curso)) {
+    //    if (!$this->cursos->contains($curso)) {
             $this->cursos[] = $curso;
-        }
+    //    }
         return $this;
     }
 

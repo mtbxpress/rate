@@ -84,3 +84,17 @@ No ha contestado las preguntas: You have not answered the questions
 Media: Average
 Resultado: Result
 Sin datos: No data
+Registro creado correctamente: Registry successfully created
+Registro modificado correctamente: Registry modified correctly
+Registro eliminado correctamente: Registry successfully deleted
+Error al crear el registro: Error to create the record
+Error al modificar el registro: Error modifying the registry
+Error al eliminar el registro: Error deleting the record
+No existe esa encuesta asignadas: This survey not exist
+Esta encuesta no le ha sido asignada: This survey has not been assigned to you
+Esta encuesta ya ha sido completada: This survey has already been completed
+Este tipo usuario no puede realizar esa encuesta: This user type can not complete that survey
+Un usuario no puede evaluarse así mismo: A user can not evaluate himself
+No se han respondido todas las preguntas: Not all questions have been answered
+No puede realizar esta encuesta: You can not complete this survey
+No puede eliminarse así mismo: It can not be removed on its own

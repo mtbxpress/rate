@@ -35,6 +35,7 @@ class CursoController extends Controller
                 //return $this->render('Titulacion/crear_titulacion.html.twig', array('form' => $form->createView() ));
             }
         }catch (Exception $ex) {
+                $this->addFlash('danger', 'Error al crear el registro' );
                 echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
         $cursos = $rep->findAll();
@@ -84,7 +85,7 @@ public function editarCursoAction(Request $request, $idCurso){
 //            $idLogado = $this->getuser()->getId();
              if( in_array("ROLE_ADMIN", $this->getuser()->getRoles(), FALSE) ){
                 if($curso->getActivo()){
-                    $this->addFlash('success', 'No puede eliminar el curso activo' );
+                    $this->addFlash('danger', 'No puede eliminar el curso activo' );
                 }
                 else{
                   $m->remove($curso);
@@ -98,7 +99,7 @@ public function editarCursoAction(Request $request, $idCurso){
             return $this->redirectToRoute('crear_curso');
         }
         catch (Exception $ex) {
-            $this->addFlash('danger', 'Registro no se ha eliminado correctamente' );
+            $this->addFlash('danger', 'Error al eliminar el registro' );
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
     }

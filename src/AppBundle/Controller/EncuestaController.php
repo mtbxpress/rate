@@ -102,7 +102,7 @@ class EncuestaController extends Controller
             return $this->redirectToRoute('crear_encuesta');
         }
         catch (Exception $ex) {
-            $this->addFlash('danger', 'Registro no se ha eliminado correctamente' );
+            $this->addFlash('danger', 'Error al eliminar el registro' );
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
     }
@@ -180,7 +180,6 @@ class EncuestaController extends Controller
     public function realizarEncuestaAction($idEncuesta){
 
         try{
-
             $usuario = $this->getUser();
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Encuesta');
@@ -188,11 +187,17 @@ class EncuestaController extends Controller
 
             if($encuesta){
                 if($encuesta->getUsuario()->getId() == $usuario->getId()){
-                    $encuPregs = $encuesta->getEncuestapregunta();
-                    return $this->render('Encuesta/realizar_encuesta.html.twig', array('encuPregs'=>$encuPregs ));
+                    if($encuesta->getCompletada() == 'NO'){
+                        $encuPregs = $encuesta->getEncuestapregunta();
+                        return $this->render('Encuesta/realizar_encuesta.html.twig', array('encuPregs'=>$encuPregs ));
+                    }
+                    else{ $this->addFlash('danger', 'Esta encuesta ya ha sido completada' ); }
+                }
+                else{
+                    $this->addFlash('danger', 'Esta encuesta no le ha sido asignada' );
                 }
             }else{
-                $this->addFlash('danger', 'No tiene encuestas asignadas' );
+                $this->addFlash('danger', 'No existe esa encuesta asignadas' );
             }
             $rep = $em->getRepository('AppBundle:Encuesta');
             $encuestasAsignadas = $rep->findByUsuario($usuario->getId());

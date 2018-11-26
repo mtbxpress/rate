@@ -46,7 +46,7 @@ class TitulacionController extends Controller
                    $this->addFlash('success', 'Registro creado correctamente' );
                 }
                 else{
-                  $this->addFlash('danger', 'Registro no se ha eliminado correctamente' );
+                  $this->addFlash('danger', 'Error al eliminar el registro' );
                 }
             }
         }catch (Exception $ex) {
@@ -88,14 +88,14 @@ class TitulacionController extends Controller
                 $this->addFlash('success', 'Registro eliminado correctamente' );
              }
              else{
-                $this->addFlash('danger', 'No puede eliminarse así mismo' );
+                $this->addFlash('danger', 'Error al eliminar el registro' );
              }
         //     $_SERVER['PHP_SELF']
       //        $request = $this->container->get('request'); $routeName = $request->get('_route');  die($this->get('kernel')->getRootDir());
             return $this->redirectToRoute('mostrar_titulaciones');
         }
         catch (Exception $ex) {
-            $this->addFlash('danger', 'Registro no se ha eliminado correctamente' );
+            $this->addFlash('danger', 'Error al eliminar el registro' );
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
     }
