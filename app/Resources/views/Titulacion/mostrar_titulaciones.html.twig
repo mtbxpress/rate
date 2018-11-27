@@ -2,9 +2,24 @@
 
 
 {% block title %}{% trans %}Mostrar{% endtrans %} {% trans %}Titulaciones{% endtrans %}{% endblock %}
-
+{% block head %}
+  {{ parent() }}
+<style>
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url("{{ asset('imagenes/loading.gif') }}") 50% 50% no-repeat rgb(249,249,249);
+    opacity: .8;
+}
+</style>
+{% endblock %}
 
 {% block pageContent %}
+<div class="loader"></div>
 
         <!-- page content -->
         <div class="right_col" role="main">
@@ -185,6 +200,10 @@ $(document).ready(function() {
       var url = "/admin/"+hrf[2]+"/eliminar/titulacion/"+$(this).attr("id");
       $("#enlace_eliminar").attr("href",url);
     });
+  });
+
+   $(window).on('load',function(){
+     $(".loader").fadeOut( "slow" );
   });
 </script>
 

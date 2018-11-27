@@ -111,6 +111,13 @@ class Usuario implements UserInterface
      */
     private $encuestas;
 
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="media", type="decimal", precision=4, scale=1)
+     */
+    private $media;
+
     public function __construct() {
    //     $this->titulaciones = new \Doctrine\Common\Collections\ArrayCollection();
         $this->encuestas = new \Doctrine\Common\Collections\ArrayCollection();
@@ -487,5 +494,29 @@ class Usuario implements UserInterface
     public function getCursos()
     {
         return $this->cursos;
+    }
+
+    /**
+     * Set media
+     *
+     * @param string $media
+     *
+     * @return Usuario
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    /**
+     * Get media
+     *
+     * @return string
+     */
+    public function getMedia()
+    {
+        return $this->media;
     }
 }

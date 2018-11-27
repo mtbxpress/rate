@@ -94,7 +94,7 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 	public function mostarUsuariosConCursoActivo()	{
 
 		try {
-			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono
+			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, usu.media
 					from usuario usu
                     				INNER JOIN curso_usuario  cusu on cusu.usuario_id = usu.id
 					INNER JOIN curso cu on cusu.curso_id = cu.id
@@ -113,7 +113,7 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 	public function mostarUsuariosConEncuestasEnCursoActivo()	{
 
 		try {
-			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, tit.nombre as titulacion, tit.codigo
+			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, usu.media, tit.nombre as titulacion, tit.codigo
 					from usuario usu
 					INNER JOIN encuesta enc on usu.id = enc.usuario_id
 					INNER JOIN titulacion tit on tit.id = enc.titulacion_id
@@ -144,7 +144,7 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 					INNER JOIN curso cu on ct.curso_id = cu.id
 					WHERE cu.activo = 1 and usu.id = $idUsuario";
 		*/
-			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono
+			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, usu.media
 					from usuario usu
                     				INNER JOIN curso_usuario  cusu on cusu.usuario_id = usu.id
 					INNER JOIN curso cu on cusu.curso_id = cu.id
@@ -167,7 +167,7 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 	public function mostarUsuarioEncuestaConCursoActivo($idUsuario)	{
 
 		try {
-			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, tit.nombre as titulacion, tit.codigo
+			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, usu.media, tit.nombre as titulacion, tit.codigo
 					from usuario usu
 					INNER JOIN encuesta enc on usu.id = enc.usuario_id
 					INNER JOIN titulacion tit on tit.id = enc.titulacion_id
@@ -245,6 +245,30 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 	}
 
 
+	public function calcularMediaTotal($idUsuario)	{
+
+		try {
+			$query = "SELECT SUM(valor)/COUNT(r.id) as media
+			FROM encuesta_pregunta ep
+			INNER JOIN encuesta e ON e.id = ep.encuesta_id
+			INNER JOIN resultado r ON ep.resultado_id = r.id
+			WHERE e.evaluado_id = $idUsuario and e.completada = 'SI' ";
+
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+//	    echo "string ".$query;
+//echo "<pre>"; print_r($res);  echo "</pre>"; die();
+	  return $res;
+
+	}
 
 
 }

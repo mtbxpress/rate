@@ -10,8 +10,21 @@ function funcion(){
     }, 3500);
   }
 </script>#}
+<style>
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url("{{ asset('imagenes/loading.gif') }}") 50% 50% no-repeat rgb(249,249,249);
+    opacity: .8;
+}
+</style>
 {% endblock %}
 {% block pageContent %}
+  <div class="loader"></div>  {# loader #}
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
@@ -145,12 +158,24 @@ function funcion(){
                           <div class="col-xs-12 bottom text-center">
                             <div class="col-xs-12 col-sm-6 emphasis">
                               <p class="ratings">
-                                <a>4.0</a>
-                                <a href="#"><span class="fa fa-star"></span></a>
-                                <a href="#"><span class="fa fa-star"></span></a>
-                                <a href="#"><span class="fa fa-star"></span></a>
-                                <a href="#"><span class="fa fa-star"></span></a>
-                                <a href="#"><span class="fa fa-star-o"></span></a>
+                                <a>{{ usuario.media }}</a>
+
+                                {% for i in range(1, 5) %}
+                                    {% if i <= usuario.media %}
+                                        <a><span class="fa fa-star " ></span></a>
+                                    {% else %}
+                                          {% if i - usuario.media > 0.3  and  i - usuario.media < 0.7 %}
+                                              <a><span class="fa fa-star-half-o" ></span></a>
+                                          {% else %}
+                                            <a><span class="fa fa-star-o" ></span></a>
+                                          {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                              {#  <a><span class="fa fa-star e1" ></span></a>
+                                <a><span class="fa fa-star e1 e2"></span></a>
+                                <a><span class="fa fa-star e1 e2 e3"></span></a>
+                                <a><span class="fa fa-star e1 e2 e3 e4"></span></a>
+                                <a><span class="fa fa-star e1 e2 e3 e3 e5"></span></a>#}
                               </p>
                             </div>
                             <div class="col-xs-12 col-sm-6 emphasis">
@@ -299,5 +324,9 @@ function funcion(){
      $(".loader").fadeOut( "slow" );
 });
 */
+ $(window).on('load',function(){
+     $(".loader").fadeOut( "slow" );
+});
+
 </script>
 {% endblock %}

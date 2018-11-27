@@ -154,6 +154,12 @@ class EncuestaController extends Controller
                             $encuesta->setCompletada('SI');
                             $em->persist($encuesta);
                             $em->flush();
+
+                            $mediaTotal = $em->getRepository('AppBundle:Usuario')->calcularMediaTotal($encuesta->getEvaluado()->getId());
+                            $evaluado    = $em->getRepository('AppBundle:Usuario')->find($encuesta->getEvaluado()->getId());
+                            $evaluado->setMedia($mediaTotal[0]['media']);
+                            $em->persist($evaluado);
+                            $em->flush();
                      }
                      else{
                           $this->addFlash('danger', 'No se han respondido todas las preguntas' );
