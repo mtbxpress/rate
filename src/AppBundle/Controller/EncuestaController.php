@@ -42,19 +42,21 @@ class EncuestaController extends Controller
 	                $cursoActivo[0]->addTitulacion($encuesta->getTitulacion());
 
                              $rep = $em->getRepository('AppBundle:Pregunta');
-                             if($encuesta->getUsuario()->getRoles()[0] == 'ROLE_PROFE'){
+                             if($encuesta->getEvaluado()->getRoles()[0] == 'ROLE_PROFE'){
                                 $tipoPregunta = 'PROFESOR_EXTERNO';
                              }
-                             else if($encuesta->getUsuario()->getRoles()[0] == 'ROLE_PROFI'){
+                             else if($encuesta->getEvaluado()->getRoles()[0] == 'ROLE_PROFI'){
                                 $tipoPregunta = 'PROFESOR_INTERNO';
                              }
-                             else if($encuesta->getUsuario()->getRoles()[0] == 'ROLE_ALU'){
+                             else if($encuesta->getEvaluado()->getRoles()[0] == 'ROLE_ALU'){
                                 $tipoPregunta = 'ALUMNO';
                              }
                              else { $tipoPregunta = 'PROFESOR_INTERNO'; }
-                             $preguntas = $rep->findByTipo(['tipo' => $tipoPregunta ]);
 
+                             $preguntas = $rep->findByTipo(['tipo' => $tipoPregunta ]);
+                        //      echo $tipoPregunta;  echo count($preguntas ); die("jdgiu");
                              foreach ($preguntas as $key => $value) {
+
                                 $encPre = new EncuestaPregunta();
                                 $encPre->setEncuesta($encuesta);
                                 $encPre->setPregunta($value);
@@ -198,6 +200,7 @@ class EncuestaController extends Controller
                 if($encuesta->getUsuario()->getId() == $usuario->getId()){
                     if($encuesta->getCompletada() == 'NO'){
                         $encuPregs = $encuesta->getEncuestapregunta();
+                  //      dump($encuPregs); die();
                       //  echo count($encuPregs); die();
                         if(count($encuPregs) == 0){
                             $this->addFlash('danger', 'Esta encuesta no tiene preguntas asignadas' );

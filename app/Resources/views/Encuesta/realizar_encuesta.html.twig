@@ -152,9 +152,9 @@
                                       <div class="form-group text-center">
                                         <div class="centro">
                                           <h1>
-                                        {% if urlActual[2] == 'es' %}
+                                        {% if urlActual[1] == 'es' %}
                                             {{ encuPreg.pregunta.descripcion}}
-                                        {% elseif urlActual[2] == 'en' %}
+                                        {% elseif urlActual[1] == 'en' %}
                                           {{ encuPreg.pregunta.descripcionIngles}}
                                         {% endif %}
                                           </h1>
@@ -218,10 +218,10 @@
 
                                       <div class="form-group text-center">
                                         <div class="centro">
-                                          <h1>
-                                        {% if urlActual[2] == 'es' %}
+                                          <h1>{{ encuPreg.pregunta.id}}
+                                        {% if urlActual[1] == 'es' %}
                                             {{ encuPreg.pregunta.descripcion}}
-                                        {% elseif urlActual[2] == 'en' %}
+                                        {% elseif urlActual[1] == 'en' %}
                                           {{ encuPreg.pregunta.descripcionIngles}}
                                         {% endif %}
                                           </h1>
