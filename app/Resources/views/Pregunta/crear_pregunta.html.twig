@@ -105,12 +105,12 @@
 					  <div class="btn-group">
 						<div class="btn pull-right">
 							 {{ form_widget(form.reset)}}
-							<span class="text-danger">{{ form_errors(form)}}</span>
+							<span class="text-danger">{#{ form_errors(form)}#}</span>
 						</div>
 					  </div>
 						<div class="btn pull-left">
 							 {{ form_widget(form.aceptar)}}
-							<span class="text-danger">{{ form_errors(form)}}</span>
+							<span class="text-danger">{#{ form_errors(form)}#}</span>
 						</div>
 					</div><!-- # FIN Aceptar y Reset -->
 						{{ form_end(form) }}
@@ -266,7 +266,7 @@
 <script>
 $(document).ready(function() {
     $('#tabla_datatable').DataTable( {
-      "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
+      "lengthMenu": [[10, 25, 50, -1], [ 10, 25, 50, "All"]],
         "language": {
      //       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
              "url": url

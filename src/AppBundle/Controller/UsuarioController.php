@@ -64,13 +64,24 @@ class UsuarioController extends Controller
             }
             if(isset($usuario) ){
                 $encsDelUsuarioEvaluado = $em->getRepository('AppBundle:Encuesta')->findByEvaluado($usuario);
+                $resultados = 0;
 
                 foreach ($encsDelUsuarioEvaluado as $key => $value) {
 
                     $encResultados[$value->getId()] = $em->getRepository('AppBundle:EncuestaPregunta')->findByEncuesta($value->getId());
                 }
-                if(!isset($encResultados) ){
-                    $encResultados = 0;
+                if(isset($encResultados)){
+                    foreach ($encResultados as $key => $value) {
+                              if( $value  != null ){
+                                      $resultados = 1;
+                              }
+                    }
+                }
+   /*             if(!isset($encResultados) ){
+                    $encResultados = 0; // sin encuestas asignadas
+                }*/
+                if( $resultados == 0){
+                    $encResultados = 1; // con encuesta asignada pero sin completar
                 }
 
                 return $this->render('Usuario/mostrar_usuario.html.twig', array('usuario'=>$usuario, 'encResultados' => $encResultados ,'medias' => $medias));

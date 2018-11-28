@@ -5,12 +5,15 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Titulacion
  *
  * @ORM\Table(name="titulacion")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TitulacionRepository")
  */
+
 class Titulacion
 {
     /**
@@ -25,7 +28,12 @@ class Titulacion
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=255, unique=false)
+     * @ORM\Column(name="nombre", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "150",
+     * )
      */
     private $nombre;
 
@@ -33,6 +41,11 @@ class Titulacion
      * @var string
      *
      * @ORM\Column(name="codigo", type="string", length=15, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "15",
+     * )
      */
     private $codigo;
 

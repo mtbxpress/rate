@@ -3,7 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Resultado
  *
@@ -24,7 +25,12 @@ class Resultado
     /**
      * @var string
      *
-     * @ORM\Column(name="valor", type="string", length=5, nullable=false)
+     * @ORM\Column(name="valor", type="string", length=5, nullable=false,  unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "1",
+     *      max = "5",
+     * )
      */
     private $valor;
 

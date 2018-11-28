@@ -62,7 +62,7 @@ class EncuestaController extends Controller
                              }
                             $em->persist($encuesta);
                             $em->flush();
-                            $this->addFlash('success', 'Registro eliminado correctamente' );
+                            $this->addFlash('success', 'Registro creado correctamente' );
                     }
                         else { $this->addFlash('danger', 'Este tipo usuario no puede realizar esa encuesta' ); }
 
@@ -191,10 +191,18 @@ class EncuestaController extends Controller
             $rep = $em->getRepository('AppBundle:Encuesta');
             $encuesta = $rep->find($idEncuesta);
 
+            $rep = $em->getRepository('AppBundle:Encuesta');
+            $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
+
             if($encuesta){
                 if($encuesta->getUsuario()->getId() == $usuario->getId()){
                     if($encuesta->getCompletada() == 'NO'){
                         $encuPregs = $encuesta->getEncuestapregunta();
+                      //  echo count($encuPregs); die();
+                        if(count($encuPregs) == 0){
+                            $this->addFlash('danger', 'Esta encuesta no tiene preguntas asignadas' );
+                            return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
+                        }
                         return $this->render('Encuesta/realizar_encuesta.html.twig', array('encuPregs'=>$encuPregs ));
                     }
                     else{ $this->addFlash('danger', 'Esta encuesta ya ha sido completada' ); }
@@ -205,8 +213,7 @@ class EncuestaController extends Controller
             }else{
                 $this->addFlash('danger', 'No existe esa encuesta asignadas' );
             }
-            $rep = $em->getRepository('AppBundle:Encuesta');
-            $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
+
 
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";

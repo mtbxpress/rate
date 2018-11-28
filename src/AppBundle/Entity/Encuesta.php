@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 /**
  * Encuesta
  *
- * @ORM\Table(name="encuesta")
+ * @ORM\Table(name="encuesta" , uniqueConstraints={ @ORM\UniqueConstraint(name="usu_tit_eva_unicos", columns={"titulacion_id", "usuario_id", "evaluado_id"})  })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EncuestaRepository")
  */
 class Encuesta

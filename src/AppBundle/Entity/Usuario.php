@@ -7,6 +7,8 @@ use AppBundle\Entity\Titulacion;
 #@ORM\OneToMany(targetEntity="App\Entity\FormulaColor", mappedBy="color")
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,11 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "8",
+     *      max = "15",
+     * )
      */
     private $username;
 
@@ -38,6 +45,11 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="apellidos", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "100",
+     * )
      */
     private $apellidos;
 
@@ -45,6 +57,11 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=30)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "50",
+     * )
      */
     private $nombre;
 
@@ -52,6 +69,7 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=100, nullable=true)
+     * @Assert\Email()
      */
     private $email;
 
@@ -66,6 +84,7 @@ class Usuario implements UserInterface
      * @var \DateTime
      *
      * @ORM\Column(name="fechaAlta", type="datetime")
+     * @Assert\DateTime
      */
     private $fechaAlta;
 
@@ -114,7 +133,7 @@ class Usuario implements UserInterface
     /**
      * @var decimal
      *
-     * @ORM\Column(name="media", type="decimal", precision=4, scale=1)
+     * @ORM\Column(name="media", type="decimal", precision=4, scale=1, nullable=true)
      */
     private $media;
 

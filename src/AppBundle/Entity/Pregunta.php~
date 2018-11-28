@@ -3,11 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * Pregunta
  *
- * @ORM\Table(name="pregunta")
+ * @ORM\Table(name="pregunta", uniqueConstraints={ @ORM\UniqueConstraint(name="descripcion", columns={"video_dimension"}),
+    @ORM\UniqueConstraint(name="tipo", columns={"tipo"})}
+     )}
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PreguntaRepository")
  */
 class Pregunta
@@ -25,6 +28,11 @@ class Pregunta
      * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "100",
+     * )
      */
     private $descripcion;
 
@@ -32,6 +40,11 @@ class Pregunta
      * @var string
      *
      * @ORM\Column(name="descripcionIngles", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "100",
+     * )
      */
     private $descripcionIngles;
 
@@ -55,6 +68,7 @@ class Pregunta
      *
     private $encuestas;
     */
+
 
 
     /**
@@ -243,5 +257,29 @@ class Pregunta
     public function removeEncuestapreguntum(\AppBundle\Entity\EncuestaPregunta $encuestapreguntum)
     {
         $this->encuestapregunta->removeElement($encuestapreguntum);
+    }
+
+    /**
+     * Set descripcionIngles
+     *
+     * @param string $descripcionIngles
+     *
+     * @return Pregunta
+     */
+    public function setDescripcionIngles($descripcionIngles)
+    {
+        $this->descripcionIngles = $descripcionIngles;
+
+        return $this;
+    }
+
+    /**
+     * Get descripcionIngles
+     *
+     * @return string
+     */
+    public function getDescripcionIngles()
+    {
+        return $this->descripcionIngles;
     }
 }

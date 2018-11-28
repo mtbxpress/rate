@@ -31,6 +31,7 @@ class TitulacionController extends Controller
                 $existe = $rep->findByCodigo(array('codigo' => $codigo)/*,array('nombre' => $nombre)*/);
                 if(isset($existe[0])){
                      $titulacion = $em->getRepository('AppBundle:Titulacion')->find($existe[0]->getId());
+                     $this->addFlash('danger', 'Esa titulacion ya existe' );
                 }
 
                 $rep = $em->getRepository('AppBundle:Curso');
@@ -42,11 +43,11 @@ class TitulacionController extends Controller
                 $em->persist($titulacion);
                 $em->flush();
 
-                if(null != $titulacion->getId()) {
+                if(null != $titulacion->getId() && !isset($existe[0]) ){
                    $this->addFlash('success', 'Registro creado correctamente' );
                 }
                 else{
-                  $this->addFlash('danger', 'Error al eliminar el registro' );
+            //      $this->addFlash('danger', 'Error al crear el registro' );
                 }
             }
         }catch (Exception $ex) {

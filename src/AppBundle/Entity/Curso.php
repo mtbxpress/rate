@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,13 +23,13 @@ class Curso
     private $id;
 //@Assert\Regex("/^\w+/")  ([0][1-9]|[12][0-9]|3[01])       *     pattern="/^[a-z]/",       message="Formato incorrecto"
 
-
     /**
      * @var string
      * @Assert\Regex(
      *     pattern="/([2]\d{3}\/\d{2})/",
      *     match=true,
      * )
+     * @Assert\NotBlank()
      * @Assert\Length(
      *      min = "7",
      *      max = "7",

@@ -3,11 +3,17 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+/* dos indicces unicos
+ * @ORM\Table(name="pregunta", uniqueConstraints={ @ORM\UniqueConstraint(name="descripcion", columns={"descripcion"}),
+    @ORM\UniqueConstraint(name="tipo", columns={"tipo"})}
+     )}
+*/
 /**
  * Pregunta
  *
- * @ORM\Table(name="pregunta")
+ * @ORM\Table(name="pregunta", uniqueConstraints={ @ORM\UniqueConstraint(name="descripcion_tipo_unicos", columns={"descripcion", "tipo"})  })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PreguntaRepository")
  */
 class Pregunta
@@ -25,6 +31,11 @@ class Pregunta
      * @var string
      *
      * @ORM\Column(name="descripcion", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "150",
+     * )
      */
     private $descripcion;
 
@@ -32,6 +43,11 @@ class Pregunta
      * @var string
      *
      * @ORM\Column(name="descripcionIngles", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "150",
+     * )
      */
     private $descripcionIngles;
 
@@ -46,6 +62,7 @@ class Pregunta
      * @var int
      *
      * @ORM\Column(name="orden", type="smallint")
+     * @Assert\NotBlank()
      */
     private $orden;
 
