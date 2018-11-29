@@ -100,7 +100,7 @@ class Usuario implements UserInterface
      *
      * @ORM\Column(name="avatar", type="string", length=50)
      */
-    private $avatar = 'img.jpg';
+    private $avatar = 'avatar_default.jpeg';
 
     /**
      * @var int

@@ -8,7 +8,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ asset('template/build/images/img.jpg') }}" alt="">{{ app.user.nombre }} {{ app.user.apellidos }}
+                    <img src="{{ asset('imagenes/avatares/'~app.user.avatar~'') }}" alt="">{{ app.user.nombre }} {{ app.user.apellidos }}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -23,70 +23,40 @@
                     <li><a href="{{ path('logout') }}"><i class="fa fa-sign-out pull-right"></i> {% trans %}Cerrar sesion{% endtrans %}</a></li>
                   </ul>
                 </li>
+          {% set urlActual =  path(app.request.attributes.get('_route'),  app.request.attributes.get('_route_params'))  %}
+
+          {% set urlES = urlActual|replace({'en/': 'es/'}) %}
+          {% set urlEN = urlActual|replace({'es/': 'en/'}) %}
+
                 <li role="presentation" class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
+                    <i class="fa fa-flag-o"></i>
+                 {#   <span class="badge bg-green">6</span> #}
                   </a>
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+
                     <li>
-                      <a>
-                        <span class="image"><img src="{{ asset('template/build/images/img.jpg') }}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
+                      <a href="{{ urlES }}">
+                        <span class="image"> <img src="{{ asset('imagenes/es.png')}}" alt="ES"> {% trans %}Español{% endtrans %}</span>
                       </a>
                     </li>
                     <li>
-                      <a>
-                        <span class="image"><img src="{{ asset('template/build/images/img.jpg') }}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="{{ asset('template/build/images/img.jpg') }}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="{{ asset('template/build/images/img.jpg') }}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
+                      <a href="{{ urlEN }}">
+                        <span class="image"> <img src="{{ asset('imagenes/en.png')}}" alt="EN"> {% trans %}Ingles{% endtrans %}</span>
                       </a>
                     </li>
                     <li>
                       <div class="text-center">
                         <a>
-                          <strong>See All Alerts</strong>
+                          <i class="fa fa-angle-left"></i>
+                          <strong>{% trans %}Idiomas{% endtrans %}</strong>
                           <i class="fa fa-angle-right"></i>
                         </a>
                       </div>
                     </li>
                   </ul>
                 </li>
+
               </ul>
             </nav>
           </div>

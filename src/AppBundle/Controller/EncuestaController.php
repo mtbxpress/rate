@@ -141,13 +141,14 @@ class EncuestaController extends Controller
 
                     $respuestas = $request->request; //devuelve tipo parameterbag
                     $respuestas = $respuestas->all();
+             //       dump($respuestas);die();
                      $encuPreg = $em->getRepository('AppBundle:EncuestaPregunta')->findBy(  array('encuesta' => $idEncuesta) );
 
                      if( count($encuPreg) == count($respuestas)){
 
                             foreach ($encuPreg as $key => $value) {
-
-                                $resultado = $em->getRepository('AppBundle:Resultado')->findOneBy(  array('valor' => $respuestas[$value->getPregunta()->getId()]) );
+                              $valor =  $respuestas[$value->getPregunta()->getId()];
+                                $resultado = $em->getRepository('AppBundle:Resultado')->findOneBy(  array('valor' => $valor) );
                                 $value->setResultado($resultado);
                                 $em->persist($value);
                                 $em->flush();

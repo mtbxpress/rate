@@ -107,6 +107,11 @@
         						<option value="ROLE_ADMIN">Administrador</option>
 			                		</select>
 						</div>
+                                      <div class="form-group">
+                                        {{ form_label(form.avatar)}}
+                                         {{ form_widget(form.avatar, { 'attr': {'class': 'form-control'} }) }}
+                                        <span class="text-danger">{{ form_errors(form.avatar)}}</span>
+                                      </div>
 
                       <div class="ln_solid"></div>
 					<!--  Aceptar y Reset en la misma línea  -->

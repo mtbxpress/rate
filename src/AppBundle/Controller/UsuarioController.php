@@ -107,6 +107,15 @@ class UsuarioController extends Controller
             $form->handleRequest($request);
 
             if($form->isSubmitted() && $form->isValid()){
+                $file= $form['avatar']->getData();
+                if(!$file){
+                    $usuario->setAvatar("avatar_default.jpeg");
+                }
+                else{
+                    if($usuario->getAvatar() != '' && $usuario->getAvatar() !=null){
+                        $subido = $this->subirImagenAction($form,$usuario);
+                    }
+                }
                 $em = $this->getDoctrine()->getManager();
 
                 $roles = $request->request->get('roles');
@@ -162,28 +171,64 @@ class UsuarioController extends Controller
         return $this->render('Usuario/crear_usuario.html.twig', array('form' => $form->createView() ));
     }
 
+    public function subirImagenAction($form,$usuario)   {
+            // Recogemos el fichero
+            $subido = false;
+            $file= $form['avatar']->getData();  // OTRA FORMA DE OBTENER EL ELEMENTO DEL FORMULARIO
+            if($file){  //$emp->setNombreEmpresa("Fujitsu")->getData();
+                // Sacamos la extensión del fichero
+                $ext=$file->guessExtension();
+
+                // Le ponemos un nombre al fichero NO PUEDO PONER EN EL NOMBRE EL ID, POR QUE AUN NO SE HA CREADO $emp->getId(), SE CREA CUANDO SE INSRTA EN LA BD CON EL FLUSH
+                $file_name="avatar_".$usuario->getUsername()."_".time().".".$ext;
+
+                // Guardamos el fichero en el directorio uploads que estará en el directorio /web del framework
+                $subido = $file->move("imagenes/avatares", $file_name);
+
+                // Establecemos el nombre de fichero en el atributo de la entidad
+
+                $usuario->setAvatar($file_name);
+            }
+            return $subido;
+    }
  public function editarUsuarioAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, ValidatorInterface $validator, $idUsuario){
 
   try{
+    $usuarioLogado = $this->getuser();
+
+
    $m = $this->getDoctrine()->getManager();
    $usuario = $m->getRepository('AppBundle:Usuario')->find($idUsuario);
-
+   $avatarOriginal = $usuario->getAvatar();
    $form = $this->createForm(UsuarioType::class, $usuario);
    $form->handleRequest($request);
 
    if($form->isSubmitted() && $form->isValid()){
-    $roles = $request->request->get('roles');
-    $usuario->setRoles($roles);
-                          $password = $passwordEncoder->encodePassword($usuario, $usuario->getPassword());
-                          $usuario->setPassword($password);
-    $usuario = $form->getData();
+        $roles = $request->request->get('roles');
+        if(!$roles){
+            $usuario->setRoles($usuarioLogado->getRoles()[0]);
+        }else{
+            $usuario->setRoles($roles);
+        }
+    //    $subido = $this->subirImagenAction($form,$usuario);
 
-    $man = $this->getDoctrine()->getManager();
-    $man->persist($usuario);
-    $man->flush();
-    $this->addFlash('success', 'Registro modificado correctamente' );
+        if($usuario->getAvatar() != '' && $usuario->getAvatar() !=null){
+            $subido = $this->subirImagenAction($form,$usuario);
+            if( $subido && $avatarOriginal != 'avatar_default.jpeg' ){
+                unlink('imagenes/avatares/'.$avatarOriginal);
+            }
+        }
 
-    return $this->redirectToRoute('mostrar_usuarios' , array('m' => 1));
+        $password = $passwordEncoder->encodePassword($usuario, $usuario->getPassword());
+        $usuario->setPassword($password);
+        $usuario = $form->getData();
+
+        $man = $this->getDoctrine()->getManager();
+        $man->persist($usuario);
+        $man->flush();
+        $this->addFlash('success', 'Registro modificado correctamente' );
+
+        return $this->redirectToRoute('mostrar_usuarios' , array('m' => 1));
    }
 
   }
@@ -203,6 +248,9 @@ class UsuarioController extends Controller
             }
             $idLogado = $this->getuser()->getId();
             if($idLogado != $usuario->getId()){
+                if( $usuario->getAvatar() != 'avatar_default.jpeg' ){
+                     unlink('imagenes/avatares/'.$usuario->getAvatar());
+                }
                 $m->remove($usuario);
                 $m->flush();
                         $this->addFlash('success', 'Registro eliminado correctamente' );

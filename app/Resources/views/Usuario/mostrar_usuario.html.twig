@@ -66,9 +66,17 @@ function funcion(){
                       <div class="profile_img">
                         <div id="crop-avatar">
                           <!-- Current avatar -->
-                          <img class="img-responsive avatar-view" src="{{ asset('template/build/images/img.jpg') }}" alt="Avatar" title="Change the avatar">
+                          <img class="img-responsive avatar-view" src="{{ asset('imagenes/avatares/'~usuario.avatar~'') }}" alt="Avatar" title="{% trans %}Cambiar avatar{% endtrans %}" >
                         </div>
                       </div>
+                    {#  <div class="text-center">
+                        <form>
+                          <div class="form-group">
+                            <label for="exampleFormControlFile1">Avatar</label>
+                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                          </div>
+                        </form>
+                      </div>#}
                       <h3>{{ usuario.nombre }}  {{ usuario.apellidos }}</h3>
 
                       <ul class="list-unstyled user_data">
@@ -162,7 +170,7 @@ function funcion(){
                         <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
 
                           {% set cnt, active = 0, 'active' %}
-                            {{ dump(encResultados) }}
+                            {#{ dump(encResultados) }#}
                           {% for encResultado in encResultados %}
 
                                 <li role="presentation" class="{{active}}">
@@ -187,7 +195,7 @@ function funcion(){
                               {% for resultado in encResultado %}
                                   {% set cntp = cntp+1 %}
                                   <li>
-                                    <img src="{{ asset('template/build/images/img.jpg') }}" class="avatar" alt="Avatar">
+                                    <img src="{{ asset('imagenes/avatares/'~resultado.encuesta.usuario.avatar~'') }}" class="avatar" alt="Avatar">
                                    {# <img src="{{ asset('uploads/'~empresa.logo~'')}}" alt="{{ empresa.logo }}" max-width="60" height="50">#}
                                     <div class="message_date">
                                       <h3 class="date text-info">

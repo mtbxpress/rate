@@ -93,17 +93,23 @@
 							 {{ form_widget(form.telefono, { 'attr': {'class': 'form-control'} }) }}
 							<span class="text-danger">{{ form_errors(form.telefono)}}</span>
 						</div>
-						<div class="form-group">
-						    <label for="Rol">Rol</label>
-			                		<select name="roles"  class="form-control select2" data-placeholder="Seleccione un rol" style="width: 100%;" required="">
-			                		<option></option>
-        						<option value="ROLE_ALU">Alumno</option>
-        						<option value="ROLE_PROFI">Prefosor interno</option>
-        						<option value="ROLE_PROFE">Profesor externo</option>
-        						<option value="ROLE_ADMIN">Administrador</option>
-			                		</select>
-						</div>
-
+                              {% if  app.user.roles[0] == 'ROLE_ADMIN' %}
+                  						<div class="form-group">
+                  						    <label for="Rol">Rol</label>
+                  			                		<select name="roles"  class="form-control select2" data-placeholder="Seleccione un rol" style="width: 100%;" required="">
+                  			                		<option></option>
+                          						<option value="ROLE_ALU">Alumno</option>
+                          						<option value="ROLE_PROFI">Prefosor interno</option>
+                          						<option value="ROLE_PROFE">Profesor externo</option>
+                          						<option value="ROLE_ADMIN">Administrador</option>
+                  			                		</select>
+                  						</div>
+                              {%  endif %}
+                                      <div class="form-group">
+                                        {{ form_label(form.avatar)}}
+                                         {{ form_widget(form.avatar, { 'attr': {'class': 'form-control'} }) }}
+                                        <span class="text-danger">{{ form_errors(form.avatar)}}</span>
+                                      </div>
                       <div class="ln_solid"></div>
 					<!--  Aceptar y Reset en la misma línea  -->
 					<div class="btn-toolbar" role="toolbar">

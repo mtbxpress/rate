@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 
 class UsuarioType extends AbstractType
@@ -29,6 +30,11 @@ class UsuarioType extends AbstractType
         ->add('apellidos',TextType::class,array('required' => true, 'label' => 'Apellidos'))
         ->add('email',EmailType::class, array('required' => true))
         ->add('telefono',IntegerType::class, array('required' => false))
+        ->add('avatar', FileType::class,array(
+                'data_class' => null, // <== esto arregla el error de formulario que espera archivo y recibe string
+                'required' => false,
+                "label" => "Avatar",
+                "attr" =>array("class" => "form-control")))
 /*
 >add('idFkRolSistema',EntityType::class, array(
                     'class'=> 'AppBundle:RolSistema',

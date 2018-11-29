@@ -172,7 +172,7 @@
                                             <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.pregunta.id}}2" name="{{encuPreg.pregunta.id}}" value="2" />
                                                   <label for="p{{encuPreg.pregunta.id}}2" title="{% trans %}2est{% endtrans %}">2 stars</label>
 
-                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.pregunta.id}}1" name="{{cnt}}" value="1"  required="" />
+                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.pregunta.id}}1" name="{{encuPreg.pregunta.id}}" value="1"  required="" />
                                                   <label for="p{{encuPreg.pregunta.id}}1" title="{% trans %}1est{% endtrans %}">1 star</label>
                                         </div>
                                         </div>
@@ -218,7 +218,7 @@
 
                                       <div class="form-group text-center">
                                         <div class="centro">
-                                          <h1>{{ encuPreg.pregunta.id}}
+                                          <h1>
                                         {% if urlActual[1] == 'es' %}
                                             {{ encuPreg.pregunta.descripcion}}
                                         {% elseif urlActual[1] == 'en' %}
@@ -288,7 +288,12 @@
              alert("{% trans %}No ha contestado las preguntas{% endtrans %} "+nc);
             }
             else {
-               $('#form1').submit();
+              if(tipo == 'p'){
+                $('#form1').submit();
+              }
+              else{
+                $('#form2').submit();
+              }
             }
       });
   });
