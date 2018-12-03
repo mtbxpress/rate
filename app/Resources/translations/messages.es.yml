@@ -105,3 +105,8 @@ Cambiar avatar: Cambiar avatar
 Español: Español
 Ingles: Inglés
 Idiomas: Idiomas
+Profesor Externo: Profesor Externo
+Profesor Interno: Profesor Interno
+eliminar.encuesta.completada: No se puede eliminar una encuesta que ya ha sido completada
+Completada: Completada
+eliminar.pregunta.encuesta.asignada: No se puede eliminar una pregunta que ya ha sido asignada a una encuesta

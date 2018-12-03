@@ -120,15 +120,19 @@ public function editarPreguntaAction(Request $request, $idPregunta){
                 $m = $this->getDoctrine()->getManager();
                $encuestapreguntas = $m->getRepository('AppBundle:EncuestaPregunta')->findByPregunta($idPregunta);
 
-               if($encuestapreguntas){
-                    foreach ($encuestapreguntas as $key => $encpreg) {
+
+              if($encuestapreguntas){
+                $this->addFlash('danger', 'eliminar.pregunta.encuesta.asignada' );
+                 /*   foreach ($encuestapreguntas as $key => $encpreg) {
                         $m->remove($encpreg);
                         $m->flush();
-                     }
+                     }*/
               }
-                $m->remove($pregunta);
-                $m->flush();
-                $this->addFlash('success', 'Registro eliminado correctamente' );
+              else{
+                  $m->remove($pregunta);
+                  $m->flush();
+                  $this->addFlash('success', 'Registro eliminado correctamente' );
+               }
              }
 
         //     $_SERVER['PHP_SELF']

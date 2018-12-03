@@ -7,8 +7,8 @@ Crear usuario: Create User
 Todos: All
 SIN RESULTADOS: NO RESULT
 Alumno: Student
-Externo: External Tc
-Interno: Internal Tc
+Externo: External
+Interno: Internal
 Crear nuevo usuario: Create new user
 Nuevo usuario: New user
 Formulario: Form
@@ -104,3 +104,8 @@ Cambiar avatar: Change the avatar
 Español: Spanish
 Ingles: English
 Idiomas: Languages
+Profesor Externo: External Teacher
+Profesor Interno: Internal Teacher
+eliminar.encuesta.completada: You can not delete a survey that has already been completed
+Completada: Completed
+eliminar.pregunta.encuesta.asignada: Can not delete a question that has already been assigned to a survey

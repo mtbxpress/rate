@@ -61,8 +61,8 @@ function funcion(){
                         <ul class="pagination pagination-split">
                           <a href="{{ path('buscar_usuario_letra', {'letra': 'admin'})}}" class="btn btn-danger btn-md" role="button">Admin</a>
                           <a href="{{ path('buscar_usuario_letra', {'letra': 'alumno'})}}" class="btn btn-success btn-md" role="button">{% trans %}Alumno{% endtrans %} </a>
-                          <a href="{{ path('buscar_usuario_letra', {'letra': 'externo'})}}" class="btn btn-info btn-md" role="button">{% trans %}Externo{% endtrans %}</a>
-                          <a href="{{ path('buscar_usuario_letra', {'letra': 'interno'})}}" class="btn btn-warning btn-md" role="button">{% trans %}Interno{% endtrans %}</a>
+                          <a href="{{ path('buscar_usuario_letra', {'letra': 'externo'})}}" class="btn btn-info btn-md" role="button">{% trans %}Profesor Externo{% endtrans %}</a>
+                          <a href="{{ path('buscar_usuario_letra', {'letra': 'interno'})}}" class="btn btn-warning btn-md" role="button">{% trans %}Profesor Interno{% endtrans %}</a>
                           <a href="{{ path('buscar_usuario_letra', {'letra': 'All'})}}" class="btn btn-default btn-md" role="button">{% trans %}Todos{% endtrans %}</a>
                         </ul>
                       </div>
@@ -152,7 +152,7 @@ function funcion(){
                               </ul>
                             </div>
                             <div class="right col-xs-5 text-center">
-                              <img src="{{ asset('template/build/images/img.jpg') }}" alt="" class="img-circle img-responsive">
+                              <img src="{{ asset('imagenes/avatares/'~usuario.avatar~'') }}{#{ asset('template/build/images/img.jpg') }#}" alt="" class="img-circle img-responsive">
                             </div>
                           </div>
                           <div class="col-xs-12 bottom text-center">

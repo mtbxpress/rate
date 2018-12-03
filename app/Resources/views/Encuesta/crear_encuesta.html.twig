@@ -144,6 +144,7 @@
                   <th>{% trans %}Titulacion{% endtrans %}</th>
                   <th>{% trans %}usuario.usuario{% endtrans %}</th>
                   <th>{% trans %}usuario.evaluado{% endtrans %}</th>
+                  <th>{% trans %}Completada{% endtrans %}</th>
                   <th>{% trans %}Opciones{% endtrans %}</th>
                 </tr>
                 </thead>
@@ -154,7 +155,7 @@
                         <td>{{ encuesta.titulacion }}</td>
                         <td>{{ encuesta.nombre_usuario }} {{ encuesta.apellidos }}</td>
                         <td>{{ encuesta.naevaluado }}</td>
-
+                        <td class="text-center">{{ encuesta.completada }}</td>
                     <td>
                       <div class="text-center">
 
@@ -187,6 +188,7 @@
                   <th>{% trans %}Titulacion{% endtrans %}</th>
                   <th>{% trans %}usuario.usuario{% endtrans %}</th>
                   <th>{% trans %}usuario.evaluado{% endtrans %}</th>
+                  <th>{% trans %}Completada{% endtrans %}</th>
                   <th>{% trans %}Opciones{% endtrans %}</th>
                 </tr>
                 </tfoot>

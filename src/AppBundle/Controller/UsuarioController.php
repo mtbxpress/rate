@@ -67,9 +67,11 @@ class UsuarioController extends Controller
                 $resultados = 0;
 
                 foreach ($encsDelUsuarioEvaluado as $key => $value) {
-
-                    $encResultados[$value->getId()] = $em->getRepository('AppBundle:EncuestaPregunta')->findByEncuesta($value->getId());
+                    if($value->getCompletada() == 'SI'){
+                        $encResultados[$value->getId()] = $em->getRepository('AppBundle:EncuestaPregunta')->findByEncuesta($value->getId());
+                    }
                 }
+
                 if(isset($encResultados)){
                     foreach ($encResultados as $key => $value) {
                               if( $value  != null ){
@@ -196,7 +198,6 @@ class UsuarioController extends Controller
   try{
     $usuarioLogado = $this->getuser();
 
-
    $m = $this->getDoctrine()->getManager();
    $usuario = $m->getRepository('AppBundle:Usuario')->find($idUsuario);
    $avatarOriginal = $usuario->getAvatar();
@@ -211,11 +212,15 @@ class UsuarioController extends Controller
             $usuario->setRoles($roles);
         }
     //    $subido = $this->subirImagenAction($form,$usuario);
-
+dump($usuario);die();
         if($usuario->getAvatar() != '' && $usuario->getAvatar() !=null){
+
             $subido = $this->subirImagenAction($form,$usuario);
             if( $subido && $avatarOriginal != 'avatar_default.jpeg' ){
                 unlink('imagenes/avatares/'.$avatarOriginal);
+            }
+            else{
+                $usuario->setAvatar($avatarOriginal);
             }
         }
 

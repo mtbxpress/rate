@@ -25,8 +25,8 @@ class EncuestaController extends Controller
             if($form->isSubmitted() && $form->isValid()){
 
 	   	//   $evaluado= $form['evaluado']->getData();
-                    $rolUsuario = $encuesta->getUsuario()->getRoles()[0];
-                    $rolEvaluado = $encuesta->getEvaluado()->getRoles()[0];
+                $rolUsuario = $encuesta->getUsuario()->getRoles()[0];
+                $rolEvaluado = $encuesta->getEvaluado()->getRoles()[0];
             	   if($encuesta->getEvaluado() != $encuesta->getUsuario() ){
 
                     if(
@@ -55,13 +55,18 @@ class EncuestaController extends Controller
 
                              $preguntas = $rep->findByTipo(['tipo' => $tipoPregunta ]);
                         //      echo $tipoPregunta;  echo count($preguntas ); die("jdgiu");
-                             foreach ($preguntas as $key => $value) {
+                             foreach ($preguntas as $key => $pregunta) {
 
                                 $encPre = new EncuestaPregunta();
                                 $encPre->setEncuesta($encuesta);
-                                $encPre->setPregunta($value);
+                                $encPre->setPregunta($pregunta);
                                 $encuesta->addEncuestapregunta($encPre);
+                                $pregunta->addEncuestapreguna($encPre);
+                                $em->persist($encuesta);
+                                $em->persist($pregunta);
+                                $em->flush();
                              }
+
                             $em->persist($encuesta);
                             $em->flush();
                             $this->addFlash('success', 'Registro creado correctamente' );
@@ -94,9 +99,14 @@ class EncuestaController extends Controller
                 $q = $m->createQuery($query);
                 $numDeleted = $q->execute();
 
-                $m->remove($encuesta);
-                $m->flush();
-                $this->addFlash('success', 'Registro eliminado correctamente' );
+                if($encuesta->getCompletada() == 'SI'){
+                    $this->addFlash('danger', 'eliminar.encuesta.completada' );
+                }
+                else{
+                    $m->remove($encuesta);
+                    $m->flush();
+                    $this->addFlash('success', 'Registro eliminado correctamente' );
+               }
              }
 
         //     $_SERVER['PHP_SELF']
