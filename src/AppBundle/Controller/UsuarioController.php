@@ -53,6 +53,11 @@ class UsuarioController extends Controller
 
     public function mostrarUsuarioAction(Request $request, $idUsuario){
         try{
+            $usuarioLogado = $this->getuser();
+            if($usuarioLogado->getRoles()[0] != 'ROLE_ADMIN' && $usuarioLogado->getId() != $idUsuario){
+                $this->addFlash('danger', 'No tiene permiso para ver ese perfil' );
+                return $this->render('Inicio/inicio.html.twig');
+            }
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Usuario');
             $medias = $rep->calcularMedias($idUsuario);
@@ -197,50 +202,60 @@ class UsuarioController extends Controller
 
   try{
     $usuarioLogado = $this->getuser();
-
+    if($usuarioLogado->getRoles()[0] != 'ROLE_ADMIN' && $usuarioLogado->getId() != $idUsuario){
+        $this->addFlash('danger', 'No tiene permiso para editar ese usuario' );
+        return $this->render('Inicio/inicio.html.twig');
+    }
    $m = $this->getDoctrine()->getManager();
    $usuario = $m->getRepository('AppBundle:Usuario')->find($idUsuario);
    $avatarOriginal = $usuario->getAvatar();
+   $rolOriginal = $usuario->getRoles();
    $form = $this->createForm(UsuarioType::class, $usuario);
    $form->handleRequest($request);
 
    if($form->isSubmitted() && $form->isValid()){
         $roles = $request->request->get('roles');
         if(!$roles){
-            $usuario->setRoles($usuarioLogado->getRoles()[0]);
+            $usuario->setRoles($rolOriginal[0]);
         }else{
             $usuario->setRoles($roles);
         }
-    //    $subido = $this->subirImagenAction($form,$usuario);
-dump($usuario);die();
-        if($usuario->getAvatar() != '' && $usuario->getAvatar() !=null){
+
+        $usuario = $form->getData();
+        $password = $passwordEncoder->encodePassword($usuario, $usuario->getPassword());
+        $usuario->setPassword($password);
+
+//dump($usuario);die();
+   //     if( $usuario->getAvatar() !=null){
 
             $subido = $this->subirImagenAction($form,$usuario);
             if( $subido && $avatarOriginal != 'avatar_default.jpeg' ){
                 unlink('imagenes/avatares/'.$avatarOriginal);
             }
-            else{
+            if( !$subido ){
                 $usuario->setAvatar($avatarOriginal);
             }
-        }
-
-        $password = $passwordEncoder->encodePassword($usuario, $usuario->getPassword());
-        $usuario->setPassword($password);
-        $usuario = $form->getData();
+     //   }
 
         $man = $this->getDoctrine()->getManager();
         $man->persist($usuario);
         $man->flush();
         $this->addFlash('success', 'Registro modificado correctamente' );
 
-        return $this->redirectToRoute('mostrar_usuarios' , array('m' => 1));
+
+        if($usuarioLogado->getRoles()[0] == 'ROLE_ADMIN'){
+            return $this->redirectToRoute('mostrar_usuarios' , array('m' => 1));
+        }
+        else{
+            return $this->redirectToRoute('editar_usuario' , array('idUsuario' => $usuarioLogado->getId()));
+        }
    }
 
   }
   catch(Excepcition $ex){
    echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
   }
-  return $this->render('Usuario/editar_usuario.html.twig', array('form' => $form->createView()));
+  return $this->render('Usuario/editar_usuario.html.twig', array('form' => $form->createView(),'usuario'=> $usuario));
  }
 
     public function eliminarUsuarioAction($idUsuario){

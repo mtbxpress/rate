@@ -21,6 +21,7 @@ function funcion(){
                 <h3>{% trans %}Perfil usuario{% endtrans %}</h3>
               </div>
 
+              {% if app.user.roles[0]  == 'ROLE_ADMIN' %}
                 <form action="{{ path('buscar_general')}}">
                   <div class="title_right">
                     <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
@@ -35,6 +36,7 @@ function funcion(){
                     </div>
                   </div>
                 </form>
+              {% endif %}
             </div>
 
             <div class="clearfix"></div>
@@ -85,7 +87,7 @@ function funcion(){
                         </li>
 
                         <li>
-                          <i class="fa fa-info-circle user-profile-icon"></i> &nbsp;{{ usuario.roles }}
+                          <i class="fa fa-info-circle user-profile-icon"></i> &nbsp;{{ usuario.roles|trans }}
                         </li>
 {#
                               {% if  usuario.codigor is defined %}

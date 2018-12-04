@@ -66,7 +66,6 @@ mensaje.encuesta: ¿Está seguro de eliminar la encuesta?
 Mostrar usuarios encuestas: Mostrar usuarios con encuestas
 Mostrar usuarios curso: Usuarios en curso activo
 Pregunta en ingles: Pregunta en Inglés
-Ingles: Inglés
 Anyo: Curso
 Realizar encuesta: Realizar encuesta
 lista.enc.asig: Listado de encuestas asignadas
@@ -110,3 +109,13 @@ Profesor Interno: Profesor Interno
 eliminar.encuesta.completada: No se puede eliminar una encuesta que ya ha sido completada
 Completada: Completada
 eliminar.pregunta.encuesta.asignada: No se puede eliminar una pregunta que ya ha sido asignada a una encuesta
+Administrador: Administrador
+Perfil Usuario: Perfil Usuario
+No tiene permiso para ver ese perfil: No tiene permiso para ver ese perfil
+No tiene permiso para editar ese usuario: No tiene permiso para editar ese usuario
+Editar Usuario: Editar Usuario
+Avatar: Avatar
+ROLE_PROFE: Profesor Externo
+ROLE_PROFI: Profesor Interno
+ROLE_ADMIN: Administrador
+ROLE_ALU: Alumno

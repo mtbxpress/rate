@@ -66,7 +66,6 @@ mensaje.encuesta: Are you sure delete survey?
 Mostrar usuarios encuestas: Users with survey
 Mostrar usuarios curso: Users with active curse
 Pregunta en ingles: Question in English
-Ingles: English
 Anyo: Curse
 Realizar encuesta: Complete survey
 lista.enc.asig: List of assigned surveys
@@ -106,6 +105,16 @@ Ingles: English
 Idiomas: Languages
 Profesor Externo: External Teacher
 Profesor Interno: Internal Teacher
+Administrador: Admin
 eliminar.encuesta.completada: You can not delete a survey that has already been completed
 Completada: Completed
 eliminar.pregunta.encuesta.asignada: Can not delete a question that has already been assigned to a survey
+Perfil Usuario: User Profile
+No tiene permiso para ver ese perfil: You do not have permission to see that profile
+No tiene permiso para editar ese usuario: You do not have permission to edit that profile
+Editar Usuario: Edit User
+Avatar: Avatar
+ROLE_PROFE: Internal Teacher
+ROLE_PROFI: External Teacher
+ROLE_ADMIN: Admin
+ROLE_ALU: Student

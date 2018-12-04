@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 27-11-2018 a las 21:26:18
+-- Tiempo de generación: 04-12-2018 a las 21:14:12
 -- Versión del servidor: 5.7.24-0ubuntu0.16.04.1
 -- Versión de PHP: 7.2.7-1+ubuntu16.04.1+deb.sury.org+1
 
@@ -37,14 +37,9 @@ CREATE TABLE `curso` (
 --
 
 INSERT INTO `curso` (`id`, `descripcion`, `activo`) VALUES
-(62, '2015/18', 0),
-(73, '2016/36', 0),
-(74, '2014/44', 0),
-(75, '2015/12', 1),
-(77, '2015/98', 0),
-(78, '2015/90', 0),
-(79, '2015/14', 0),
-(80, '2015/11', 0);
+(81, '2015/16', 0),
+(82, '2016/17', 0),
+(83, '2017/18', 1);
 
 -- --------------------------------------------------------
 
@@ -62,26 +57,7 @@ CREATE TABLE `curso_titulacion` (
 --
 
 INSERT INTO `curso_titulacion` (`curso_id`, `titulacion_id`) VALUES
-(62, 1),
-(62, 22),
-(62, 23),
-(74, 24),
-(74, 37),
-(74, 43),
-(75, 1),
-(75, 24),
-(75, 25),
-(75, 27),
-(75, 37),
-(75, 44),
-(75, 46),
-(75, 47),
-(75, 49),
-(75, 50),
-(75, 51),
-(75, 52),
-(78, 33),
-(78, 34);
+(83, 55);
 
 -- --------------------------------------------------------
 
@@ -99,9 +75,12 @@ CREATE TABLE `curso_usuario` (
 --
 
 INSERT INTO `curso_usuario` (`curso_id`, `usuario_id`) VALUES
-(75, 1),
-(75, 20),
-(75, 36);
+(83, 1),
+(83, 37),
+(83, 38),
+(83, 39),
+(83, 40),
+(83, 41);
 
 -- --------------------------------------------------------
 
@@ -123,18 +102,10 @@ CREATE TABLE `encuesta` (
 --
 
 INSERT INTO `encuesta` (`id`, `titulacion_id`, `usuario_id`, `evaluado_id`, `naevaluado`, `completada`) VALUES
-(72, 23, 1, 33, NULL, 'SI'),
-(74, 1, 1, 20, 'FDFF g', 'SI'),
-(75, 44, 33, 26, 'x fdfdfd', 'NO'),
-(76, 29, 26, 30, NULL, 'NO'),
-(80, 1, 35, 30, 'ghf fgh', 'NO'),
-(82, 1, 1, 35, 'cvcv vcv', 'SI'),
-(83, 1, 21, 35, 'cvcv vcv', 'NO'),
-(84, 1, 34, 35, 'cvcv vcv', 'NO'),
-(92, 25, 21, 9, 'czcz czxczx', 'NO'),
-(93, 25, 21, 9, 'czcz czxczx', 'NO'),
-(94, 25, 21, 9, 'czcz czxczx', 'NO'),
-(95, 25, 21, 9, 'czcz czxczx', 'NO');
+(96, 55, 38, 37, 'Lola Fernandez Ruiz', 'NO'),
+(102, 55, 39, 37, 'Lola Fernandez Ruiz', 'SI'),
+(103, 55, 37, 38, 'Luis Merino Cabañas', 'SI'),
+(107, 55, 39, 40, 'nuevooooo oucvo', 'SI');
 
 -- --------------------------------------------------------
 
@@ -154,46 +125,12 @@ CREATE TABLE `encuesta_pregunta` (
 --
 
 INSERT INTO `encuesta_pregunta` (`id`, `encuesta_id`, `pregunta_id`, `resultado_id`) VALUES
-(51, 74, 67, 4),
-(52, 72, 68, 6),
-(53, 75, 68, NULL),
-(60, 72, 67, 5),
-(62, 72, 65, 5),
-(65, 80, 65, NULL),
-(66, 80, 66, NULL),
-(67, 80, 67, NULL),
-(71, 82, 68, 5),
-(73, 83, 68, 2),
-(75, 84, 65, NULL),
-(76, 84, 66, NULL),
-(77, 84, 67, NULL),
-(78, 72, 70, 4),
-(79, 75, 70, NULL),
-(80, 76, 71, NULL),
-(81, 80, 71, NULL);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `post`
---
-
-CREATE TABLE `post` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `post_tag`
---
-
-CREATE TABLE `post_tag` (
-  `id` int(11) NOT NULL,
-  `post_id` int(11) DEFAULT NULL,
-  `tag_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+(100, 107, 74, 3),
+(101, 107, 75, 5),
+(103, 102, 74, 5),
+(104, 102, 75, 6),
+(105, 103, 74, 6),
+(106, 103, 75, 4);
 
 -- --------------------------------------------------------
 
@@ -214,12 +151,8 @@ CREATE TABLE `pregunta` (
 --
 
 INSERT INTO `pregunta` (`id`, `descripcion`, `tipo`, `orden`, `descripcionIngles`) VALUES
-(65, '111', NULL, 1, '115'),
-(66, '22', 'ALUMNO', 2, '22'),
-(67, 'gdfdf', 'ALUMNO', 4, 'fdfgd'),
-(68, 'hhhhhhhhhhhh', 'PROFESOR_INTERNO', 1, 'hhhhhhhhhh'),
-(70, 'bbb', 'PROFESOR_INTERNO', 1, 'bbb'),
-(71, 'adsdd', 'PROFESOR_EXTERNO', 111, 'sdadss');
+(74, 'El alumno llega a su hora?', 'ALUMNO', 1, 'Studen hour'),
+(75, 'pregunta 1', 'ALUMNO', 2, 'question 2');
 
 -- --------------------------------------------------------
 
@@ -246,17 +179,6 @@ INSERT INTO `resultado` (`id`, `valor`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tag`
---
-
-CREATE TABLE `tag` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `titulacion`
 --
 
@@ -271,26 +193,7 @@ CREATE TABLE `titulacion` (
 --
 
 INSERT INTO `titulacion` (`id`, `nombre`, `codigo`) VALUES
-(1, 'Informatica', 'INF'),
-(22, 'sdaa', 'GGDDT'),
-(23, 'tttttttt', '0'),
-(24, 'fisica', 'FIS'),
-(25, 'ugibk', 'lihli'),
-(27, 'ugibkggd', 'lihligdffd'),
-(28, 'ggggg', 'dfdfd'),
-(29, 'ggggghij', 'dfdfdhgh'),
-(31, 'ggggghijrrrrrrr', 'dfdfdhghr'),
-(33, 'rtttr', 'wew'),
-(34, 'rtttrfgf', 'wewfff'),
-(37, 'rtttrfgfdsa', 'dsdb'),
-(43, 'gfgh', 'len'),
-(44, 'nueva', 'nvvvvvvvvv'),
-(46, 'fsfsd', 'dsfd'),
-(47, 'fgs', 'fdsdd'),
-(49, 'nfgsbgg', 'fdsngg'),
-(50, 'nfgsbgghh', 'fdsnggf'),
-(51, 'nfgsbff', 'fdssr'),
-(52, 'sfsdf', 'sfds');
+(55, 'Informatica', 'INF');
 
 -- --------------------------------------------------------
 
@@ -309,7 +212,7 @@ CREATE TABLE `usuario` (
   `avatar` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `roles` enum('ROLE_PROFE','ROLE_PROFI','ROLE_ALU','ROLE_ADMIN') COLLATE utf8_unicode_ci DEFAULT NULL,
   `telefono` int(11) DEFAULT NULL,
-  `media` decimal(4,1) NOT NULL
+  `media` decimal(4,1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -317,27 +220,12 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id`, `username`, `password`, `nombre`, `apellidos`, `email`, `fechaAlta`, `avatar`, `roles`, `telefono`, `media`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'JJ', 'Delgado Romero', 'a@g.com', '2018-11-12 00:00:00', 'fiyfiy', 'ROLE_ADMIN', 0, '0.0'),
-(9, 'adminx', 'f5cb5fd0b3bd86d92c3982f5c27174ec', 'czcz', 'czxczx', 'zczx@gmail.com', '2018-11-04 11:06:50', 'img.jpg', 'ROLE_ALU', NULL, '0.0'),
-(11, 'ffsf', 'ed35e4fac311eb3ddaac043e0bf12a39', 'sdsds', 'dsds', 'n@ffffff.com', '2018-11-04 11:13:45', 'img.jpg', 'ROLE_PROFI', 443322345, '0.0'),
-(13, 'adminGBDFG', '4943c668497795bb894ca5bfd8526ccd', 'FDFF', 'fdfdfd', 'nF@hotmail.com', '2018-11-04 19:21:49', 'img.jpg', 'ROLE_PROFE', 222, '0.0'),
-(14, 'admin2Q22', '1cd3f7c4095fb55de1d50f0fce236fb5', '323', '2323', '2@aaaaaaaaa.com', '2018-11-04 19:22:00', 'img.jpg', 'ROLE_ALU', 3232, '0.0'),
-(15, 'adminTRTRE', '21232f297a57a5a743894a0e4a801fc3', 'HFGF', 'dddddddddddddR', 'jjdelrom2012@gmail.com', '2018-11-04 19:22:41', 'img.jpg', 'ROLE_PROFI', 44, '0.0'),
-(16, 'ivhoiss', 'a947195af78490ae81b2e7e000579200', 'ttt', 'ttt', 'nttt@hotmail.com', '2018-11-17 11:08:10', 'img.jpg', 'ROLE_PROFI', 5443333, '0.0'),
-(17, 'admingfgf', '3b542fdcd44331364f0dc93a88dd7f37', 'dffdf', 'fdff', 'cccn@f.com', '2018-11-18 19:15:36', 'img.jpg', 'ROLE_PROFI', 44444, '0.0'),
-(18, 'adminhg5e', '21232f297a57a5a743894a0e4a801fc3', 'h', 'h', 'nff@ffffff.com', '2018-11-21 19:49:59', 'img.jpg', 'ROLE_PROFI', 34, '0.0'),
-(19, 'trhtht', '80a5aababc3324446fbfac54178a8c10', 'dftr', 'ddddddddddddd', 'jjdelrdfom2012@gmail.com', '2018-11-21 19:51:01', 'img.jpg', 'ROLE_ADMIN', 66, '0.0'),
-(20, 'adhfhfmin', '61973640c8edd4220badd367b719d564', 'FDFF', 'g', 'nfgf@hotmail.com', '2018-11-21 19:51:51', 'img.jpg', 'ROLE_ALU', 66, '3.6'),
-(21, 'admingg', '03442cc18f1b5b2e8791d5f977d508f3', 'ghf', 'fgh', 'gfggfgfg@gmail.com', '2018-11-21 19:54:47', 'img.jpg', 'ROLE_PROFE', 666, '0.0'),
-(23, 'admingggd', '36eba1e1e343279857ea7f69a597324e', 'ghf', 'fgh', 'gfggfgfg@gmail.com', '2018-11-21 19:55:58', 'img.jpg', 'ROLE_PROFE', 666, '0.0'),
-(25, 'admingggdhg', 'b6e6e16890f6be1c4785f03d92acf177', 'ghf', 'fgh', 'gfggfgfg@gmail.com', '2018-11-21 19:57:21', 'img.jpg', 'ROLE_PROFE', 666, '0.0'),
-(26, 'admingfsw', '21232f297a57a5a743894a0e4a801fc3', 'x', 'fdfdfd', 'skddin@gmail.com', '2018-11-21 19:58:01', 'img.jpg', 'ROLE_PROFI', 4, '0.0'),
-(30, 'admingcsdhg', '8eab34801b8f05644302ecacb5eadc49', 'ghf', 'fgh', 'gfggfgfg@gmail.com', '2018-11-21 20:04:57', 'img.jpg', 'ROLE_PROFE', 666, '0.0'),
-(31, 'adminoiuio', '21232f297a57a5a743894a0e4a801fc3', 'dgddf', 'sfds', 'dsdsdadn@hotmail.com', '2018-11-21 20:05:34', 'img.jpg', 'ROLE_PROFI', 33, '0.0'),
-(33, 'admisdfsdn', '8e1e02ca3401f4667cd586cdf03758fd', 'df', 'sa', 'nsad@ffffff.com', '2018-11-21 20:08:04', 'img.jpg', 'ROLE_PROFI', 33, '0.0'),
-(34, 'fsdsdadmin', '2f3a8d1dea6b2aa2bf221684e3c6540a', 'sds', 'ew', 'ndsds@f.com', '2018-11-21 20:10:17', 'img.jpg', 'ROLE_ALU', 33, '0.0'),
-(35, 'admingf', '670da91be64127c92faac35c8300e814', 'estudiantenss', 'vcv', 'jjdelrtrreom2012@gmail.com', '2018-11-21 20:13:42', 'img.jpg', 'ROLE_ALU', 455, '0.0'),
-(36, 'admingfdfd', '9a967103c4cb00cdc7a03099baa6148a', 'dsd', 'dsd', 'ncxcxc@f.com', '2018-11-26 20:34:18', 'img.jpg', 'ROLE_PROFI', 333, '0.0');
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 'JJ', 'Delgado Romero', 'a@g.com', '2018-11-12 00:00:00', 'avatar_default.jpeg', 'ROLE_ADMIN', 0, NULL),
+(37, '11111111', '21232f297a57a5a743894a0e4a801fc3', 'Lola', 'Fernandez Ruiz', 'lola@gmail.com', '2018-11-28 20:43:14', 'avatar_11111111_1543953333.png', 'ROLE_ALU', 658965874, '4.5'),
+(38, '965896523', '21232f297a57a5a743894a0e4a801fc3', 'Luis', 'Merino Cabañas', 'lmercab@hotmail.com', '2018-11-28 20:46:31', 'avatar_default.jpeg', 'ROLE_PROFI', 635214789, '4.0'),
+(39, '659852147', '21232f297a57a5a743894a0e4a801fc3', 'Fernando', 'Pareja Solo', 'fe@gmail.com', '2018-11-28 20:47:12', 'avatar_659852147_1543523229.png', 'ROLE_PROFE', 652358749, NULL),
+(40, 'nuevo333', '21232f297a57a5a743894a0e4a801fc3', 'nuevooooo', 'oucvo', 'dsdsddsn@hotmail.com', '2018-11-29 21:34:38', 'avatar_nuevo333_1543947423.png', 'ROLE_ALU', 22222121, '3.0'),
+(41, 'nuevo222', '21232f297a57a5a743894a0e4a801fc3', 'ddddsd', 'dsdsd', 'dsdsdasddn@hotmail.com', '2018-11-29 21:38:07', 'avatar_nuevo222_1543523887.png', 'ROLE_ALU', 232332, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -371,6 +259,7 @@ ALTER TABLE `curso_usuario`
 --
 ALTER TABLE `encuesta`
   ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `usu_tit_eva_unicos` (`titulacion_id`,`usuario_id`,`evaluado_id`),
   ADD KEY `IDX_B25B6841F471CF55` (`titulacion_id`),
   ADD KEY `IDX_B25B6841DB38439E` (`usuario_id`),
   ADD KEY `IDX_B25B6841960057D3` (`evaluado_id`);
@@ -385,43 +274,26 @@ ALTER TABLE `encuesta_pregunta`
   ADD KEY `IDX_3C1707EEFF51ECB6` (`resultado_id`);
 
 --
--- Indices de la tabla `post`
---
-ALTER TABLE `post`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `post_tag`
---
-ALTER TABLE `post_tag`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `IDX_5ACE3AF04B89032C` (`post_id`),
-  ADD KEY `IDX_5ACE3AF0BAD26311` (`tag_id`);
-
---
 -- Indices de la tabla `pregunta`
 --
 ALTER TABLE `pregunta`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `descripcion_tipo_unicos` (`descripcion`,`tipo`);
 
 --
 -- Indices de la tabla `resultado`
 --
 ALTER TABLE `resultado`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `tag`
---
-ALTER TABLE `tag`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `UNIQ_B2ED91C2E892728` (`valor`);
 
 --
 -- Indices de la tabla `titulacion`
 --
 ALTER TABLE `titulacion`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `UNIQ_873C182420332D99` (`codigo`);
+  ADD UNIQUE KEY `UNIQ_873C182420332D99` (`codigo`),
+  ADD UNIQUE KEY `UNIQ_873C18243A909126` (`nombre`);
 
 --
 -- Indices de la tabla `usuario`
@@ -438,52 +310,37 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 --
 -- AUTO_INCREMENT de la tabla `encuesta`
 --
 ALTER TABLE `encuesta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 --
 -- AUTO_INCREMENT de la tabla `encuesta_pregunta`
 --
 ALTER TABLE `encuesta_pregunta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
---
--- AUTO_INCREMENT de la tabla `post`
---
-ALTER TABLE `post`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT de la tabla `post_tag`
---
-ALTER TABLE `post_tag`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 --
 -- AUTO_INCREMENT de la tabla `pregunta`
 --
 ALTER TABLE `pregunta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 --
 -- AUTO_INCREMENT de la tabla `resultado`
 --
 ALTER TABLE `resultado`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT de la tabla `tag`
---
-ALTER TABLE `tag`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT de la tabla `titulacion`
 --
 ALTER TABLE `titulacion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- Restricciones para tablas volcadas
 --
@@ -517,13 +374,6 @@ ALTER TABLE `encuesta_pregunta`
   ADD CONSTRAINT `FK_3C1707EE31A5801E` FOREIGN KEY (`pregunta_id`) REFERENCES `pregunta` (`id`),
   ADD CONSTRAINT `FK_3C1707EE46844BA6` FOREIGN KEY (`encuesta_id`) REFERENCES `encuesta` (`id`),
   ADD CONSTRAINT `FK_3C1707EEFF51ECB6` FOREIGN KEY (`resultado_id`) REFERENCES `resultado` (`id`);
-
---
--- Filtros para la tabla `post_tag`
---
-ALTER TABLE `post_tag`
-  ADD CONSTRAINT `FK_5ACE3AF04B89032C` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`),
-  ADD CONSTRAINT `FK_5ACE3AF0BAD26311` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

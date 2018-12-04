@@ -36,6 +36,9 @@
 				-->
 						</div>
 						<div class="clearfix"></div>
+             {% block mensajes %}
+              {{ parent() }}
+              {% endblock %}
 						{% endblock %}
 
 				 		{% block rows %}

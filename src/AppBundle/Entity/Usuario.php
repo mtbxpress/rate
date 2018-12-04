@@ -99,6 +99,10 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="avatar", type="string", length=50)
+     * @Assert\File(
+     *      mimeTypes={"image/jpeg","image/jpg", "image/png"},
+     *      maxSize = "3M",
+     *   )
      */
     private $avatar = 'avatar_default.jpeg';
 
@@ -306,6 +310,7 @@ class Usuario implements UserInterface
     public function setRoles($roles)
     {
     if (!in_array($roles, array('ROLE_ALU', 'ROLE_ADMIN',  'ROLE_PROFI', 'ROLE_PROFE'))) {
+        print_r($roles);
         throw new \InvalidArgumentException("Rol no valido");
     }
         $this->roles = $roles;

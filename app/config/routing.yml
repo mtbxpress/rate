@@ -31,7 +31,7 @@ mostrar_usuarios:
         m: \d+
 
 mostrar_usuario:
-    path:  /admin/{_locale}/mostrar/usuario/{idUsuario}
+    path:  /inicio/{_locale}/mostrar/usuario/{idUsuario}
     defaults: { _controller: AppBundle:Usuario:mostrarUsuario, _locale: es }
     requirements:
         _locale: 'en|es'
@@ -44,7 +44,7 @@ crear_usuario:
         _locale: 'en|es'
 
 editar_usuario:
-    path:   /admin/{_locale}/editar/usuario/{idUsuario}
+    path:   /inicio/{_locale}/editar/usuario/{idUsuario}
     defaults: {_controller: AppBundle:Usuario:editarUsuario, _locale: es}
     requirements:
         _locale: 'en|es'
