@@ -321,6 +321,25 @@ class UsuarioController extends Controller
         return $this->render('Usuario/mostrar_usuarios.html.twig', array('usuarios'=>$usuarios ));
     }
 
+    public function mostrarEstadisticasAction(){
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $rep = $em->getRepository('AppBundle:Usuario');
+            $numUsuarios = $rep->calcularNumTiposUsuarios();
+            $numEncuestas = $rep->calcularNumEncuestas();
+            $numEncCompletada = $rep->calcularNumEncuestasPorUsuarios('SI');
+            $numEncNoCompletada = $rep->calcularNumEncuestasPorUsuarios('NO');
+            $topAlu = $rep->calcularTopUsuarios('ROLE_ALU',5);
+            $topProfi = $rep->calcularTopUsuarios('ROLE_PROFI',5);
+            $topProfe = $rep->calcularTopUsuarios('ROLE_PROFE',5);
+
+        } catch (Exception $ex) {
+            echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
+        }
+
+        return $this->render('Estadistica/estadisticas.html.twig', array('numUsuarios' => $numUsuarios, 'numEncuestas' => $numEncuestas, 'numEncCompletada' => $numEncCompletada, 'numEncNoCompletada' => $numEncNoCompletada, 'topAlu' => $topAlu, 'topProfi' => $topProfi, 'topProfe' => $topProfe) );
+    }
+
  /*  public function calcularMediasAction($idUsuario){
         try{
 

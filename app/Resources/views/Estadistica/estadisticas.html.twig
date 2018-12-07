@@ -1,0 +1,421 @@
+{% extends 'base_menu.html.twig' %}
+{% block title %} {% trans %}Mostrar{% endtrans %}{% trans %}Estadisticas{% endtrans %}{% endblock %}
+
+{% block pageContent %}
+       <!-- page content -->
+        <div class="right_col" role="main">
+          <!-- top tiles -->
+          <div class="row tile_count">
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
+              <span class="count_top" ><i class="fa fa-users"></i> {% trans %}Usuarios totales{% endtrans %}</span>
+              <div class="count text-center">{{ numUsuarios.total }} </div>
+              <span class="count_bottom"><i class="green">100% </i> {% trans %}del total{% endtrans %}</span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count  text-center">
+              <span class="count_top"><i class="fa fa-graduation-cap"></i> {% trans %}Alumno{% endtrans %}</span>
+              <div class="count text-center">{{ numUsuarios.alumno }} </div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ ((numUsuarios.alumno*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
+              <span class="count_top"><i class="fa fa-user"></i> {% trans %}Profesor Interno{% endtrans %}</span>
+              <div class="count text-center">{{ numUsuarios.profi }} </div> {#</div><div class="count green">2,500</div>#}
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ ((numUsuarios.profi*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
+              <span class="count_top"><i class="fa fa-user"></i> {% trans %}Profesor Externo{% endtrans %}</span>
+              <div class="count text-center">{{ numUsuarios.profe }} </div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ ((numUsuarios.profe*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
+              <span class="count_top"><i class="fa fa-cogs"></i> {% trans %}Administrador{% endtrans %}</span>
+              <div class="count text-center">{{ numUsuarios.admin }} </div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ ((numUsuarios.admin*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
+              <span class="count_top"><i class="fa fa-list-alt"></i> {% trans %}Total encuestas{% endtrans %}</span>
+              <div class="count text-center">{{ numEncuestas.total }} </div>
+              {% set porcentajeEnc = (numEncuestas.completada*100)/numEncuestas.total %}
+              {% if porcentajeEnc < 50 %}
+               {% set color = 'red' %}
+              {% else %}
+                {% set color = 'green' %}
+              {% endif %}
+              <span class="count_bottom">
+                <i class="{{color}}"><i class="fa fa-sort-asc"></i>{{ porcentajeEnc }}%  {% trans %}Completada{% endtrans %}</i></span>
+            </div>
+          </div>
+          <!-- /top tiles -->
+
+          <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                  <h2>{% trans %}Encuestas{% endtrans %} {% trans %}Completada{% endtrans %}</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <div class="text-left">{% trans %}porcentaje.enc.by.usuario{% endtrans %}</div>
+                  <div class="text-right">{% trans %}Encuestas{% endtrans %}</div>
+                  <div class="widget_summary">
+                    <div class="w_left w_25">
+                      <span>{% trans %}Profesor Interno{% endtrans %}</span>
+                    </div>
+                        {% set porcentaje = (numEncCompletada.profi*100)/(numEncCompletada.profi+numEncNoCompletada.profi) %}
+                    <div class="w_center w_55">
+                      <div class="progress">
+                        {% set porcentaje = (numEncCompletada.profi*100)/(numEncCompletada.profi+numEncNoCompletada.profi) %}
+                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{porcentaje}}%;">{{porcentaje}}%
+                          <span class="sr-only"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="w_right w_20">
+                      <span>{{numEncCompletada.profi+numEncNoCompletada.profi}} </span>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="widget_summary">
+                    <div class="w_left w_25">
+                      <span>{% trans %}Profesor Externo{% endtrans %}</span>
+                    </div>
+                    {% set porcentaje = (numEncCompletada.profe*100)/(numEncCompletada.profe+numEncNoCompletada.profe) %}
+                    <div class="w_center w_55">
+                      <div class="progress">
+
+                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{porcentaje}}%;">{{porcentaje}}%
+                          <span class="sr-only">60% Complete</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="w_right w_20">
+                      <span>{{numEncCompletada.profe+numEncNoCompletada.profe}}</span>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="widget_summary">
+                    <div class="w_left w_25">
+                      <span>{% trans %}Alumno{% endtrans %}</span>
+                    </div>
+                    {% set porcentaje = (numEncCompletada.alumno*100)/(numEncCompletada.alumno+numEncNoCompletada.alumno) %}
+                    <div class="w_center w_55">
+                      <div class="progress">
+                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{porcentaje}}%;">{{porcentaje}}%
+                          <span class="sr-only"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="w_right w_20">
+                      <span>{{numEncCompletada.alumno+numEncNoCompletada.alumno}}</span>
+                    </div>
+                    <div class="clearfix"></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="x_panel tile fixed_height_320 overflow_hidden">
+                <div class="x_title">
+                  <h2>Info {% trans %}Usuarios{% endtrans %}</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <table class="" style="width:100%">
+                    <tr>
+                      <th style="width:37%;">
+                        <p>{% trans %}Grafico{% endtrans %}</p>
+                      </th>
+                      <th>
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
+                          <p class="">{% trans %}Tipo{% endtrans %}</p>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                          <p class="">{% trans %}Porcentaje{% endtrans %} </p>
+                        </div>
+                      </th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <canvas class="canvasDoughnut" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                      </td>
+                      <td>
+                        <table class="tile_info">
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square blue"></i>Admin </p>
+                            </td>
+                            <td>{{ ((numUsuarios.admin*100)/numUsuarios.total)|number_format(2, '.', ',')}}%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square green"></i>{% trans %}Alumno{% endtrans %} </p>
+                            </td>
+                            <td>{{ ((numUsuarios.alumno*100)/numUsuarios.total)|number_format(2, '.', ',')}}%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square purple"></i>{% trans %}Profesor Interno{% endtrans %} </p>
+                            </td>
+                            <td>{{ ((numUsuarios.profi*100)/numUsuarios.total)|number_format(2, '.', ',')}}%</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p><i class="fa fa-square red"></i>{% trans %}Profesor Externo{% endtrans %} </p>
+                            </td>
+                            <td>{{ ((numUsuarios.profe*100)/numUsuarios.total)|number_format(2, '.', ',')}}%</td>
+                          </tr>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-md-4 col-sm-4 col-xs-12">
+              <div class="x_panel tile fixed_height_320">
+                <div class="x_title">
+                  <h2>Info {% trans %}Encuestas{% endtrans %}</h2>
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                  <div class="dashboard-widget-content">
+                    <ul class="quick-list">
+                      <li><i class="fa fa-calendar-o"></i>Total {{ numEncuestas.total }}
+                      </li>
+                      <li><i class="fa fa-bars"></i>{% trans %}Completada{% endtrans %} {{ numEncuestas.completada }}
+                      </li>
+                      <li><i class="fa fa-bar-chart"></i>No {% trans %}Completada{% endtrans %} {{ numEncuestas.nocompletada }}</li>
+                    </ul>
+
+                    <div class="sidebar-widget">
+                        <h4>{% trans %}Encuestas{% endtrans %}</h4>
+                        <canvas width="150" height="80" id="chart_gauge_01" class="" style="width: 160px; height: 100px;"></canvas>
+                        <div class="goal-wrapper">
+                          <span id="gauge-text" class="gauge-value pull-left">0</span>
+                          <span class="gauge-value pull-left">%</span>
+                          <span id="goal-text" class="goal-value pull-right">100%</span>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+<div class="row">
+              <div class="col-md-4">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Top {% trans %}Alumno{% endtrans %}</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    {% for alu in topAlu %}
+                    <article class="media event">
+                      <a class="pull-left date">
+
+                       <div class="text-center"> <span class="fa fa-star" ></span></div>
+                        <p class="day">{{alu.media}}</p>
+                      </a>
+                      <div class="media-body">
+                        <a class="title" href="{{ path('mostrar_usuario' , {'idUsuario': alu.id})  }}">{{alu.username}}</a>
+                        <h4>{{alu.nombre}} {{alu.apellidos}}</h4>
+                      </div>
+                    </article>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Top {% trans %}Profesor Interno{% endtrans %}</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    {% for profi in topProfi %}
+                    <article class="media event">
+                      <a class="pull-left date">
+
+                       <div class="text-center"> <span class="fa fa-star" ></span></div>
+                        <p class="day">{{profi.media}}</p>
+                      </a>
+                      <div class="media-body">
+                        <a class="title" href="{{ path('mostrar_usuario' , {'idUsuario': profi.id})  }}">{{profi.username}}</a>
+                        <h4>{{profi.nombre}} {{profi.apellidos}}</h4>
+                      </div>
+                    </article>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Top {% trans %}Profesor Externo{% endtrans %}</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    {% for profe in topProfe %}
+                    <article class="media event">
+                      <a class="pull-left date">
+
+                       <div class="text-center"> <span class="fa fa-star" ></span></div>
+                        <p class="day">{{profe.media}}</p>
+                      </a>
+                      <div class="media-body">
+                        <a class="title" href="{{ path('mostrar_usuario' , {'idUsuario': profe.id})  }}">{{profe.username}}</a>
+                        <h4>{{profe.nombre}} {{profe.apellidos}}</h4>
+                      </div>
+                    </article>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          </div>
+
+
+        <!-- /page content -->
+{% endblock %}
+{% block javascripts %}
+  {{ parent() }}
+<script>
+  function init_gauge() {
+
+    if( typeof (Gauge) === 'undefined'){ return; }
+
+    console.log('init_gauge [' + $('.gauge-chart').length + ']');
+    console.log('init_gauge');
+      var chart_gauge_settings = {
+      lines: 12,
+      angle: 0,
+      lineWidth: 0.4,
+      pointer: {
+        length: 0.75,
+        strokeWidth: 0.042,
+        color: '#1D212A'
+      },
+      limitMax: 'false',
+      colorStart: '#1ABC9C',
+      colorStop: '#1ABC9C',
+      strokeColor: '#F0F3F3',
+      generateGradient: true
+    };
+
+
+    if ($('#chart_gauge_01').length){
+
+      var chart_gauge_01_elem = document.getElementById('chart_gauge_01');
+      var chart_gauge_01 = new Gauge(chart_gauge_01_elem).setOptions(chart_gauge_settings);
+
+    }
+
+
+    if ($('#gauge-text').length){
+
+      chart_gauge_01.maxValue = 100;
+      chart_gauge_01.animationSpeed = 32;
+      chart_gauge_01.set({{ (numEncuestas.completada*100)/numEncuestas.total }});
+      chart_gauge_01.setTextField(document.getElementById("gauge-text"));
+
+    }
+  }
+
+  function init_chart_doughnut(){
+
+    if( typeof (Chart) === 'undefined'){ return; }
+
+    console.log('init_chart_doughnut');
+
+    if ($('.canvasDoughnut').length){
+
+    var chart_doughnut_settings = {
+        type: 'doughnut',
+        tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+        data: {
+          labels: [
+            "Admin",
+            "{% trans %}Profesor Interno{% endtrans %}",
+            "{% trans %}Profesor Externo{% endtrans %}",
+            "{% trans %}Alumno{% endtrans %}"
+          ],
+          datasets: [{
+            data: [ {{ numUsuarios.admin }},{{ numUsuarios.profi }}, {{ numUsuarios.profe }},  {{ numUsuarios.alumno }}],
+            backgroundColor: [
+              "#3498DB",
+              "#9B59B6",
+              "#E74C3C",
+              "#26B99A",
+              "#BDC3C7"
+            ],
+            hoverBackgroundColor: [
+              "#49A9EA",
+              "#B370CF",
+              "#E95E4F",
+              "#36CAAB",
+              "#CFD4D8"
+            ]
+          }]
+        },
+        options: {
+          legend: false,
+          responsive: false
+        }
+      }
+
+      $('.canvasDoughnut').each(function(){
+
+        var chart_element = $(this);
+        var chart_doughnut = new Chart( chart_element, chart_doughnut_settings);
+
+      });
+
+    }
+
+  }
+</script>
+{% endblock %}

@@ -682,7 +682,7 @@ if (typeof NProgress != 'undefined') {
 	}
 
 
-	function init_chart_doughnut(){
+/*	function init_chart_doughnut(){
 
 		if( typeof (Chart) === 'undefined'){ return; }
 
@@ -734,7 +734,7 @@ if (typeof NProgress != 'undefined') {
 
 		}
 
-	}
+	}*/
 
 	function init_gauge() {
 
@@ -762,7 +762,7 @@ if (typeof NProgress != 'undefined') {
 	  };
 
 
-		if ($('#chart_gauge_01').length){
+/*		if ($('#chart_gauge_01').length){
 
 			var chart_gauge_01_elem = document.getElementById('chart_gauge_01');
 			var chart_gauge_01 = new Gauge(chart_gauge_01_elem).setOptions(chart_gauge_settings);
@@ -772,13 +772,13 @@ if (typeof NProgress != 'undefined') {
 
 		if ($('#gauge-text').length){
 
-			chart_gauge_01.maxValue = 6000;
+			chart_gauge_01.maxValue = 150;
 			chart_gauge_01.animationSpeed = 32;
-			chart_gauge_01.set(3200);
+			chart_gauge_01.set(5);
 			chart_gauge_01.setTextField(document.getElementById("gauge-text"));
 
 		}
-
+*/
 		if ($('#chart_gauge_02').length){
 
 			var chart_gauge_02_elem = document.getElementById('chart_gauge_02');

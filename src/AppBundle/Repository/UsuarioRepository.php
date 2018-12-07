@@ -270,7 +270,95 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 
 	}
 
+	public function calcularNumTiposUsuarios()	{
 
+		try {
+			$query = "SELECT
+			SUM(CASE WHEN roles = 'ROLE_ADMIN' THEN 1 ELSE 0 END) admin,
+			SUM(CASE WHEN roles = 'ROLE_ALU' THEN 1 ELSE 0 END) alumno,
+			SUM(CASE WHEN roles = 'ROLE_PROFE' THEN 1 ELSE 0 END) profe,
+			SUM(CASE WHEN roles = 'ROLE_PROFI' THEN 1 ELSE 0 END) profi,
+			SUM(CASE WHEN roles = 'ROLE_PROFI' OR roles = 'ROLE_PROFE' OR roles = 'ROLE_ADMIN' OR roles = 'ROLE_ALU' THEN 1 ELSE 0 END) total
+			FROM usuario; ";
+
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+	  return $res[0];
+	}
+
+	public function calcularNumEncuestas()	{
+
+		try {
+			$query = "SELECT
+				SUM(CASE WHEN completada = 'SI' THEN 1 ELSE 0 END) completada,
+				SUM(CASE WHEN completada = 'NO' THEN 1 ELSE 0 END) nocompletada,
+				SUM(CASE WHEN completada = 'SI' OR completada = 'NO' THEN 1 ELSE 0 END) total
+				FROM encuesta;";
+
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+	  return $res[0];
+	}
+
+	public function calcularNumEncuestasPorUsuarios($completada = null)	{
+
+		try {
+
+			$query = "SELECT
+			SUM(CASE WHEN roles = 'ROLE_ADMIN' THEN 1 ELSE 0 END) admin,
+			SUM(CASE WHEN roles = 'ROLE_ALU' THEN 1 ELSE 0 END) alumno,
+			SUM(CASE WHEN roles = 'ROLE_PROFE' THEN 1 ELSE 0 END) profe,
+			SUM(CASE WHEN roles = 'ROLE_PROFI' THEN 1 ELSE 0 END) profi,
+			SUM(CASE WHEN roles = 'ROLE_PROFI' OR roles = 'ROLE_PROFE' OR roles = 'ROLE_ADMIN' OR roles = 'ROLE_ALU' THEN 1 ELSE 0 END) total
+			FROM usuario u
+            			INNER JOIN encuesta e ON u.id = e.usuario_id WHERE e.completada='$completada'";
+
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+	  return $res[0];
+	}
+
+	public function calcularTopUsuarios($rolUsuario, $cantidad)	{
+
+		try {
+
+			$query = "SELECT * FROM usuario WHERE roles = '$rolUsuario' ORDER BY media DESC LIMIT $cantidad;";
+
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+	  return $res;
+	}
 }
-
 
