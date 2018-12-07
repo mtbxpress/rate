@@ -169,7 +169,7 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 		try {
 			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, usu.media, tit.nombre as titulacion, tit.codigo
 					from usuario usu
-					INNER JOIN encuesta enc on usu.id = enc.usuario_id
+					INNER JOIN encuesta enc on usu.id = enc.evaluado_id
 					INNER JOIN titulacion tit on tit.id = enc.titulacion_id
 					INNER JOIN curso_titulacion ct on ct.titulacion_id = tit.id
 					INNER JOIN curso cu on ct.curso_id = cu.id

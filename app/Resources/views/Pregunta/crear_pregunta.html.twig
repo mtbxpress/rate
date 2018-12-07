@@ -90,7 +90,7 @@
                                     <select name="tipo"  class="form-control select2" data-placeholder="Seleccione un tipo" style="width: 100%;" required="">
                                     <option></option>
                                     <option value="ALUMNO">Alumno</option>
-                                    <option value="PROFESOR_INTERNO">Prefosor interno</option>
+                                    <option value="PROFESOR_INTERNO">Profesor interno</option>
                                     <option value="PROFESOR_EXTERNO">Profesor externo</option>
                                     </select>
                       </div>
@@ -162,7 +162,7 @@
                         <td>{{ pregunta.descripcion }}</td>
                         <td>{{ pregunta.descripcionIngles }}</td>
                         <td>{{ pregunta.tipo }}</td>
-                        <td>{{ pregunta.orden }}</td>
+                        <td class="text-center">{{ pregunta.orden }}</td>
                 <!--<td>
                   <div class="text-center">
                     <img src="{#{ asset('uploads/'~empresa.logo~'')}#}" alt="{#{ empresa.logo }#}" max-width="60" height="50">

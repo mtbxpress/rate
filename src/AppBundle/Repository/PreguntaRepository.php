@@ -11,4 +11,25 @@ namespace AppBundle\Repository;
 class PreguntaRepository extends \Doctrine\ORM\EntityRepository
 {
 
+	public function comprobarSiexisteEncuestaCompleta($role)	{
+
+		try {
+			$query = "SELECT e.*
+				FROM encuesta e
+				INNER JOIN usuario u ON e.evaluado_id = u.id
+				WHERE u.roles = '$role' AND e.completada = 'SI'";
+
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+	    if($res){
+		return $res[0];
+	    }
+	}
 }

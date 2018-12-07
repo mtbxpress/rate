@@ -107,9 +107,15 @@
                               </a>
 
                               <a href="#">
-                                <button type="button" class="btn btn-link btn-xs eliminar" data-toggle="modal" data-target="#myModal" id="{{ curso.id }}" name="{{curso.descripcion}}">
-                                  <i class="fa fa-trash fa-2x" style="color: red;"></i>
+                                {% if curso.activo %}
+                                    <button type="button" class="btn btn-link btn-xs " >
+                                      <i class="fa fa-trash fa-2x" style="color: gray;"></i>
                                 </button>
+                              {% else %}
+                                    <button type="button" class="btn btn-link btn-xs eliminar" data-toggle="modal" data-target="#myModal" id="{{ curso.id }}" name="{{curso.descripcion}}">
+                                      <i class="fa fa-trash fa-2x" style="color: red;"></i>
+                                </button>
+                                {% endif %}
                               </a>
                       </div>
 

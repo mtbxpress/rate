@@ -21,11 +21,8 @@ class PreguntaController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             if($form->isSubmitted() && $form->isValid()){
+
                 $tipo = $request->request->get('tipo');
-                $em = $this->getDoctrine()->getManager();
-                $pregunta->setTipo($tipo);
-                $em->persist($pregunta);
-                $em->flush();
                 if($tipo == 'ALUMNO'){
                   $role = 'ROLE_ALU';
                 }
@@ -35,6 +32,14 @@ class PreguntaController extends Controller
                 else if($tipo == 'PROFESOR_EXTERNO'){
                    $role = 'ROLE_PROFE';
                 }
+                $existeEncuestaCompleta = $em->getRepository('AppBundle:Pregunta')->comprobarSiexisteEncuestaCompleta($role);
+
+            if(!isset($existeEncuestaCompleta['id'])){
+
+                $pregunta->setTipo($tipo);
+                $em->persist($pregunta);
+                $em->flush();
+
                 //Asigno a todas las encuestas segun el tipo, la nueva pregunta
           //       $em = $this->getDoctrine()->getManager();
              //    $encuestas = $em->getRepository('AppBundle:Encuesta')->obtenerEncuestasSegunRol($role);
@@ -49,8 +54,12 @@ class PreguntaController extends Controller
                                  $em->flush();
                          }
                      }
-                }
+                 }
                 $this->addFlash('success', 'Registro creado correctamente' );
+              }
+              else{
+                $this->addFlash('danger', 'No puede crear una pregunta por que ya se ha completado alguna encuesta' );
+              }
             }
         }catch (Exception $ex) {
                 $this->addFlash('danger', 'Error al crear el registro' );
@@ -67,14 +76,20 @@ public function editarPreguntaAction(Request $request, $idPregunta){
   try{
    $m = $this->getDoctrine()->getManager();
    $pregunta = $m->getRepository('AppBundle:Pregunta')->find($idPregunta);
-   $tipo = $pregunta->getTipo();
+   $tipoOriginal = $pregunta->getTipo();
    $form = $this->createForm(\AppBundle\Form\PreguntaType::class, $pregunta);
    $form->handleRequest($request);
 
    if($form->isSubmitted() && $form->isValid()){
-        $tipo = $request->request->get('tipo');
         $pregunta = $form->getData();
-        $pregunta->setTipo($tipo);
+        $tipo = $request->request->get('tipo');
+        if($tipo == '' || $tipo == null){
+            $pregunta->setTipo($tipoOriginal);
+        }else{
+          $pregunta->setTipo($tipo);
+        }
+
+
         $man = $this->getDoctrine()->getManager();
         $man->persist($pregunta);
         $man->flush();

@@ -682,7 +682,7 @@ if (typeof NProgress != 'undefined') {
 	}
 
 
-/*	function init_chart_doughnut(){
+	function init_chart_doughnut(){
 
 		if( typeof (Chart) === 'undefined'){ return; }
 
@@ -734,7 +734,7 @@ if (typeof NProgress != 'undefined') {
 
 		}
 
-	}*/
+	}
 
 	function init_gauge() {
 

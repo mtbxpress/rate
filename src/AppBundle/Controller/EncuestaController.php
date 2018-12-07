@@ -125,12 +125,23 @@ class EncuestaController extends Controller
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Encuesta');
             $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
-           if(count( $encuestasAsignadas) > 0){
-                return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
-           }
-           else{
-                  return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('sinEncuestas'=>"sinEncuestas" ));
-           }
+
+            $rep = $em->getRepository('AppBundle:Usuario');
+            $usCursoActivo = $rep->mostarUsuarioEncuestaConCursoActivo($usuario->getId());
+            if(!isset($usCursoActivo) ){
+                $usCursoActivo = $rep->mostarUsuarioCursoActivo($usuario->getId());
+            }
+            if(isset($usCursoActivo) ){
+                   if(count( $encuestasAsignadas) > 0){
+                        return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
+                   }
+                   else{
+                          return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('sinEncuestas'=>"sinEncuestas" ));
+                   }
+            }else{
+                $this->addFlash('danger', 'No esta inscrito en este curso' );
+                return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('sinEncuestas'=>"sinEncuestas" ));
+            }
 
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
@@ -162,6 +173,7 @@ class EncuestaController extends Controller
                                 $value->setResultado($resultado);
                                 $em->persist($value);
                                 $em->flush();
+                                $value->getResultado();
                             }
 
                             $encuesta->setCompletada('SI');
@@ -211,23 +223,24 @@ class EncuestaController extends Controller
                 if($encuesta->getUsuario()->getId() == $usuario->getId()){
                     if($encuesta->getCompletada() == 'NO'){
                         $encuPregs = $encuesta->getEncuestapregunta();
-                  //      dump($encuPregs); die();
-                      //  echo count($encuPregs); die();
+
                         if(count($encuPregs) == 0){
                             $this->addFlash('danger', 'Esta encuesta no tiene preguntas asignadas' );
                             return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
                         }
-                        return $this->render('Encuesta/realizar_encuesta.html.twig', array('encuPregs'=>$encuPregs ));
-                    }
-                    else{ $this->addFlash('danger', 'Esta encuesta ya ha sido completada' ); }
-                }
-                else{
-                    $this->addFlash('danger', 'Esta encuesta no le ha sido asignada' );
-                }
-            }else{
-                $this->addFlash('danger', 'No existe esa encuesta asignadas' );
-            }
+                        else{
+                          return $this->render('Encuesta/realizar_encuesta.html.twig', array('encuPregs'=>$encuPregs ));
+                        }
+                   }
+                   else{
+                      $this->addFlash('danger', 'Esta encuesta ya ha sido completada' );
+                   }
 
+                }else{
+                    $this->addFlash('danger', 'No puede realizar esta encuesta' );
+                }
+            }
+            return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
 
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";

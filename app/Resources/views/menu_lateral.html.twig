@@ -26,6 +26,8 @@
               <div class="text-center">
                     <a href="" class="site_title"><b>{% trans %}Anyo{% endtrans %} {{ app.session.get('cursoActivo') }}</b></a>
               </div>
+       <br>
+           {% if  app.user.roles[0]  != 'ROLE_ADMIN' %}
              <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
@@ -34,7 +36,7 @@
                 </ul>
               </div>
 
-            {% if  app.user.roles[0]  != 'ROLE_ADMIN' %}
+
               <div class="menu_section">
                 <h3>{% trans %}Encuestas{% endtrans %}</h3>
                 <ul class="nav side-menu">

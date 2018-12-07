@@ -62,7 +62,6 @@ class UsuarioController extends Controller
             $rep = $em->getRepository('AppBundle:Usuario');
             $medias = $rep->calcularMedias($idUsuario);
 
-
             $usuario = $rep->mostarUsuarioEncuestaConCursoActivo($idUsuario);
             if(!isset($usuario) ){
                 $usuario = $rep->mostarUsuarioCursoActivo($idUsuario);
@@ -84,16 +83,14 @@ class UsuarioController extends Controller
                               }
                     }
                 }
-   /*             if(!isset($encResultados) ){
-                    $encResultados = 0; // sin encuestas asignadas
-                }*/
+
                 if( $resultados == 0){
                     $encResultados = 1; // con encuesta asignada pero sin completar
                 }
 
                 return $this->render('Usuario/mostrar_usuario.html.twig', array('usuario'=>$usuario, 'encResultados' => $encResultados ,'medias' => $medias));
-
             }
+            $this->addFlash('danger', 'No esta inscrito en este curso' );
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }

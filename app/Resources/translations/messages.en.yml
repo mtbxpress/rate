@@ -114,8 +114,8 @@ No tiene permiso para ver ese perfil: You do not have permission to see that pro
 No tiene permiso para editar ese usuario: You do not have permission to edit that profile
 Editar Usuario: Edit User
 Avatar: Avatar
-ROLE_PROFE: Internal Teacher
-ROLE_PROFI: External Teacher
+ROLE_PROFI: Internal Teacher
+ROLE_PROFE: External Teacher
 ROLE_ADMIN: Admin
 ROLE_ALU: Student
 Estadisticas: Statistics
@@ -126,3 +126,6 @@ del total: to total
 Porcentaje: Percentage
 Grafico: Graphic
 porcentaje.enc.by.usuario: Percentage surveys by type user
+Sistema.evaluacion.encuestas: System of evaluation of practices in companies.
+No esta inscrito en este curso: You are not enrolled in this course
+No puede crear una pregunta por que ya se ha completado alguna encuesta: You can not create a question because a survey has already been completed
