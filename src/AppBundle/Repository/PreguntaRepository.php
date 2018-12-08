@@ -32,4 +32,32 @@ class PreguntaRepository extends \Doctrine\ORM\EntityRepository
 		return $res[0];
 	    }
 	}
+
+	public function obtenerPreguntasCursoActivo()	{
+
+		try {
+			$query = "SELECT p.*
+				FROM pregunta p
+				INNER JOIN encuesta_pregunta ep ON ep.pregunta_id=p.id
+				INNER JOIN encuesta e ON e.id = ep.encuesta_id
+				INNER JOIN titulacion t ON t.id = e.titulacion_id
+				INNER JOIN curso_titulacion ct ON ct.titulacion_id = t.id
+				INNER JOIN curso c ON ct.curso_id = c.id
+				WHERE c.activo = 1";
+
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+	    if($res){
+		return $res;
+	    }
+	}
 }
+
+

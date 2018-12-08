@@ -1,7 +1,22 @@
 {% extends 'base_menu.html.twig' %}
 {% block title %} {% trans %}Mostrar{% endtrans %}{% trans %}Estadisticas{% endtrans %}{% endblock %}
-
+{% block head %}
+  {{ parent() }}
+<style>
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url("{{ asset('imagenes/loading.gif') }}") 50% 50% no-repeat rgb(249,249,249);
+    opacity: .8;
+}
+</style>
+{% endblock %}
 {% block pageContent %}
+        <div class="loader"></div>
        <!-- page content -->
         <div class="right_col" role="main">
           <!-- top tiles -->
@@ -14,22 +29,22 @@
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count  text-center">
               <span class="count_top"><i class="fa fa-graduation-cap"></i> {% trans %}Alumno{% endtrans %}</span>
               <div class="count text-center">{{ numUsuarios.alumno }} </div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ ((numUsuarios.alumno*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
+              <span class="count_bottom"><i class="green">{{ ((numUsuarios.alumno*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
               <span class="count_top"><i class="fa fa-user"></i> {% trans %}Profesor Interno{% endtrans %}</span>
               <div class="count text-center">{{ numUsuarios.profi }} </div> {#</div><div class="count green">2,500</div>#}
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ ((numUsuarios.profi*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
+              <span class="count_bottom"><i class="green">{{ ((numUsuarios.profi*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
               <span class="count_top"><i class="fa fa-user"></i> {% trans %}Profesor Externo{% endtrans %}</span>
               <div class="count text-center">{{ numUsuarios.profe }} </div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ ((numUsuarios.profe*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
+              <span class="count_bottom"><i class="green">{{ ((numUsuarios.profe*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
               <span class="count_top"><i class="fa fa-cogs"></i> {% trans %}Administrador{% endtrans %}</span>
               <div class="count text-center">{{ numUsuarios.admin }} </div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>{{ ((numUsuarios.admin*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
+              <span class="count_bottom"><i class="green">{{ ((numUsuarios.admin*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
               <span class="count_top"><i class="fa fa-list-alt"></i> {% trans %}Total encuestas{% endtrans %}</span>
@@ -41,7 +56,7 @@
                 {% set color = 'green' %}
               {% endif %}
               <span class="count_bottom">
-                <i class="{{color}}"><i class="fa fa-sort-asc"></i>{{ porcentajeEnc }}%  {% trans %}Completada{% endtrans %}</i></span>
+                <i class="{{color}}">{{ porcentajeEnc }}%  {% trans %}Completada{% endtrans %}</i></span>
             </div>
           </div>
           <!-- /top tiles -->
@@ -413,9 +428,11 @@
         var chart_doughnut = new Chart( chart_element, chart_doughnut_settings);
 
       });
-
     }
-
   }
+
+   $(window).on('load',function(){
+     $(".loader").fadeOut( "slow" );
+  });
 </script>
 {% endblock %}

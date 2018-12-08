@@ -113,8 +113,9 @@ public function editarPreguntaAction(Request $request, $idPregunta){
         try{
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Pregunta');
-            $preguntas = $rep->findAll();
-
+      //      $preguntas = $rep->findAll();
+            $preguntas = $rep->obtenerPreguntasCursoActivo();
+//echo "<pre>"; print_r($preguntas);  echo "</pre>"; die();
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }

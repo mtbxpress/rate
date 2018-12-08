@@ -2,18 +2,22 @@
 {% block title %} {% trans %}Mostrar usuario{% endtrans %}{% endblock %}
 {% block head %}
   {{ parent() }}
-{#<script>
-function funcion(){
-
-    setTimeout(function() {
-      $('.alert').hide()
-    }, 3500);
-  }
-</script>#}
-
+<style>
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url("{{ asset('imagenes/loading.gif') }}") 50% 50% no-repeat rgb(249,249,249);
+    opacity: .8;
+}
+</style>
 {% endblock %}
 {% block pageContent %}
         <!-- page content -->
+        <div class="loader"></div>
         <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
@@ -262,17 +266,7 @@ function funcion(){
                {pregunta: '{% trans %}P{% endtrans %}{{cnt}}', Resultado: {{ media }} },
               {% set cnt = cnt+1 %}
           {% endfor %}
-    //      {pregunta: '{% trans %}P{% endtrans %}1', Resultado: {{ encResultados|length }} },
-        /*  {pregunta: '{% trans %}P{% endtrans %}2', Resultado: 1},
-          {pregunta: '{% trans %}P{% endtrans %}3', Resultado: 2},
-          {pregunta: '{% trans %}P{% endtrans %}4', Resultado: 1},
-          {pregunta: '{% trans %}P{% endtrans %}5', Resultado: 3},
-          {pregunta: '{% trans %}P{% endtrans %}6', Resultado: 4},
-          {pregunta: '{% trans %}P{% endtrans %}7', Resultado: 4},
-          {pregunta: '{% trans %}P{% endtrans %}8', Resultado: 3},
-          {pregunta: '{% trans %}P{% endtrans %}9', Resultado: 1},
-          {pregunta: '{% trans %}P{% endtrans %}10', Resultado: 5}
-          */
+
           ],
           xkey: 'pregunta',
           ykeys: ['Resultado'],
@@ -290,5 +284,12 @@ function funcion(){
 
 
     };
+
+   $(window).on('load',function(){
+     $(".loader").fadeOut( "slow" );
+  });
 </script>
+
 {% endblock %}
+
+
