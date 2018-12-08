@@ -42,6 +42,15 @@
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
                       <li><a class="close-link"><i class="fa fa-close"></i></a>
                       </li>
                     </ul>
@@ -55,11 +64,12 @@
                     <table class="table table-striped projects table-responsive">
                       <thead>
                         <tr>
-                          <th >#</th>
-                          <th >{% trans %}Nombre{% endtrans %}</th>
+                          <th style="width: 5%">#</th>
+                          <th style="width: 20%">{% trans %}Nombre{% endtrans %}</th>
+                          <th>{% trans %}Apellidos{% endtrans %}</th>
                           <th>{% trans %}Titulacion{% endtrans %}</th>
-                          <th>{% trans %}Curso{% endtrans %}</th>
-                          <th >{% trans %}Estado{% endtrans %}</th>
+                          <th>{% trans %}Rol{% endtrans %}</th>
+                          <th style="width: 20%">{% trans %}Estado{% endtrans %}</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -74,14 +84,19 @@
                                 </td>
 
                                   <td>
-                                      {{ encuesta.naevaluado }}
+                                      {{ encuesta.evaluado.nombre }}
                                     <br />
+                                    <small>Created 01.01.2015</small>
                                   </td>
                                   <td>
-                                        {{ encuesta.titulacion }}
+                                        {{ encuesta.evaluado.apellidos }}
+
+                                  <td>
+                                        {{ encuesta.titulacion.nombre }}
+                                  </td>
                                   </td>
                                   <td>
-                                        {{ encuesta.curso }}
+                                        {{ encuesta.evaluado.roles[0] }}
                                   </td>
                                   <td>
                                       {% if encuesta.completada == 'NO' %}
@@ -117,37 +132,4 @@
 
 
 {% endblock %}
-{#
-{% block javascripts %}
-    {{ parent() }}
 
- {% if app.request.getLocale() == 'es' %}
-      <script>var url = "{{ asset('template/build/mi_datatable/traduciones_datatables/Spanish.json') }}";</script>
-  {% elseif app.request.getLocale() == 'en' %}
-      <script>var url = "{{ asset('template/build/mi_datatable/traduciones_datatables/English.json') }}";</script>
-  {% else %}
-      <script>var url = "{{ asset('template/build/mi_datatable/traduciones_datatables/Spanish.json') }}";</script>
-  {% endif %}
-
-<script>
-$(document).ready(function() {
-    $('#tabla_datatable').DataTable( {
-      "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-        "language": {
-     //       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-             "url": url
-        }
-    } );
-} );
-
-  $( document ).ready(function() {
-    $(".eliminar").on('click', function() {
-      $("#nombre").html($(this).attr("name"));
-      var hrf = $("#enlace_eliminar").attr("href").split("/");
-      var url = "/admin/"+hrf[2]+"/eliminar/encuesta/"+$(this).attr("id");
-      $("#enlace_eliminar").attr("href",url);
-    });
-  });
-</script>
-
-{% endblock %#}

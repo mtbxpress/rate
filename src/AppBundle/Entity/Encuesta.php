@@ -82,6 +82,12 @@ class Encuesta
      */
     private $completada = 'NO';
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Curso")
+     * @ORM\JoinColumn(name="curso_id", referencedColumnName="id")
+     */
+    private $curso;
+
     public function __construct() {
         //$this->preguntas = new \Doctrine\Common\Collections\ArrayCollection();
         $this->encuestapregunta = new \Doctrine\Common\Collections\ArrayCollection();
@@ -279,5 +285,29 @@ class Encuesta
     public function removeEncuestapreguntum(\AppBundle\Entity\EncuestaPregunta $encuestapreguntum)
     {
         $this->encuestapregunta->removeElement($encuestapreguntum);
+    }
+
+    /**
+     * Set curso
+     *
+     * @param \AppBundle\Entity\Curso $curso
+     *
+     * @return Encuesta
+     */
+    public function setCurso(\AppBundle\Entity\Curso $curso = null)
+    {
+        $this->curso = $curso;
+
+        return $this;
+    }
+
+    /**
+     * Get curso
+     *
+     * @return \AppBundle\Entity\Curso
+     */
+    public function getCurso()
+    {
+        return $this->curso;
     }
 }

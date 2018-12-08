@@ -50,7 +50,7 @@ class TitulacionRepository extends \Doctrine\ORM\EntityRepository
 	}
 
 
-	public function mostarTitulacionCursoActivo($idUsuario)	{
+/*	public function mostarTitulacionCursoActivo($idUsuario)	{
 
 		try {
 			$query = "SELECT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, tit.nombre as titulacion, tit.codigo
@@ -73,5 +73,5 @@ class TitulacionRepository extends \Doctrine\ORM\EntityRepository
 	    if($res){
 		return $res[0];
 	    }
-	}
+	}*/
 }

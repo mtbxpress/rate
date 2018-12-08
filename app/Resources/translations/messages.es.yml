@@ -7,8 +7,8 @@ Crear usuario: Crear Usuario
 Todos: Todos
 SIN RESULTADOS: SIN RESULTADOS
 Alumno: Alumno
-Externo: Pr. Externo
-Interno: Pr. Interno
+Externo: Externo
+Interno: Interno
 Crear nuevo usuario: Crear nuevo usuario
 Nuevo usuario: New user
 Formulario: Formulario
@@ -63,7 +63,7 @@ usuario.evaluado: Usuario que será evaluado
 usuario.usuario: Usuario que realizará la encuesta
 Sobre: sobre
 mensaje.encuesta: ¿Está seguro de eliminar la encuesta?
-Mostrar usuarios encuestas: Mostrar usuarios con encuestas
+Mostrar usuarios encuestas: Usuarios con encuestas
 Mostrar usuarios curso: Usuarios en curso activo
 Pregunta en ingles: Pregunta en Inglés
 Anyo: Curso
@@ -130,3 +130,4 @@ porcentaje.enc.by.usuario: Porcentaje encuestas por tipo usuario
 Sistema.evaluacion.encuestas: Sistema de evaluación de prácticas en empresas.
 No esta inscrito en este curso: No esta inscrito en este curso
 No puede crear una pregunta por que ya se ha completado alguna encuesta: No puede crear una pregunta por que ya se ha completado alguna encuesta
+No se puede crear una encuesta si no existen preguntas: No se puede crear una encuesta si no existen preguntas

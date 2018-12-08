@@ -150,7 +150,8 @@
                       </ul>
                       {% if encuPregs is defined %}
                          {% set cnt = 0 %}
-                          <form action="{{ path('insertar_datos_encuesta', {'idEncuesta': encuPregs[0].encuesta.id})}}" method="post" id="form1" name="form1">
+                        {#  <form action="{{ path('insertar_datos_encuesta', {'idEncuesta': encuPregs[0].encuesta.id})}}" method="post" id="form1" name="form1">#}
+                          <form action="{{ path('insertar_datos_encuesta', {'idEncuesta': encuPregs[0].encuesta_id})}}" method="post" id="form1" name="form1">
                           {% for encuPreg in encuPregs %}
 
                             {% set cnt  = cnt + 1 %}
@@ -159,27 +160,29 @@
                                         <div class="centro">
                                           <h1>
                                         {% if urlActual[1] == 'es' %}
-                                            {{ encuPreg.pregunta.descripcion}}
+                                            {#{ encuPreg.pregunta.descripcion}#}
+                                            {{ encuPreg.descripcion}}
                                         {% elseif urlActual[1] == 'en' %}
-                                          {{ encuPreg.pregunta.descripcionIngles}}
+                                          {#{ encuPreg.pregunta.descripcionIngles}#}
+                                          {{ encuPreg.descripcionIngles}}
                                         {% endif %}
                                           </h1>
 
                                         <div class="rating centro">
-                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.pregunta.id}}5" name="{{encuPreg.pregunta.id}}" value="5" />
-                                                  <label for="p{{encuPreg.pregunta.id}}5" title="{% trans %}5est{% endtrans %}">5 stars</label>
+                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.id}}5" name="{{encuPreg.id}}" value="5" />
+                                                  <label for="p{{encuPreg.id}}5" title="{% trans %}5est{% endtrans %}">5 stars</label>
 
-                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.pregunta.id}}4" name="{{encuPreg.pregunta.id}}" value="4" />
-                                                  <label for="p{{encuPreg.pregunta.id}}4" title="{% trans %}4est{% endtrans %}">4 stars</label>
+                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.id}}4" name="{{encuPreg.id}}" value="4" />
+                                                  <label for="p{{encuPreg.id}}4" title="{% trans %}4est{% endtrans %}">4 stars</label>
 
-                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.pregunta.id}}3" name="{{encuPreg.pregunta.id}}" value="3" />
-                                                  <label for="p{{encuPreg.pregunta.id}}3" title="{% trans %}3est{% endtrans %}">3 stars</label>
+                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.id}}3" name="{{encuPreg.id}}" value="3" />
+                                                  <label for="p{{encuPreg.id}}3" title="{% trans %}3est{% endtrans %}">3 stars</label>
 
-                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.pregunta.id}}2" name="{{encuPreg.pregunta.id}}" value="2" />
-                                                  <label for="p{{encuPreg.pregunta.id}}2" title="{% trans %}2est{% endtrans %}">2 stars</label>
+                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.id}}2" name="{{encuPreg.id}}" value="2" />
+                                                  <label for="p{{encuPreg.id}}2" title="{% trans %}2est{% endtrans %}">2 stars</label>
 
-                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.pregunta.id}}1" name="{{encuPreg.pregunta.id}}" value="1"  required="" />
-                                                  <label for="p{{encuPreg.pregunta.id}}1" title="{% trans %}1est{% endtrans %}">1 star</label>
+                                            <input data-idp="p{{cnt}}" type="radio" id="p{{encuPreg.id}}1" name="{{encuPreg.id}}" value="1"  required="" />
+                                                  <label for="p{{encuPreg.id}}1" title="{% trans %}1est{% endtrans %}">1 star</label>
                                         </div>
                                         </div>
                                       </div>
@@ -214,9 +217,9 @@
                       {% endif %}
                       </ul>
 
-
                         {% if encuPregs is defined %}
-                          <form class="form-horizontal form-label-left" action="{{ path('insertar_datos_encuesta', {'idEncuesta': encuPregs[0].encuesta.id})}}" method="post" id="form2" name="form2">
+
+                          <form class="form-horizontal form-label-left" action="{{ path('insertar_datos_encuesta', {'idEncuesta': encuPregs[0].encuesta_id})}}" method="post" id="form2" name="form2">
                           {% set cnt = 0 %}
                           {% for encuPreg in encuPregs %}
                           {% set cnt  = cnt + 1 %}
@@ -226,23 +229,23 @@
                                         <div class="centro">
                                           <h1>
                                         {% if urlActual[1] == 'es' %}
-                                            {{ encuPreg.pregunta.descripcion}}
+                                            {{ encuPreg.descripcion}}
                                         {% elseif urlActual[1] == 'en' %}
-                                          {{ encuPreg.pregunta.descripcionIngles}}
+                                          {{ encuPreg.descripcionIngles}}
                                         {% endif %}
                                           </h1>
 
                                         <div class="rating centro">
-                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.pregunta.id}}5" name="{{encuPreg.pregunta.id}}" value="5" />
-                                                  <label for="v{{encuPreg.pregunta.id}}5" title="{% trans %}5est{% endtrans %}">5 stars</label>
-                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.pregunta.id}}4" name="{{encuPreg.pregunta.id}}" value="4" />
-                                                  <label for="v{{encuPreg.pregunta.id}}4" title="{% trans %}4est{% endtrans %}">4 stars</label>
-                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.pregunta.id}}3" name="{{encuPreg.pregunta.id}}" value="3" />
-                                                  <label for="v{{encuPreg.pregunta.id}}3" title="{% trans %}3est{% endtrans %}">3 stars</label>
-                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.pregunta.id}}2" name="{{encuPreg.pregunta.id}}" value="2" />
-                                                  <label for="v{{encuPreg.pregunta.id}}2" title="{% trans %}2est{% endtrans %}">2 stars</label>
-                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.pregunta.id}}1" name="{{encuPreg.pregunta.id}}" value="1" />
-                                                  <label for="v{{encuPreg.pregunta.id}}1" title="{% trans %}1est{% endtrans %}">1 star</label>
+                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.id}}5" name="{{encuPreg.id}}" value="5" />
+                                                  <label for="v{{encuPreg.id}}5" title="{% trans %}5est{% endtrans %}">5 stars</label>
+                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.id}}4" name="{{encuPreg.id}}" value="4" />
+                                                  <label for="v{{encuPreg.id}}4" title="{% trans %}4est{% endtrans %}">4 stars</label>
+                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.id}}3" name="{{encuPreg.id}}" value="3" />
+                                                  <label for="v{{encuPreg.id}}3" title="{% trans %}3est{% endtrans %}">3 stars</label>
+                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.id}}2" name="{{encuPreg.id}}" value="2" />
+                                                  <label for="v{{encuPreg.id}}2" title="{% trans %}2est{% endtrans %}">2 stars</label>
+                                            <input data-idp="v{{cnt}}" type="radio" id="v{{encuPreg.id}}1" name="{{encuPreg.id}}" value="1" />
+                                                  <label for="v{{encuPreg.id}}1" title="{% trans %}1est{% endtrans %}">1 star</label>
                                         </div>
                                         </div>
                                       </div>

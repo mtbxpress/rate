@@ -24,10 +24,23 @@ class EncuestaController extends Controller
 
             if($form->isSubmitted() && $form->isValid()){
 
-	   	//   $evaluado= $form['evaluado']->getData();
-                $rolUsuario = $encuesta->getUsuario()->getRoles()[0];
-                $rolEvaluado = $encuesta->getEvaluado()->getRoles()[0];
-            	   if($encuesta->getEvaluado() != $encuesta->getUsuario() ){
+
+                $tit = $request->request->get('titulacion');
+                $usu = $request->request->get('usuario');
+                $eva = $request->request->get('evaluado');
+
+                $rep = $em->getRepository('AppBundle:Titulacion');
+                $tit = $rep->find(  $request->request->get('titulacion'));
+
+                $rep = $em->getRepository('AppBundle:Usuario');
+                $usu = $rep->find(  $request->request->get('usuario'));
+
+                $rep = $em->getRepository('AppBundle:Usuario');
+                $eva = $rep->find(  $request->request->get('evaluado'));
+
+                $rolUsuario = $usu->getRoles()[0];
+                $rolEvaluado = $eva->getRoles()[0];
+            	   if($usu != $eva ){
 
                     if(
                         ($rolUsuario == 'ROLE_ALU' && ($rolEvaluado == 'ROLE_PROFI' || $rolEvaluado == 'ROLE_PROFE') ) ||
@@ -35,41 +48,56 @@ class EncuestaController extends Controller
                         ($rolUsuario == 'ROLE_PROFE' && ($rolEvaluado == 'ROLE_ALU' ) )
                     ){
 
-	            	   $na = $encuesta->getEvaluado()->getNombre().' '.$encuesta->getEvaluado()->getApellidos() ;
+	            	   $na = $eva->getNombre().' '.$eva->getApellidos() ;
 	            	   $encuesta->setNaevaluado($na);
+                      $encuesta->setTitulacion($tit);
+                      $encuesta->setUsuario($usu);
+                      $encuesta->setEvaluado($eva);
+
 	            	   $rep = $em->getRepository('AppBundle:Curso');
 	                $cursoActivo = $rep->findBy(	array('activo' => 1));
 	                $cursoActivo[0]->addTitulacion($encuesta->getTitulacion());
 
-                             $rep = $em->getRepository('AppBundle:Pregunta');
-                             if($encuesta->getEvaluado()->getRoles()[0] == 'ROLE_PROFE'){
-                                $tipoPregunta = 'PROFESOR_EXTERNO';
-                             }
-                             else if($encuesta->getEvaluado()->getRoles()[0] == 'ROLE_PROFI'){
-                                $tipoPregunta = 'PROFESOR_INTERNO';
-                             }
-                             else if($encuesta->getEvaluado()->getRoles()[0] == 'ROLE_ALU'){
-                                $tipoPregunta = 'ALUMNO';
-                             }
-                             else { $tipoPregunta = 'PROFESOR_INTERNO'; }
+                       $rep = $em->getRepository('AppBundle:Pregunta');
+                       if($encuesta->getEvaluado()->getRoles()[0] == 'ROLE_PROFE'){
+                          $tipoPregunta = 'PROFESOR_EXTERNO';
+                       }
+                       else if($encuesta->getEvaluado()->getRoles()[0] == 'ROLE_PROFI'){
+                          $tipoPregunta = 'PROFESOR_INTERNO';
+                       }
+                       else if($encuesta->getEvaluado()->getRoles()[0] == 'ROLE_ALU'){
+                          $tipoPregunta = 'ALUMNO';
+                       }
+                       else { $tipoPregunta = 'PROFESOR_INTERNO'; }
 
-                             $preguntas = $rep->findByTipo(['tipo' => $tipoPregunta ]);
-                        //      echo $tipoPregunta;  echo count($preguntas ); die("jdgiu");
-                             foreach ($preguntas as $key => $pregunta) {
+                      // $preguntas = $rep->findByTipo(['tipo' => $tipoPregunta ]);
+                       $preguntas = $rep->obtenerPreguntasCursoActivo($tipoPregunta);
+                  //      echo $tipoPregunta;  echo count($preguntas ); die("jdgiu");
 
-                                $encPre = new EncuestaPregunta();
-                                $encPre->setEncuesta($encuesta);
-                                $encPre->setPregunta($pregunta);
-                                $encuesta->addEncuestapregunta($encPre);
-                                $pregunta->addEncuestapreguna($encPre);
-                                $em->persist($encuesta);
-                                $em->persist($pregunta);
-                                $em->flush();
-                             }
+                  if(isset($preguntas) ){
+                       foreach ($preguntas as $key => $pregunta) {
 
-                            $em->persist($encuesta);
-                            $em->flush();
-                            $this->addFlash('success', 'Registro creado correctamente' );
+                          $encPre = new EncuestaPregunta();
+
+                          $rep = $em->getRepository('AppBundle:Pregunta');
+                          $preg = $rep->find( $pregunta['id'] );
+
+                          $encPre->setEncuesta($encuesta);
+                          $encPre->setPregunta($preg);
+                          $encuesta->setCurso($cursoActivo[0]);
+                          $encuesta->addEncuestapregunta($encPre);
+                          $preg->addEncuestapreguna($encPre);
+                          $em->persist($encuesta);
+                          $em->persist($preg);
+                          $em->flush();
+                       }
+                      $em->persist($encuesta);
+                      $em->flush();
+                      $this->addFlash('success', 'Registro creado correctamente' );
+                    }
+                    else{ $this->addFlash('danger', 'No se puede crear una encuesta si no existen preguntas' ); }
+
+
                     }
                         else { $this->addFlash('danger', 'Este tipo usuario no puede realizar esa encuesta' ); }
 
@@ -81,8 +109,12 @@ class EncuestaController extends Controller
         }
         $rep = $em->getRepository('AppBundle:Encuesta');
         $encuestas = $rep->mostarEncuestasCursoActivo();
+        $rep = $em->getRepository('AppBundle:Titulacion');
+        $titulacionesActivas = $rep->mostarTitulacionesCursoActivo();
+        $rep = $em->getRepository('AppBundle:Usuario');
+        $usuariosActivos = $rep->mostarUsuariosConCursoActivo();
 
-        return $this->render('Encuesta/crear_encuesta.html.twig', array('form' => $form->createView(), 'encuestas'=>$encuestas ));
+        return $this->render('Encuesta/crear_encuesta.html.twig', array('form' => $form->createView(), 'encuestas'=>$encuestas, 'titulacionesActivas' => $titulacionesActivas, 'usuariosActivos' => $usuariosActivos ));
     }
 
    public function eliminarEncuestaAction(Request $request, $idEncuesta){
@@ -124,7 +156,8 @@ class EncuestaController extends Controller
             $usuario = $this->getUser();
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Encuesta');
-            $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
+       //     $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
+            $encuestasAsignadas = $rep->mostarEncuestasCursoActivo($usuario->getId());
 
             $rep = $em->getRepository('AppBundle:Usuario');
             $usCursoActivo = $rep->mostarUsuarioEncuestaConCursoActivo($usuario->getId());
@@ -155,7 +188,8 @@ class EncuestaController extends Controller
             $usuario = $this->getUser();
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Encuesta');
-            $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
+       //     $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
+
             $encuesta = $em->getRepository('AppBundle:Encuesta')->find($idEncuesta);
 
             if( $encuesta->getCompletada() == 'NO' && $encuesta->getUsuario()->getId() == $usuario->getId()){
@@ -163,13 +197,19 @@ class EncuestaController extends Controller
                     $respuestas = $request->request; //devuelve tipo parameterbag
                     $respuestas = $respuestas->all();
              //       dump($respuestas);die();
-                     $encuPreg = $em->getRepository('AppBundle:EncuestaPregunta')->findBy(  array('encuesta' => $idEncuesta) );
-
+                //     $encuPreg = $em->getRepository('AppBundle:EncuestaPregunta')->findBy(  array('encuesta' => $idEncuesta) );
+                      $encuPreg =$rep->obtenerPreguntasEncuestasCursoActivo($idEncuesta);
+            //          dump($respuestas);
+           //         dump($encuPreg);die();
                      if( count($encuPreg) == count($respuestas)){
 
                             foreach ($encuPreg as $key => $value) {
-                              $valor =  $respuestas[$value->getPregunta()->getId()];
+                              $valor =  $respuestas[$value['pregunta_id']];
+
                                 $resultado = $em->getRepository('AppBundle:Resultado')->findOneBy(  array('valor' => $valor) );
+
+                                $value = $em->getRepository('AppBundle:EncuestaPregunta')->find($value['encpreg_id']);
+
                                 $value->setResultado($resultado);
                                 $em->persist($value);
                                 $em->flush();
@@ -194,7 +234,7 @@ class EncuestaController extends Controller
                 $this->addFlash('danger', 'No puede realizar esta encuesta' );
             }
 
-
+          $encuestasAsignadas = $rep->mostarEncuestasCursoActivo($usuario->getId());
            if(count( $encuestasAsignadas) > 0){
                 return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
            }
@@ -216,14 +256,18 @@ class EncuestaController extends Controller
             $rep = $em->getRepository('AppBundle:Encuesta');
             $encuesta = $rep->find($idEncuesta);
 
-            $rep = $em->getRepository('AppBundle:Encuesta');
-            $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
+       //     $rep = $em->getRepository('AppBundle:Encuesta');
+        //    $encuestasAsignadas = $rep->findByUsuario($usuario->getId());
+            $encuestasAsignadas = $rep->mostarEncuestasCursoActivo($usuario->getId());
 
             if($encuesta){
-                if($encuesta->getUsuario()->getId() == $usuario->getId()){
+    //          echo $encuesta->getUsuario()->getId();
+   //           echo "string ".$usuario->getId();die();
+                if($encuesta->getEvaluado()->getId() != $usuario->getId()){
                     if($encuesta->getCompletada() == 'NO'){
-                        $encuPregs = $encuesta->getEncuestapregunta();
-
+                   //     $encuPregs = $encuesta->getEncuestapregunta();
+                          $encuPregs =$rep->obtenerPreguntasEncuestasCursoActivo($idEncuesta);
+//dump($encuPregs);die();
                         if(count($encuPregs) == 0){
                             $this->addFlash('danger', 'Esta encuesta no tiene preguntas asignadas' );
                             return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));

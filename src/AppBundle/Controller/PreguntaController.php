@@ -8,10 +8,75 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Pregunta;
 use AppBundle\Entity\EncuestaPregunta;
+use AppBundle\Entity\Curso;
 class PreguntaController extends Controller
 {
+   public function crearPreguntaAction(Request $request){
 
-    public function crearPreguntaAction(Request $request){
+        try{
+           $em = $this->getDoctrine()->getManager();
+           $curso = $em->getRepository('AppBundle:Curso')->findByActivo(1);
+
+            $pregunta = new Pregunta();
+
+            $form = $this->createForm(\AppBundle\Form\PreguntaType::class, $pregunta);
+            $form->handleRequest($request);
+
+
+            if($form->isSubmitted() && $form->isValid()){
+
+                $tipo = $request->request->get('tipo');
+                if($tipo == 'ALUMNO'){
+                  $role = 'ROLE_ALU';
+                }
+                else if($tipo == 'PROFESOR_INTERNO'){
+                   $role = 'ROLE_PROFI';
+                }
+                else if($tipo == 'PROFESOR_EXTERNO'){
+                   $role = 'ROLE_PROFE';
+                }
+                $existeEncuestaCompleta = $em->getRepository('AppBundle:Pregunta')->comprobarSiexisteEncuestaCompleta($role);
+
+            if(!isset($existeEncuestaCompleta['id'])){
+
+                $pregunta->setTipo($tipo);
+
+                $pregunta->addCurso($curso[0]);
+                $curso[0]->addPregunta($pregunta);
+
+                $em->persist($pregunta);
+                $em->persist($curso[0]);
+                $em->flush();
+
+                //Asigno a todas las encuestas segun el tipo, la nueva pregunta
+                  $encuestas = $em->getRepository('AppBundle:Encuesta')->findAll();
+                 if($encuestas){
+                     foreach ($encuestas as $key => $value) {
+                          if($value->getEvaluado()->getRoles()[0]  == $role  ){
+                                $encuestapregunta =  new EncuestaPregunta();
+                                 $encuestapregunta->setEncuesta($value);
+                                 $encuestapregunta->setPregunta($pregunta);
+                                 $em->persist($encuestapregunta);
+                                 $em->flush();
+                         }
+                     }
+                 }
+                $this->addFlash('success', 'Registro creado correctamente' );
+              }
+              else{
+                $this->addFlash('danger', 'No puede crear una pregunta por que ya se ha completado alguna encuesta' );
+              }
+            }
+        }catch (Exception $ex) {
+                $this->addFlash('danger', 'Error al crear el registro' );
+                echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
+        }
+
+            $rep = $em->getRepository('AppBundle:Pregunta');
+            $preguntas = $rep->obtenerPreguntasCursoActivo();
+        return $this->render('Pregunta/crear_pregunta.html.twig', array('form' => $form->createView(), 'preguntas'=>$preguntas ));
+    }
+/*    public function crearPreguntaAction(Request $request){
 
         try{
 
@@ -41,8 +106,6 @@ class PreguntaController extends Controller
                 $em->flush();
 
                 //Asigno a todas las encuestas segun el tipo, la nueva pregunta
-          //       $em = $this->getDoctrine()->getManager();
-             //    $encuestas = $em->getRepository('AppBundle:Encuesta')->obtenerEncuestasSegunRol($role);
                   $encuestas = $em->getRepository('AppBundle:Encuesta')->findAll();
                  if($encuestas){
                      foreach ($encuestas as $key => $value) {
@@ -70,7 +133,7 @@ class PreguntaController extends Controller
             $preguntas = $rep->findAll();
         return $this->render('Pregunta/crear_pregunta.html.twig', array('form' => $form->createView(), 'preguntas'=>$preguntas ));
     }
-
+*/
 public function editarPreguntaAction(Request $request, $idPregunta){
 
   try{
@@ -105,7 +168,7 @@ public function editarPreguntaAction(Request $request, $idPregunta){
    echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
   }
     $rep = $m->getRepository('AppBundle:Pregunta');
-   $preguntas = $rep->findAll();
+   $preguntas = $rep->obtenerPreguntasCursoActivo();
   return $this->render('Pregunta/editar_pregunta.html.twig', array('form' => $form->createView(), 'preguntas'=>$preguntas, 'tipo' => $pregunta->getTipo()  ) );
  }
 
@@ -123,6 +186,7 @@ public function editarPreguntaAction(Request $request, $idPregunta){
         return $this->render('Pregunta/mostrar_preguntas.html.twig', array('preguntas'=>$preguntas ));
     }
 
+
     public function eliminarPreguntaAction(Request $request, $idPregunta){
         try{
             $m = $this->getDoctrine()->getManager();
@@ -130,21 +194,33 @@ public function editarPreguntaAction(Request $request, $idPregunta){
             if(!$pregunta){
                 throw $this->createNotFoundException('La pregunta con id: '.$idPregunta.' no existe.');
             }
-//            $idLogado = $this->getuser()->getId();
+
              if( in_array("ROLE_ADMIN", $this->getuser()->getRoles(), FALSE) ){
 
-                $m = $this->getDoctrine()->getManager();
-               $encuestapreguntas = $m->getRepository('AppBundle:EncuestaPregunta')->findByPregunta($idPregunta);
+               $m = $this->getDoctrine()->getManager();
 
+                $tipo = $pregunta->getTipo();
+                if($tipo == 'ALUMNO'){
+                  $role = 'ROLE_ALU';
+                }
+                else if($tipo == 'PROFESOR_INTERNO'){
+                   $role = 'ROLE_PROFI';
+                }
+                else if($tipo == 'PROFESOR_EXTERNO'){
+                   $role = 'ROLE_PROFE';
+                }
+               $encuestapreguntas = $m->getRepository('AppBundle:Pregunta')->comprobarSiexisteEncuestaCompleta($role);
 
               if($encuestapreguntas){
                 $this->addFlash('danger', 'eliminar.pregunta.encuesta.asignada' );
-                 /*   foreach ($encuestapreguntas as $key => $encpreg) {
-                        $m->remove($encpreg);
-                        $m->flush();
-                     }*/
+
               }
               else{
+                 $encpregs = $m->getRepository('AppBundle:EncuestaPregunta')->findBy(array('pregunta' => $pregunta));
+            //     dump($encpreg); echo $pregunta->getId(); die();
+                 foreach ($encpregs as $key => $value) {
+                    $m->remove($value);
+                 }
                   $m->remove($pregunta);
                   $m->flush();
                   $this->addFlash('success', 'Registro eliminado correctamente' );
@@ -160,6 +236,7 @@ public function editarPreguntaAction(Request $request, $idPregunta){
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
     }
+
 
 }
 

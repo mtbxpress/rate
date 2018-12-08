@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,13 +23,13 @@ class Curso
     private $id;
 //@Assert\Regex("/^\w+/")  ([0][1-9]|[12][0-9]|3[01])       *     pattern="/^[a-z]/",       message="Formato incorrecto"
 
-
     /**
      * @var string
      * @Assert\Regex(
      *     pattern="/([2]\d{3}\/\d{2})/",
      *     match=true,
      * )
+     * @Assert\NotBlank()
      * @Assert\Length(
      *      min = "7",
      *      max = "7",
@@ -54,10 +54,17 @@ class Curso
 
     /**
      * Many cursos have Many usuarios.
-     * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="usuarios")
+     * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="cursos")
      * @ORM\JoinTable(name="curso_usuario")
      */
     private $usuarios;
+
+    /**
+     * Many cursos have Many preguntas.
+     * @ORM\ManyToMany(targetEntity="Pregunta", inversedBy="cursos")
+     * @ORM\JoinTable(name="curso_preguntas")
+     */
+    private $preguntas;
 
     public function __construct() {
         $this->titulaciones = new \Doctrine\Common\Collections\ArrayCollection();
@@ -130,7 +137,12 @@ class Curso
      */
     public function addTitulacion(\AppBundle\Entity\Titulacion $titulacione)
     {
-        $existe = 0;
+        if (!$this->titulaciones->contains($titulacione)) {
+            $this->titulaciones[] = $titulacione;
+           // $titulacione->setCliente($this);
+        }
+
+/*        $existe = 0;
         foreach ($this->titulaciones as $tit) {
             if ($tit->getId() == $titulacione->getId()) {
                 $existe = 1;
@@ -138,7 +150,7 @@ class Curso
         }
         if(!$existe){
             $this->titulaciones[] = $titulacione;
-        }
+        }*/
         return $this;
     }
 
@@ -160,5 +172,70 @@ class Curso
     public function getTitulaciones()
     {
         return $this->titulaciones;
+    }
+
+    /**
+     * Add titulacione
+     *
+     * @param \AppBundle\Entity\Titulacion $titulacione
+     *
+     * @return Curso
+     */
+    public function addTitulacione(\AppBundle\Entity\Titulacion $titulacione)
+    {
+        $this->titulaciones[] = $titulacione;
+
+        return $this;
+    }
+
+    /**
+     * Remove titulacione
+     *
+     * @param \AppBundle\Entity\Titulacion $titulacione
+     */
+    public function removeTitulacione(\AppBundle\Entity\Titulacion $titulacione)
+    {
+        $this->titulaciones->removeElement($titulacione);
+    }
+
+    /**
+     * Add usuario
+     *
+     * @param \AppBundle\Entity\Usuario $usuario
+     *
+     * @return Curso
+     */
+    public function addUsuario(\AppBundle\Entity\Usuario $usuario)
+    {
+    /*    $this->usuarios[] = $usuario;
+
+        return $this;*/
+        if (!$this->usuarios->contains($usuario)) {
+            $this->usuarios[] = $usuario;
+            //$usuario->setCurso($this);
+        }
+
+        return $this;
+
+    }
+
+    /**
+     * Remove usuario
+     *
+     * @param \AppBundle\Entity\Usuario $usuario
+     */
+    public function removeUsuario(\AppBundle\Entity\Usuario $usuario)
+    {
+        $this->usuarios->removeElement($usuario);
+    }
+
+    /**
+     * Get usuarios
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsuarios()
+    {
+        return $this->usuarios;
     }
 }

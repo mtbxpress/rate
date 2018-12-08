@@ -172,7 +172,7 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 					INNER JOIN encuesta enc on usu.id = enc.evaluado_id
 					INNER JOIN titulacion tit on tit.id = enc.titulacion_id
 					INNER JOIN curso_titulacion ct on ct.titulacion_id = tit.id
-					INNER JOIN curso cu on ct.curso_id = cu.id
+					INNER JOIN curso cu on ct.curso_id = cu.id and cu.id = enc.curso_id
 					WHERE cu.activo = 1 and usu.id = $idUsuario";
 
 			$em  = $this->getEntityManager();
@@ -199,11 +199,20 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 	public function calcularMedias($idUsuario)	{
 
 		try {
-			$query = "SELECT ep.* , e.*, res.valor
+		/*	$query = "SELECT ep.* , e.*, res.valor
 				FROM encuesta_pregunta ep
 				INNER JOIN encuesta e on ep.encuesta_id = e.id
 				INNER JOIN resultado res on ep.resultado_id = res.id
 				WHERE e.evaluado_id = $idUsuario AND e.completada = 'SI' ";
+*/
+			$query = "SELECT ep.* , e.*, res.valor
+				FROM encuesta_pregunta ep
+				INNER JOIN encuesta e on ep.encuesta_id = e.id
+				INNER JOIN resultado res on ep.resultado_id = res.id
+				INNER JOIN titulacion t ON t.id = e.titulacion_id
+				INNER JOIN curso_titulacion ct ON ct.titulacion_id = t.id
+				INNER JOIN curso c ON c.id = ct.curso_id and c.id = e.curso_id
+				WHERE e.evaluado_id = $idUsuario AND e.completada = 'SI' AND c.activo = 1 ";
 
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();

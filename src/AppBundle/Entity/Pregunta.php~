@@ -5,12 +5,15 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+/* dos indicces unicos
+ * @ORM\Table(name="pregunta", uniqueConstraints={ @ORM\UniqueConstraint(name="descripcion", columns={"descripcion"}),
+    @ORM\UniqueConstraint(name="tipo", columns={"tipo"})}
+     )}
+*/
 /**
  * Pregunta
  *
- * @ORM\Table(name="pregunta", uniqueConstraints={ @ORM\UniqueConstraint(name="descripcion", columns={"video_dimension"}),
-    @ORM\UniqueConstraint(name="tipo", columns={"tipo"})}
-     )}
+ * @ORM\Table(name="pregunta", uniqueConstraints={ @ORM\UniqueConstraint(name="descripcion_tipo_unicos", columns={"descripcion", "tipo"})  })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PreguntaRepository")
  */
 class Pregunta
@@ -31,7 +34,7 @@ class Pregunta
      * @Assert\NotBlank()
      * @Assert\Length(
      *      min = "2",
-     *      max = "100",
+     *      max = "150",
      * )
      */
     private $descripcion;
@@ -43,7 +46,7 @@ class Pregunta
      * @Assert\NotBlank()
      * @Assert\Length(
      *      min = "2",
-     *      max = "100",
+     *      max = "150",
      * )
      */
     private $descripcionIngles;
@@ -59,6 +62,7 @@ class Pregunta
      * @var int
      *
      * @ORM\Column(name="orden", type="smallint")
+     * @Assert\NotBlank()
      */
     private $orden;
 
@@ -69,7 +73,11 @@ class Pregunta
     private $encuestas;
     */
 
-
+    /**
+     * Many usuarios have Many cursos.
+     * @ORM\ManyToMany(targetEntity="Curso", mappedBy="preguntas")
+     */
+    private $cursos;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\EncuestaPregunta", mappedBy="pregunta", cascade={"persist"})

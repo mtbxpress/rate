@@ -63,16 +63,19 @@ class UsuarioController extends Controller
             $medias = $rep->calcularMedias($idUsuario);
 
             $usuario = $rep->mostarUsuarioEncuestaConCursoActivo($idUsuario);
+
             if(!isset($usuario) ){
                 $usuario = $rep->mostarUsuarioCursoActivo($idUsuario);
             }
-            if(isset($usuario) ){
-                $encsDelUsuarioEvaluado = $em->getRepository('AppBundle:Encuesta')->findByEvaluado($usuario);
-                $resultados = 0;
 
+            if(isset($usuario) ){
+         //       $encsDelUsuarioEvaluado = $em->getRepository('AppBundle:Encuesta')->findByEvaluado($usuario);
+                $encsDelUsuarioEvaluado = $em->getRepository('AppBundle:Encuesta')->obtenerEncuestasCursoActivoEvaluado($usuario['id']);
+                $resultados = 0;
+//dump($encsDelUsuarioEvaluado);die();
                 foreach ($encsDelUsuarioEvaluado as $key => $value) {
-                    if($value->getCompletada() == 'SI'){
-                        $encResultados[$value->getId()] = $em->getRepository('AppBundle:EncuestaPregunta')->findByEncuesta($value->getId());
+                    if($value['completada'] == 'SI'){
+                        $encResultados[$value['id']] = $em->getRepository('AppBundle:EncuestaPregunta')->findByEncuesta($value['id']);
                     }
                 }
 
@@ -91,6 +94,7 @@ class UsuarioController extends Controller
                 return $this->render('Usuario/mostrar_usuario.html.twig', array('usuario'=>$usuario, 'encResultados' => $encResultados ,'medias' => $medias));
             }
             $this->addFlash('danger', 'No esta inscrito en este curso' );
+            return $this->render('Inicio/inicio.html.twig');
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }

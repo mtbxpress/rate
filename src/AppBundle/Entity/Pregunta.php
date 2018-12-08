@@ -73,7 +73,11 @@ class Pregunta
     private $encuestas;
     */
 
-
+    /**
+     * Many usuarios have Many cursos.
+     * @ORM\ManyToMany(targetEntity="Curso", mappedBy="preguntas")
+     */
+    private $cursos;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\EncuestaPregunta", mappedBy="pregunta", cascade={"persist"})
@@ -285,5 +289,39 @@ class Pregunta
     public function getDescripcionIngles()
     {
         return $this->descripcionIngles;
+    }
+
+    /**
+     * Add curso
+     *
+     * @param \AppBundle\Entity\Curso $curso
+     *
+     * @return Pregunta
+     */
+    public function addCurso(\AppBundle\Entity\Curso $curso)
+    {
+        $this->cursos[] = $curso;
+
+        return $this;
+    }
+
+    /**
+     * Remove curso
+     *
+     * @param \AppBundle\Entity\Curso $curso
+     */
+    public function removeCurso(\AppBundle\Entity\Curso $curso)
+    {
+        $this->cursos->removeElement($curso);
+    }
+
+    /**
+     * Get cursos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCursos()
+    {
+        return $this->cursos;
     }
 }

@@ -14,10 +14,18 @@ class PreguntaRepository extends \Doctrine\ORM\EntityRepository
 	public function comprobarSiexisteEncuestaCompleta($role)	{
 
 		try {
-			$query = "SELECT e.*
+			/*$query = "SELECT e.*
 				FROM encuesta e
 				INNER JOIN usuario u ON e.evaluado_id = u.id
 				WHERE u.roles = '$role' AND e.completada = 'SI'";
+				*/
+			$query = "SELECT e.*
+				FROM encuesta e
+				INNER JOIN usuario u ON e.evaluado_id = u.id
+				INNER JOIN titulacion t ON t.id = e.titulacion_id
+				INNER JOIN curso_titulacion ct ON ct.titulacion_id = t.id
+				INNER JOIN curso c ON c.id = ct.curso_id
+				WHERE u.roles = '$role' AND e.completada = 'SI' AND c.activo = 1";
 
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
@@ -33,10 +41,10 @@ class PreguntaRepository extends \Doctrine\ORM\EntityRepository
 	    }
 	}
 
-	public function obtenerPreguntasCursoActivo()	{
+	public function obtenerPreguntasCursoActivo($tipo = null)	{
 
 		try {
-			$query = "SELECT p.*
+			/*$query = "SELECT p.*
 				FROM pregunta p
 				INNER JOIN encuesta_pregunta ep ON ep.pregunta_id=p.id
 				INNER JOIN encuesta e ON e.id = ep.encuesta_id
@@ -44,6 +52,16 @@ class PreguntaRepository extends \Doctrine\ORM\EntityRepository
 				INNER JOIN curso_titulacion ct ON ct.titulacion_id = t.id
 				INNER JOIN curso c ON ct.curso_id = c.id
 				WHERE c.activo = 1";
+				*/
+			if($tipo != null){
+				$sub = "and p.tipo = '$tipo'";
+			}
+			else { $sub = ''; }
+			$query = "SELECT p.*
+				FROM pregunta p
+				INNER JOIN curso_preguntas cp ON cp.pregunta_id = p.id
+				INNER JOIN curso c ON cp.curso_id = c.id
+				WHERE c.activo = 1 $sub ";
 
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();

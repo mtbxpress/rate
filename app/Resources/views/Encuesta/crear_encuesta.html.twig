@@ -74,7 +74,7 @@
 <!-- <form class="form-horizontal form-label-left" novalidate>  -->
 					{#{ form_start(form, { 'enctype':"multipart/form-data",  'attr' : {'role' : 'form', 'class': 'form-label-left',novalidate: 'novalidate'} }) }#}
 					{{ form_start(form, { 'enctype':"multipart/form-data",  'attr' : {'role' : 'form'} }) }}
-
+{#
 						<div class="form-group">
 							{{ form_label(form.titulacion)}}
 							 {{ form_widget(form.titulacion, { 'attr': {'class': 'form-control'} }) }}
@@ -90,7 +90,35 @@
 							 {{ form_widget(form.evaluado, { 'attr': {'class': 'form-control'} }) }}
 							<span class="text-danger">{{ form_errors(form.evaluado)}}</span>
 						</div>
+#}
 
+                                        <div class="form-group">
+                                            <label for="Titulacion">{% trans %}Titulacion{% endtrans %}</label>
+                                                      <select name="titulacion"  class="form-control select2"  style="width: 100%;" required="">
+                                                        <option></option>
+                                                          {% for titulacion in titulacionesActivas %}
+                                                              <option value="{{titulacion.id}}">{{ titulacion.nombre }}</option>
+                                                          {% endfor %}
+                                                      </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Titulacion">{% trans %}usuario.usuario{% endtrans %}</label>
+                                                      <select name="usuario"  class="form-control select2"  style="width: 100%;" required="">
+                                                        <option></option>
+                                                          {% for usuario in usuariosActivos %}
+                                                              <option value="{{usuario.id}}">{{ usuario.nombre }} {{ usuario.apellidos }}  //  {{ usuario.roles }}</option>
+                                                          {% endfor %}
+                                                      </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Titulacion">{% trans %}usuario.evaluado{% endtrans %}</label>
+                                                      <select name="evaluado"  class="form-control select2"  style="width: 100%;" required="">
+                                                        <option></option>
+                                                          {% for evaluado in usuariosActivos %}
+                                                              <option value="{{evaluado.id}}">{{ evaluado.nombre }} {{ evaluado.apellidos }}  //  {{ evaluado.roles}}</option>
+                                                          {% endfor %}
+                                                      </select>
+                                        </div>
                       <div class="ln_solid"></div>
 					<!--  Aceptar y Reset en la misma línea  -->
 					<div class="btn-toolbar" role="toolbar">

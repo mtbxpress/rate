@@ -59,6 +59,13 @@ class Curso
      */
     private $usuarios;
 
+    /**
+     * Many cursos have Many preguntas.
+     * @ORM\ManyToMany(targetEntity="Pregunta", inversedBy="cursos")
+     * @ORM\JoinTable(name="curso_preguntas")
+     */
+    private $preguntas;
+
     public function __construct() {
         $this->titulaciones = new \Doctrine\Common\Collections\ArrayCollection();
     }
@@ -230,5 +237,39 @@ class Curso
     public function getUsuarios()
     {
         return $this->usuarios;
+    }
+
+    /**
+     * Add pregunta
+     *
+     * @param \AppBundle\Entity\Pregunta $pregunta
+     *
+     * @return Curso
+     */
+    public function addPregunta(\AppBundle\Entity\Pregunta $pregunta)
+    {
+        $this->preguntas[] = $pregunta;
+
+        return $this;
+    }
+
+    /**
+     * Remove pregunta
+     *
+     * @param \AppBundle\Entity\Pregunta $pregunta
+     */
+    public function removePregunta(\AppBundle\Entity\Pregunta $pregunta)
+    {
+        $this->preguntas->removeElement($pregunta);
+    }
+
+    /**
+     * Get preguntas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPreguntas()
+    {
+        return $this->preguntas;
     }
 }

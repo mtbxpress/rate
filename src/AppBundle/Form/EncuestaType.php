@@ -16,7 +16,7 @@ class EncuestaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('evaluado',EntityType::class, array(
+     /*       ->add('evaluado',EntityType::class, array(
                 'class'=> 'AppBundle:Usuario',
                 'label'=> 'usuario.evaluado',
                 'placeholder' => '' ,
@@ -52,7 +52,7 @@ class EncuestaType extends AbstractType
              //           }
                         return $strOption;
                       }
-            ))
+            ))*/
             ->add('reset',ResetType::class, array('attr' => array( 'class' => 'btn btn-success'  )))
             ->add('aceptar',SubmitType::class, array('attr' => array( 'class' => 'btn btn-primary'  )));
     }/**

@@ -129,3 +129,4 @@ porcentaje.enc.by.usuario: Percentage surveys by type user
 Sistema.evaluacion.encuestas: System of evaluation of practices in companies.
 No esta inscrito en este curso: You are not enrolled in this course
 No puede crear una pregunta por que ya se ha completado alguna encuesta: You can not create a question because a survey has already been completed
+No se puede crear una encuesta si no existen preguntas: You can not create a survey if there are no questions
