@@ -282,13 +282,24 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 	public function calcularNumTiposUsuarios()	{
 
 		try {
-			$query = "SELECT
+/*			$query = "SELECT
 			SUM(CASE WHEN roles = 'ROLE_ADMIN' THEN 1 ELSE 0 END) admin,
 			SUM(CASE WHEN roles = 'ROLE_ALU' THEN 1 ELSE 0 END) alumno,
 			SUM(CASE WHEN roles = 'ROLE_PROFE' THEN 1 ELSE 0 END) profe,
 			SUM(CASE WHEN roles = 'ROLE_PROFI' THEN 1 ELSE 0 END) profi,
 			SUM(CASE WHEN roles = 'ROLE_PROFI' OR roles = 'ROLE_PROFE' OR roles = 'ROLE_ADMIN' OR roles = 'ROLE_ALU' THEN 1 ELSE 0 END) total
 			FROM usuario; ";
+*/
+			$query = "SELECT
+			SUM(CASE WHEN roles = 'ROLE_ADMIN' THEN 1 ELSE 0 END) admin,
+			SUM(CASE WHEN roles = 'ROLE_ALU' THEN 1 ELSE 0 END) alumno,
+			SUM(CASE WHEN roles = 'ROLE_PROFE' THEN 1 ELSE 0 END) profe,
+			SUM(CASE WHEN roles = 'ROLE_PROFI' THEN 1 ELSE 0 END) profi,
+			SUM(CASE WHEN roles = 'ROLE_PROFI' OR roles = 'ROLE_PROFE' OR roles = 'ROLE_ADMIN' OR roles = 'ROLE_ALU' THEN 1 ELSE 0 END) total
+				FROM usuario u
+			            INNER JOIN curso_usuario cu on cu.usuario_id = u.id
+			            INNER JOIN curso c on c.id = cu.curso_id
+			            WHERE c.activo = 1;";
 
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
@@ -303,14 +314,14 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 	  return $res[0];
 	}
 
-	public function calcularNumEncuestas()	{
+	public function calcularNumEncuestas($idCursoActivo)	{
 
 		try {
 			$query = "SELECT
 				SUM(CASE WHEN completada = 'SI' THEN 1 ELSE 0 END) completada,
 				SUM(CASE WHEN completada = 'NO' THEN 1 ELSE 0 END) nocompletada,
 				SUM(CASE WHEN completada = 'SI' OR completada = 'NO' THEN 1 ELSE 0 END) total
-				FROM encuesta;";
+				FROM encuesta where encuesta.curso_id = $idCursoActivo;";
 
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
@@ -325,7 +336,7 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 	  return $res[0];
 	}
 
-	public function calcularNumEncuestasPorUsuarios($completada = null)	{
+	public function calcularNumEncuestasPorUsuarios($idCursoActivo, $completada = null)	{
 
 		try {
 
@@ -336,7 +347,9 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 			SUM(CASE WHEN roles = 'ROLE_PROFI' THEN 1 ELSE 0 END) profi,
 			SUM(CASE WHEN roles = 'ROLE_PROFI' OR roles = 'ROLE_PROFE' OR roles = 'ROLE_ADMIN' OR roles = 'ROLE_ALU' THEN 1 ELSE 0 END) total
 			FROM usuario u
-            			INNER JOIN encuesta e ON u.id = e.usuario_id WHERE e.completada='$completada'";
+            			INNER JOIN encuesta e ON u.id = e.usuario_id
+            			WHERE e.completada='$completada' and e.curso_id = $idCursoActivo ";
+
 
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
@@ -355,7 +368,12 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 
 		try {
 
-			$query = "SELECT * FROM usuario WHERE roles = '$rolUsuario' ORDER BY media DESC LIMIT $cantidad;";
+			$query = "SELECT *
+				    FROM usuario u
+			                 INNER JOIN curso_usuario cu on cu.usuario_id = u.id
+			                 INNER JOIN curso c on c.id = cu.curso_id
+			                 WHERE c.activo = 1 and u.roles = '$rolUsuario'
+			                 ORDER BY media DESC LIMIT $cantidad;";
 
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();

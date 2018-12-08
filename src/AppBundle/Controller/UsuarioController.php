@@ -325,11 +325,15 @@ class UsuarioController extends Controller
     public function mostrarEstadisticasAction(){
         try{
             $em = $this->getDoctrine()->getManager();
+            $rep = $em->getRepository('AppBundle:Curso');
+            $cursoActivo = $rep->findBy(array('activo' => true));
+
+            $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Usuario');
             $numUsuarios = $rep->calcularNumTiposUsuarios();
-            $numEncuestas = $rep->calcularNumEncuestas();
-            $numEncCompletada = $rep->calcularNumEncuestasPorUsuarios('SI');
-            $numEncNoCompletada = $rep->calcularNumEncuestasPorUsuarios('NO');
+            $numEncuestas = $rep->calcularNumEncuestas($cursoActivo[0]->getId());
+            $numEncCompletada = $rep->calcularNumEncuestasPorUsuarios($cursoActivo[0]->getId(),'SI');
+            $numEncNoCompletada = $rep->calcularNumEncuestasPorUsuarios($cursoActivo[0]->getId(),'NO');
             $topAlu = $rep->calcularTopUsuarios('ROLE_ALU',5);
             $topProfi = $rep->calcularTopUsuarios('ROLE_PROFI',5);
             $topProfe = $rep->calcularTopUsuarios('ROLE_PROFE',5);

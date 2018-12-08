@@ -81,10 +81,13 @@
                     <div class="w_left w_25">
                       <span>{% trans %}Profesor Interno{% endtrans %}</span>
                     </div>
+                    {% if numEncCompletada.profi+numEncNoCompletada.profi > 0 %}
                         {% set porcentaje = (numEncCompletada.profi*100)/(numEncCompletada.profi+numEncNoCompletada.profi) %}
+                    {% else %}
+                      {% set porcentaje = 0%}
+                    {% endif %}
                     <div class="w_center w_55">
                       <div class="progress">
-                        {% set porcentaje = (numEncCompletada.profi*100)/(numEncCompletada.profi+numEncNoCompletada.profi) %}
                         <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{porcentaje}}%;">{{porcentaje}}%
                           <span class="sr-only"></span>
                         </div>
@@ -100,7 +103,11 @@
                     <div class="w_left w_25">
                       <span>{% trans %}Profesor Externo{% endtrans %}</span>
                     </div>
-                    {% set porcentaje = (numEncCompletada.profe*100)/(numEncCompletada.profe+numEncNoCompletada.profe) %}
+                    {% if numEncCompletada.profe+numEncNoCompletada.profe > 0 %}
+                      {% set porcentaje = (numEncCompletada.profe*100)/(numEncCompletada.profe+numEncNoCompletada.profe) %}
+                    {% else %}
+                      {% set porcentaje = 0%}
+                    {% endif %}
                     <div class="w_center w_55">
                       <div class="progress">
 
@@ -118,7 +125,11 @@
                     <div class="w_left w_25">
                       <span>{% trans %}Alumno{% endtrans %}</span>
                     </div>
-                    {% set porcentaje = (numEncCompletada.alumno*100)/(numEncCompletada.alumno+numEncNoCompletada.alumno) %}
+                    {% if numEncCompletada.alumno+numEncNoCompletada.alumno > 0 %}
+                        {% set porcentaje = (numEncCompletada.alumno*100)/(numEncCompletada.alumno+numEncNoCompletada.alumno) %}
+                    {% else %}
+                      {% set porcentaje = 0%}
+                    {% endif %}
                     <div class="w_center w_55">
                       <div class="progress">
                         <div class="progress-bar bg-green" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{porcentaje}}%;">{{porcentaje}}%
