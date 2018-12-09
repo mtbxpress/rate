@@ -113,11 +113,13 @@ class Usuario implements UserInterface
      */
     private $telefono;
 
-    /**
+    /*
      * Many usuarios have Many cursos.
      * @ORM\ManyToMany(targetEntity="Curso", mappedBy="usuarios")
-     */
+
     private $cursos;
+*/
+
 
     /* COMENTADO
      * Many Users have Many Titulaciones.
@@ -129,18 +131,17 @@ class Usuario implements UserInterface
 
 
     /**
-     * One usuario has many encuestas. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="Encuesta", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CursoUsuario", mappedBy="usuario", cascade={"persist"})
      */
-    private $encuestas;
+    private $cursousuario;
 
-    /**
+    /*
      * @var decimal
      *
      * @ORM\Column(name="media", type="decimal", precision=4, scale=1, nullable=true)
-     */
+     *
     private $media;
-
+*/
     public function __construct() {
    //     $this->titulaciones = new \Doctrine\Common\Collections\ArrayCollection();
         $this->encuestas = new \Doctrine\Common\Collections\ArrayCollection();
@@ -485,13 +486,13 @@ class Usuario implements UserInterface
         return $this->encuestas;
     }
 
-    /**
+    /*
      * Add curso
      *
      * @param \AppBundle\Entity\Curso $curso
      *
      * @return Usuario
-     */
+     *
     public function addCurso(\AppBundle\Entity\Curso $curso)
     {
     //    if (!$this->cursos->contains($curso)) {
@@ -500,33 +501,33 @@ class Usuario implements UserInterface
         return $this;
     }
 
-    /**
+    /*
      * Remove curso
      *
      * @param \AppBundle\Entity\Curso $curso
-     */
+     *
     public function removeCurso(\AppBundle\Entity\Curso $curso)
     {
         $this->cursos->removeElement($curso);
     }
 
-    /**
+    /*
      * Get cursos
      *
      * @return \Doctrine\Common\Collections\Collection
-     */
+     *
     public function getCursos()
     {
         return $this->cursos;
     }
-
-    /**
+*/
+    /*
      * Set media
      *
      * @param string $media
      *
      * @return Usuario
-     */
+     *
     public function setMedia($media)
     {
         $this->media = $media;
@@ -534,13 +535,47 @@ class Usuario implements UserInterface
         return $this;
     }
 
-    /**
+    /*
      * Get media
      *
      * @return string
-     */
+     *
     public function getMedia()
     {
         return $this->media;
+    }
+*/
+    /**
+     * Add cursousuario
+     *
+     * @param \AppBundle\Entity\CursoUsuario $cursousuario
+     *
+     * @return Usuario
+     */
+    public function addCursousuario(\AppBundle\Entity\CursoUsuario $cursousuario)
+    {
+        $this->cursousuario[] = $cursousuario;
+
+        return $this;
+    }
+
+    /**
+     * Remove cursousuario
+     *
+     * @param \AppBundle\Entity\CursoUsuario $cursousuario
+     */
+    public function removeCursousuario(\AppBundle\Entity\CursoUsuario $cursousuario)
+    {
+        $this->cursousuario->removeElement($cursousuario);
+    }
+
+    /**
+     * Get cursousuario
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCursousuario()
+    {
+        return $this->cursousuario;
     }
 }

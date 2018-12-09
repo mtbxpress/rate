@@ -52,12 +52,19 @@ class Curso
      */
     private $titulaciones;
 
-    /**
+    /*
      * Many cursos have Many usuarios.
      * @ORM\ManyToMany(targetEntity="Usuario", inversedBy="cursos")
      * @ORM\JoinTable(name="curso_usuario")
-     */
+
     private $usuarios;
+*/
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CursoUsuario", mappedBy="curso", cascade={"persist"})
+     */
+    private $cursousuario;
 
     /**
      * Many cursos have Many preguntas.
@@ -198,18 +205,15 @@ class Curso
         $this->titulaciones->removeElement($titulacione);
     }
 
-    /**
+    /*
      * Add usuario
      *
      * @param \AppBundle\Entity\Usuario $usuario
      *
      * @return Curso
-     */
+     *
     public function addUsuario(\AppBundle\Entity\Usuario $usuario)
     {
-    /*    $this->usuarios[] = $usuario;
-
-        return $this;*/
         if (!$this->usuarios->contains($usuario)) {
             $this->usuarios[] = $usuario;
             //$usuario->setCurso($this);
@@ -219,26 +223,26 @@ class Curso
 
     }
 
-    /**
+    *
      * Remove usuario
      *
      * @param \AppBundle\Entity\Usuario $usuario
-     */
+     *
     public function removeUsuario(\AppBundle\Entity\Usuario $usuario)
     {
         $this->usuarios->removeElement($usuario);
     }
 
-    /**
+    **
      * Get usuarios
      *
      * @return \Doctrine\Common\Collections\Collection
-     */
+     *
     public function getUsuarios()
     {
         return $this->usuarios;
     }
-
+*/
     /**
      * Add pregunta
      *
@@ -271,5 +275,39 @@ class Curso
     public function getPreguntas()
     {
         return $this->preguntas;
+    }
+
+    /**
+     * Add cursousuario
+     *
+     * @param \AppBundle\Entity\CursoUsuario $cursousuario
+     *
+     * @return Curso
+     */
+    public function addCursousuario(\AppBundle\Entity\CursoUsuario $cursousuario)
+    {
+        $this->cursousuario[] = $cursousuario;
+
+        return $this;
+    }
+
+    /**
+     * Remove cursousuario
+     *
+     * @param \AppBundle\Entity\CursoUsuario $cursousuario
+     */
+    public function removeCursousuario(\AppBundle\Entity\CursoUsuario $cursousuario)
+    {
+        $this->cursousuario->removeElement($cursousuario);
+    }
+
+    /**
+     * Get cursousuario
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCursousuario()
+    {
+        return $this->cursousuario;
     }
 }

@@ -23,28 +23,56 @@
           <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
               <span class="count_top" ><i class="fa fa-users"></i> {% trans %}Usuarios totales{% endtrans %}</span>
-              <div class="count text-center">{{ numUsuarios.total }} </div>
+              <div class="count text-center">{{ numUsuarios.total|number_format }} </div>
               <span class="count_bottom"><i class="green">100% </i> {% trans %}del total{% endtrans %}</span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count  text-center">
               <span class="count_top"><i class="fa fa-graduation-cap"></i> {% trans %}Alumno{% endtrans %}</span>
-              <div class="count text-center">{{ numUsuarios.alumno }} </div>
-              <span class="count_bottom"><i class="green">{{ ((numUsuarios.alumno*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
+              <div class="count text-center">{{ numUsuarios.alumno|number_format }} </div>
+              <span class="count_bottom"><i class="green">
+                {% if numUsuarios.total > 0 %}
+                {{ ((numUsuarios.alumno*100)/numUsuarios.total)|number_format(2, '.', ',')}}%
+              {% else %}
+                0%
+              {% endif %}
+              </i> {% trans %}del total{% endtrans %}
+              </span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
               <span class="count_top"><i class="fa fa-user"></i> {% trans %}Profesor Interno{% endtrans %}</span>
-              <div class="count text-center">{{ numUsuarios.profi }} </div> {#</div><div class="count green">2,500</div>#}
-              <span class="count_bottom"><i class="green">{{ ((numUsuarios.profi*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
+              <div class="count text-center">{{ numUsuarios.profi|number_format }} </div> {#</div><div class="count green">2,500</div>#}
+              <span class="count_bottom"><i class="green">
+                {% if numUsuarios.total > 0 %}
+                {{ ((numUsuarios.profi*100)/numUsuarios.total)|number_format(2, '.', ',')}}%
+              {% else %}
+                 0%
+              {% endif %}
+                %</i> {% trans %}del total{% endtrans %}
+              </span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
               <span class="count_top"><i class="fa fa-user"></i> {% trans %}Profesor Externo{% endtrans %}</span>
-              <div class="count text-center">{{ numUsuarios.profe }} </div>
-              <span class="count_bottom"><i class="green">{{ ((numUsuarios.profe*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
+              <div class="count text-center">{{ numUsuarios.profe|number_format }} </div>
+              <span class="count_bottom"><i class="green">
+                {% if numUsuarios.total > 0 %}
+                  {{ ((numUsuarios.profe*100)/numUsuarios.total)|number_format(2, '.', ',')}}%
+              {% else %}
+                0%
+              {% endif %}
+              </i> {% trans %}del total{% endtrans %}
+              </span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
               <span class="count_top"><i class="fa fa-cogs"></i> {% trans %}Administrador{% endtrans %}</span>
-              <div class="count text-center">{{ numUsuarios.admin }} </div>
-              <span class="count_bottom"><i class="green">{{ ((numUsuarios.admin*100)/numUsuarios.total)|number_format(2, '.', ',')}}% </i> {% trans %}del total{% endtrans %}</span>
+              <div class="count text-center">{{ numUsuarios.admin|number_format }} </div>
+              <span class="count_bottom"><i class="green">
+              {% if numUsuarios.total > 0 %}
+                {{ ((numUsuarios.admin*100)/numUsuarios.total)|number_format(2, '.', ',')}}%
+              {% else %}
+                0%
+              {% endif %}
+              </i> {% trans %}del total{% endtrans %}
+              </span>
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count text-center">
               <span class="count_top"><i class="fa fa-list-alt"></i> {% trans %}Total encuestas{% endtrans %}</span>
@@ -65,7 +93,7 @@
             <div class="col-md-4 col-sm-4 col-xs-12">
               <div class="x_panel tile fixed_height_320">
                 <div class="x_title">
-                  <h2>{% trans %}Encuestas{% endtrans %} {% trans %}Completada{% endtrans %}</h2>
+                  <h2>{% trans %}Enc{% endtrans %} {% trans %}Completada{% endtrans %}</h2>
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -184,25 +212,49 @@
                             <td>
                               <p><i class="fa fa-square blue"></i>Admin </p>
                             </td>
-                            <td>{{ ((numUsuarios.admin*100)/numUsuarios.total)|number_format(2, '.', ',')}}%</td>
+                            <td>
+                              {% if numUsuarios.total > 0 %}
+                              {{ ((numUsuarios.admin*100)/numUsuarios.total)|number_format(2, '.', ',')}}%
+                              {% else %}
+                                0%
+                              {% endif %}
+                            </td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square green"></i>{% trans %}Alumno{% endtrans %} </p>
                             </td>
-                            <td>{{ ((numUsuarios.alumno*100)/numUsuarios.total)|number_format(2, '.', ',')}}%</td>
+                            <td>
+                               {% if numUsuarios.total > 0 %}
+                                  {{ ((numUsuarios.alumno*100)/numUsuarios.total)|number_format(2, '.', ',')}}%
+                              {% else %}
+                                0%
+                              {% endif %}
+                            </td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square purple"></i>{% trans %}Profesor Interno{% endtrans %} </p>
                             </td>
-                            <td>{{ ((numUsuarios.profi*100)/numUsuarios.total)|number_format(2, '.', ',')}}%</td>
+                            <td>
+                            {% if numUsuarios.total > 0 %}
+                              {{ ((numUsuarios.profi*100)/numUsuarios.total)|number_format(2, '.', ',')}}%
+                              {% else %}
+                                0%
+                              {% endif %}
+                            </td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square red"></i>{% trans %}Profesor Externo{% endtrans %} </p>
                             </td>
-                            <td>{{ ((numUsuarios.profe*100)/numUsuarios.total)|number_format(2, '.', ',')}}%</td>
+                            <td>
+                            {% if numUsuarios.total > 0 %}
+                              {{ ((numUsuarios.profe*100)/numUsuarios.total)|number_format(2, '.', ',')}}%
+                              {% else %}
+                                0%
+                              {% endif %}
+                            </td>
                           </tr>
                         </table>
                       </td>
@@ -405,8 +457,8 @@
         data: {
           labels: [
             "Admin",
-            "{% trans %}Profesor Interno{% endtrans %}",
-            "{% trans %}Profesor Externo{% endtrans %}",
+            "{% trans %}Prof Interno{% endtrans %}",
+            "{% trans %}Prof Externo{% endtrans %}",
             "{% trans %}Alumno{% endtrans %}"
           ],
           datasets: [{

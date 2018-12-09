@@ -290,27 +290,8 @@ function funcion(){
 
 {% block javascripts %}
   {{ parent() }}
-{% if app.request.getLocale() == 'es' %}
-      <script>var url = "{{ asset('traduciones_datatables/Spanish.json') }}";</script>
-  {% elseif app.request.getLocale() == 'en' %}
-      <script>var url = "{{ asset('traduciones_datatables/English.json') }}";</script>
-  {% else %}
-      <script>var url = "{{ asset('traduciones_datatables/Spanish.json') }}";</script>
-  {% endif %}
-
-    <script src="{{ asset('traduciones_datatables/Spanish.json') }}"></script>
-
 <script>
-/*$(document).ready(function() {
-    $('table.display').DataTable( {
-       "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        "language": {
-     //       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-             "url": url
-        }
-    } );
-} );
-*/
+
   $( document ).ready(function() {
     $(".eliminar").on('click', function() {
       $("#nombre").html($(this).attr("name"));
@@ -319,11 +300,7 @@ function funcion(){
       $("#enlace_eliminar").attr("href",url);
     });
   });
-/*
- $(window).on('load',function(){
-     $(".loader").fadeOut( "slow" );
-});
-*/
+
  $(window).on('load',function(){
      $(".loader").fadeOut( "slow" );
 });

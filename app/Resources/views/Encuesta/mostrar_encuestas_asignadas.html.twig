@@ -114,40 +114,5 @@
           </div>
         </div>
         <!-- /page content -->
-
-
 {% endblock %}
-{#
-{% block javascripts %}
-    {{ parent() }}
 
- {% if app.request.getLocale() == 'es' %}
-      <script>var url = "{{ asset('template/build/mi_datatable/traduciones_datatables/Spanish.json') }}";</script>
-  {% elseif app.request.getLocale() == 'en' %}
-      <script>var url = "{{ asset('template/build/mi_datatable/traduciones_datatables/English.json') }}";</script>
-  {% else %}
-      <script>var url = "{{ asset('template/build/mi_datatable/traduciones_datatables/Spanish.json') }}";</script>
-  {% endif %}
-
-<script>
-$(document).ready(function() {
-    $('#tabla_datatable').DataTable( {
-      "lengthMenu": [[5, 10, 25, 50, -1], [5, 10, 25, 50, "All"]],
-        "language": {
-     //       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-             "url": url
-        }
-    } );
-} );
-
-  $( document ).ready(function() {
-    $(".eliminar").on('click', function() {
-      $("#nombre").html($(this).attr("name"));
-      var hrf = $("#enlace_eliminar").attr("href").split("/");
-      var url = "/admin/"+hrf[2]+"/eliminar/encuesta/"+$(this).attr("id");
-      $("#enlace_eliminar").attr("href",url);
-    });
-  });
-</script>
-
-{% endblock %#}

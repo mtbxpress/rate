@@ -94,7 +94,7 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 	public function mostarUsuariosConCursoActivo()	{
 
 		try {
-			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, usu.media
+			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, cusu.media
 					from usuario usu
                     				INNER JOIN curso_usuario  cusu on cusu.usuario_id = usu.id
 					INNER JOIN curso cu on cusu.curso_id = cu.id
@@ -113,13 +113,13 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 	public function mostarUsuariosConEncuestasEnCursoActivo()	{
 
 		try {
-			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, usu.media, tit.nombre as titulacion, tit.codigo
+			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, cusu.media, tit.nombre as titulacion, tit.codigo
 					from usuario usu
 					INNER JOIN encuesta enc on usu.id = enc.usuario_id
 					INNER JOIN titulacion tit on tit.id = enc.titulacion_id
 					INNER JOIN curso_titulacion ct on ct.titulacion_id = tit.id
 					INNER JOIN curso cu on ct.curso_id = cu.id
-					INNER JOIN curso_usuario cusu on cusu.usuario_id = usu.id
+					INNER JOIN curso_usuario cusu on cusu.usuario_id = usu.id /*and cu.id = cusu.curso_id*/
 					WHERE cu.activo = 1";
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
@@ -144,10 +144,10 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 					INNER JOIN curso cu on ct.curso_id = cu.id
 					WHERE cu.activo = 1 and usu.id = $idUsuario";
 		*/
-			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, usu.media
+			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, cusu.media
 					from usuario usu
                     				INNER JOIN curso_usuario  cusu on cusu.usuario_id = usu.id
-					INNER JOIN curso cu on cusu.curso_id = cu.id
+					INNER JOIN curso cu on cusu.curso_id = cu.id and cu.id = cusu.curso_id
 					WHERE cu.activo = 1 and usu.id = $idUsuario";
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
@@ -167,13 +167,23 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 	public function mostarUsuarioEncuestaConCursoActivo($idUsuario)	{
 
 		try {
-			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, usu.media, tit.nombre as titulacion, tit.codigo
+		/*	$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, usu.media, tit.nombre as titulacion, tit.codigo
 					from usuario usu
 					INNER JOIN encuesta enc on usu.id = enc.evaluado_id
 					INNER JOIN titulacion tit on tit.id = enc.titulacion_id
 					INNER JOIN curso_titulacion ct on ct.titulacion_id = tit.id
 					INNER JOIN curso cu on ct.curso_id = cu.id and cu.id = enc.curso_id
 					WHERE cu.activo = 1 and usu.id = $idUsuario";
+		*/
+			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono,  tit.nombre as titulacion, tit.codigo, curu.media
+					from usuario usu
+                    				INNER JOIN curso_usuario curu ON usu.id = curu.usuario_id
+					INNER JOIN encuesta enc on usu.id = enc.evaluado_id
+					INNER JOIN titulacion tit on tit.id = enc.titulacion_id
+					INNER JOIN curso_titulacion ct on ct.titulacion_id = tit.id
+					INNER JOIN curso cu on ct.curso_id = cu.id and cu.id = enc.curso_id and cu.id = curu.curso_id
+					WHERE cu.activo = 1 and usu.id = $idUsuario";
+
 
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
@@ -254,14 +264,22 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 	}
 
 
-	public function calcularMediaTotal($idUsuario)	{
+	public function calcularMediaTotalAnual($idUsuario)	{
 
 		try {
+/*  ESTA CONSULTA CALCULA LA MEDIA TOTAL DE TODOS LOS AÑOS
 			$query = "SELECT SUM(valor)/COUNT(r.id) as media
 			FROM encuesta_pregunta ep
 			INNER JOIN encuesta e ON e.id = ep.encuesta_id
 			INNER JOIN resultado r ON ep.resultado_id = r.id
 			WHERE e.evaluado_id = $idUsuario and e.completada = 'SI' ";
+*/
+			$query = "SELECT SUM(valor)/COUNT(r.id) as media
+			FROM encuesta_pregunta ep
+			INNER JOIN encuesta e ON e.id = ep.encuesta_id
+			INNER JOIN resultado r ON ep.resultado_id = r.id
+            		INNER JOIN curso c ON c.id = e.curso_id
+			WHERE e.evaluado_id = 40 and e.completada = 'SI' AND c.activo = 1 ";
 
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
@@ -373,7 +391,7 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 			                 INNER JOIN curso_usuario cu on cu.usuario_id = u.id
 			                 INNER JOIN curso c on c.id = cu.curso_id
 			                 WHERE c.activo = 1 and u.roles = '$rolUsuario'
-			                 ORDER BY media DESC LIMIT $cantidad;";
+			                 ORDER BY cu.media DESC LIMIT $cantidad;";
 
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();

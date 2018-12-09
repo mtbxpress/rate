@@ -10,6 +10,7 @@ use AppBundle\Entity\Encuesta;
 use AppBundle\Entity\Curso;
 use AppBundle\Entity\Pregunta;
 use AppBundle\Entity\EncuestaPregunta;
+use AppBundle\Entity\CursoUsuario;
 
 class EncuestaController extends Controller
 {
@@ -220,9 +221,17 @@ class EncuestaController extends Controller
                             $em->persist($encuesta);
                             $em->flush();
 
-                            $mediaTotal = $em->getRepository('AppBundle:Usuario')->calcularMediaTotal($encuesta->getEvaluado()->getId());
+                            $mediaTotal = $em->getRepository('AppBundle:Usuario')->calcularMediaTotalAnual($encuesta->getEvaluado()->getId());
                             $evaluado    = $em->getRepository('AppBundle:Usuario')->find($encuesta->getEvaluado()->getId());
-                            $evaluado->setMedia($mediaTotal[0]['media']);
+
+                            $rep = $em->getRepository('AppBundle:Curso');
+                            $cursoActivo = $rep->findBy(  array('activo' => 1));
+
+                            $cursoUsuario = $em->getRepository('AppBundle:CursoUsuario')->findOneBy(array('curso' => $cursoActivo[0]->getId(), 'usuario' => $evaluado->getId()));
+
+                            $cursoUsuario->setMedia($mediaTotal[0]['media']);
+                            $em->persist($cursoUsuario);
+                    //        $evaluado->setMedia($mediaTotal[0]['media']);
                             $em->persist($evaluado);
                             $em->flush();
                      }
@@ -233,7 +242,7 @@ class EncuestaController extends Controller
             else{
                 $this->addFlash('danger', 'No puede realizar esta encuesta' );
             }
-
+          $rep = $em->getRepository('AppBundle:Encuesta');
           $encuestasAsignadas = $rep->mostarEncuestasCursoActivo($usuario->getId());
            if(count( $encuestasAsignadas) > 0){
                 return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
@@ -273,7 +282,7 @@ class EncuestaController extends Controller
                             return $this->render('Encuesta/mostrar_encuestas_asignadas.html.twig', array('encuestasAsignadas'=>$encuestasAsignadas ));
                         }
                         else{
-                          return $this->render('Encuesta/realizar_encuesta.html.twig', array('encuPregs'=>$encuPregs ));
+                          return $this->render('Encuesta/realizar_encuesta.html.twig', array('encuPregs'=>$encuPregs, 'encuesta' => $encuesta ));
                         }
                    }
                    else{

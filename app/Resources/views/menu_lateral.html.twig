@@ -24,7 +24,13 @@
  <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="text-center">
-                    <a href="" class="site_title"><b>{% trans %}Anyo{% endtrans %} {{ app.session.get('cursoActivo') }}</b></a>
+                <a
+                {% if  app.user.roles[0]  == 'ROLE_ADMIN' %}
+                    href="{{ path('mostrar_cursos')}}"
+                {% else %}
+                    href="#"
+                {% endif %}
+                      class="site_title"><b>{% trans %}Anyo{% endtrans %} {{ app.session.get('cursoActivo') }}</b></a>
               </div>
        <br>
            {% if  app.user.roles[0]  != 'ROLE_ADMIN' %}

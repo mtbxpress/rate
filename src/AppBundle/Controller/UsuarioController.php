@@ -61,7 +61,6 @@ class UsuarioController extends Controller
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Usuario');
             $medias = $rep->calcularMedias($idUsuario);
-
             $usuario = $rep->mostarUsuarioEncuestaConCursoActivo($idUsuario);
 
             if(!isset($usuario) ){

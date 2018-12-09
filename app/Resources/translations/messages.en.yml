@@ -26,6 +26,7 @@ Telefono: Phone
 Eliminar usuario: Delete user
 ¿Esta seguro de eliminar el usuario?: Are you sure delete this user?
 Encuestas: Surveys
+Enc: Surveys
 Asignar: Assign
 Crear: Create
 Editar: Edit
@@ -105,6 +106,8 @@ Ingles: English
 Idiomas: Languages
 Profesor Externo: External Teacher
 Profesor Interno: Internal Teacher
+Prof Interno: Internal T.
+Prof Externo: External T.
 Administrador: Admin
 eliminar.encuesta.completada: You can not delete a survey that has already been completed
 Completada: Completed
@@ -130,3 +133,4 @@ Sistema.evaluacion.encuestas: System of evaluation of practices in companies.
 No esta inscrito en este curso: You are not enrolled in this course
 No puede crear una pregunta por que ya se ha completado alguna encuesta: You can not create a question because a survey has already been completed
 No se puede crear una encuesta si no existen preguntas: You can not create a survey if there are no questions
+No puede eliminar el curso por que se han realizado encuestas: You can not delete the course because surveys have been done

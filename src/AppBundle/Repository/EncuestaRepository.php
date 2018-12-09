@@ -88,7 +88,8 @@ class EncuestaRepository extends \Doctrine\ORM\EntityRepository
 				INNER JOIN pregunta p ON p.id = ep.pregunta_id
 				INNER JOIN curso_preguntas cp ON cp.pregunta_id = p.id
 				INNER JOIN curso c ON c.id = cp.curso_id
-				WHERE  c.activo = 1 and ep.encuesta_id = $idEncuesta";
+				WHERE  c.activo = 1 and ep.encuesta_id = $idEncuesta
+				ORDER BY orden ASC";
 
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();

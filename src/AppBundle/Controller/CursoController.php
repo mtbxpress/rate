@@ -88,9 +88,16 @@ public function editarCursoAction(Request $request, $idCurso){
                     $this->addFlash('danger', 'No puede eliminar el curso activo' );
                 }
                 else{
-                  $m->remove($curso);
-                  $m->flush();
-                  $this->addFlash('success', 'Registro eliminado correctamente' );
+
+                  $encuesta = $m->getRepository('AppBundle:Encuesta')->findOneByCurso($curso->getId());
+                  if(isset($encuesta)){
+                      $this->addFlash('danger', 'No puede eliminar el curso por que se han realizado encuestas' );
+                  }else{
+                    $m->remove($curso);
+                    $m->flush();
+                    $this->addFlash('success', 'Registro eliminado correctamente' );
+                  }
+
                 }
              }
 

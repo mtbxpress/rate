@@ -26,6 +26,7 @@ Telefono: Teléfono
 Eliminar usuario: Eliminar Usuario
 ¿Esta seguro de eliminar el usuario?: ¿Esta seguro de eliminar el usuario?
 Encuestas: Encuestas
+Enc: Enc.
 Asignar: Asignar
 Crear: Crear
 Editar: Editar
@@ -106,6 +107,8 @@ Ingles: Inglés
 Idiomas: Idiomas
 Profesor Externo: Profesor Externo
 Profesor Interno: Profesor Interno
+Prof Interno: P.Interno
+Prof Externo: P.Externo
 eliminar.encuesta.completada: No se puede eliminar una encuesta que ya ha sido completada
 Completada: Completada
 eliminar.pregunta.encuesta.asignada: No se puede eliminar una pregunta que ya ha sido asignada a una encuesta
@@ -131,3 +134,4 @@ Sistema.evaluacion.encuestas: Sistema de evaluación de prácticas en empresas.
 No esta inscrito en este curso: No esta inscrito en este curso
 No puede crear una pregunta por que ya se ha completado alguna encuesta: No puede crear una pregunta por que ya se ha completado alguna encuesta
 No se puede crear una encuesta si no existen preguntas: No se puede crear una encuesta si no existen preguntas
+No puede eliminar el curso por que se han realizado encuestas: No puede eliminar el curso por que se han realizado encuestas

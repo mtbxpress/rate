@@ -7,6 +7,8 @@ use AppBundle\Entity\Titulacion;
 #@ORM\OneToMany(targetEntity="App\Entity\FormulaColor", mappedBy="color")
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,11 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "8",
+     *      max = "15",
+     * )
      */
     private $username;
 
@@ -38,6 +45,11 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="apellidos", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "100",
+     * )
      */
     private $apellidos;
 
@@ -45,6 +57,11 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="nombre", type="string", length=30)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "50",
+     * )
      */
     private $nombre;
 
@@ -52,6 +69,7 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="email", type="string", length=100, nullable=true)
+     * @Assert\Email()
      */
     private $email;
 
@@ -66,6 +84,7 @@ class Usuario implements UserInterface
      * @var \DateTime
      *
      * @ORM\Column(name="fechaAlta", type="datetime")
+     * @Assert\DateTime
      */
     private $fechaAlta;
 
@@ -80,8 +99,12 @@ class Usuario implements UserInterface
      * @var string
      *
      * @ORM\Column(name="avatar", type="string", length=50)
+     * @Assert\File(
+     *      mimeTypes={"image/jpeg","image/jpg", "image/png"},
+     *      maxSize = "3M",
+     *   )
      */
-    private $avatar = 'img.jpg';
+    private $avatar = 'avatar_default.jpeg';
 
     /**
      * @var int
@@ -90,11 +113,13 @@ class Usuario implements UserInterface
      */
     private $telefono;
 
-    /**
+    /*
      * Many usuarios have Many cursos.
      * @ORM\ManyToMany(targetEntity="Curso", mappedBy="usuarios")
-     */
+
     private $cursos;
+*/
+
 
     /* COMENTADO
      * Many Users have Many Titulaciones.
@@ -106,15 +131,14 @@ class Usuario implements UserInterface
 
 
     /**
-     * One usuario has many encuestas. This is the inverse side.
-     * @ORM\OneToMany(targetEntity="Encuesta", mappedBy="usuario")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\CursoUsuario", mappedBy="usuario", cascade={"persist"})
      */
-    private $encuestas;
+    private $cursousuario;
 
     /**
      * @var decimal
      *
-     * @ORM\Column(name="media", type="decimal", precision=19, scale=4)
+     * @ORM\Column(name="media", type="decimal", precision=4, scale=1, nullable=true)
      */
     private $media;
 
@@ -287,6 +311,7 @@ class Usuario implements UserInterface
     public function setRoles($roles)
     {
     if (!in_array($roles, array('ROLE_ALU', 'ROLE_ADMIN',  'ROLE_PROFI', 'ROLE_PROFE'))) {
+        print_r($roles);
         throw new \InvalidArgumentException("Rol no valido");
     }
         $this->roles = $roles;
@@ -461,13 +486,13 @@ class Usuario implements UserInterface
         return $this->encuestas;
     }
 
-    /**
+    /*
      * Add curso
      *
      * @param \AppBundle\Entity\Curso $curso
      *
      * @return Usuario
-     */
+     *
     public function addCurso(\AppBundle\Entity\Curso $curso)
     {
     //    if (!$this->cursos->contains($curso)) {
@@ -476,23 +501,47 @@ class Usuario implements UserInterface
         return $this;
     }
 
-    /**
+    /*
      * Remove curso
      *
      * @param \AppBundle\Entity\Curso $curso
-     */
+     *
     public function removeCurso(\AppBundle\Entity\Curso $curso)
     {
         $this->cursos->removeElement($curso);
     }
 
-    /**
+    /*
      * Get cursos
      *
      * @return \Doctrine\Common\Collections\Collection
-     */
+     *
     public function getCursos()
     {
         return $this->cursos;
+    }
+*/
+    /**
+     * Set media
+     *
+     * @param string $media
+     *
+     * @return Usuario
+     */
+    public function setMedia($media)
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    /**
+     * Get media
+     *
+     * @return string
+     */
+    public function getMedia()
+    {
+        return $this->media;
     }
 }
