@@ -21,7 +21,7 @@ use AppBundle\Form\UsuarioType;
 use AppBundle\Entity\Curso;
 use AppBundle\Entity\Encuesta;
 use AppBundle\Entity\Resultado;
-
+use AppBundle\Entity\CursoUsuario;
 /**
  * Lógica de todas las pantallas relacionadas con el apartado de usuarios.
  */
@@ -139,32 +139,23 @@ class UsuarioController extends Controller
                 }
                 $rep = $em->getRepository('AppBundle:Curso');
                 $cursoActivo = $rep->findBy(array('activo' => true));
-    //            echo $cursoActivo[0]->getId(); die();
-   //             echo "<pre>"; print_r($cursoActivo[0]);  echo "</pre>";die("sldjh");
-                $cursoActivo[0]->addUsuario($usuario);
-                $usuario->addCurso($cursoActivo[0]);
+
+             //   $rep = $em->getRepository('AppBundle:CursoUsuario');
+             //   $cursoActivo = $rep->findOneBy(array('usuario' => $usuario->getId(), 'curso' => $cursoActivo[0]->getId()));
+
+         //       $cursoActivo[0]->addUsuario($usuario);
+         //       $usuario->addCurso($cursoActivo[0]);
 
                 $em->persist($usuario);
                 $em->persist($cursoActivo[0]);
                 $em->flush();
 
-             /*   $message = (new \Swift_Message("Envío de Password"))
-                    ->setFrom('gestorofertas2018@gmail.com')
-                     ->setTo($usuario->getEmail())
-                    ->setBody(
-                        $this->renderView(
-                            '@App/emails/plantilla_envio_password.html.twig',
-                             array('pass' => $passNoCodificada)
-                            ),
-                            'text/html'
-                        );
+                $cursoUsuario = new CursoUsuario();
+                $cursoUsuario->setUsuario($usuario);
+                $cursoUsuario->setCurso($cursoActivo[0]);
+                $em->persist($cursoUsuario);
+                $em->flush();
 
-            $res = $mailer->send($message);
-
-            if($res > 0){
-                $this->addFlash('info', 'Se ha enviado la contraseña del usuario a su email' );
-            }
-            */
                 $this->addFlash('success', 'Registro creado correctamente' );
                 $usuario = new Usuario();
                 $form = $this->createForm(UsuarioType::class, $usuario);

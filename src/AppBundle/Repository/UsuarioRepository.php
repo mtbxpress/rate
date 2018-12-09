@@ -15,54 +15,63 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 
 		try {
 			if($letra == 'All'){
-					$query = "SELECT  u.*
+					$query = "SELECT  u.*, cusu.media
 					from usuario u
                     				INNER JOIN curso_usuario  cusu on cusu.usuario_id = u.id
 					INNER JOIN curso cu on cusu.curso_id = cu.id
-					WHERE  1 ORDER By u.roles ";
+					WHERE  cu.activo = 1 ORDER By u.roles ";
 			}
 			else if($letra == 'admin'){
-				$query = "SELECT  u.*
+				$query = "SELECT  u.*, cusu.media
 					from usuario u
                     				INNER JOIN curso_usuario  cusu on cusu.usuario_id = u.id
 					INNER JOIN curso cu on cusu.curso_id = cu.id
-					WHERE  u.roles  = 'ROLE_ADMIN'";
+					WHERE  cu.activo = 1 and u.roles  = 'ROLE_ADMIN'";
 			}
 			else if($letra == 'alumno'){
-				$query = "SELECT  u.*
+				$query = "SELECT  u.*, cusu.media
 					from usuario u
                     				INNER JOIN curso_usuario  cusu on cusu.usuario_id = u.id
 					INNER JOIN curso cu on cusu.curso_id = cu.id
-					WHERE  u.roles  = 'ROLE_ALU'";
+					WHERE  cu.activo = 1 and u.roles  = 'ROLE_ALU'";
 			}
 			else if($letra == 'externo'){
-				$query = "SELECT  u.*
+				$query = "SELECT  u.*, cusu.media
 					from usuario u
                     				INNER JOIN curso_usuario  cusu on cusu.usuario_id = u.id
 					INNER JOIN curso cu on cusu.curso_id = cu.id
-					WHERE  u.roles  = 'ROLE_PROFE'";
+					WHERE  cu.activo = 1 and u.roles  = 'ROLE_PROFE'";
 			}
 			else if($letra == 'interno'){
-				$query = "SELECT  u.*
+				$query = "SELECT  u.*, cusu.media
 					from usuario u
                     				INNER JOIN curso_usuario  cusu on cusu.usuario_id = u.id
 					INNER JOIN curso cu on cusu.curso_id = cu.id
-					WHERE  u.roles  = 'ROLE_PROFI'";
+					WHERE  cu.activo = 1 and u.roles  = 'ROLE_PROFI'";
 			}
 			else{
-				$query = "SELECT  u.*
+				$query = "SELECT  u.*, cusu.media
 					from usuario u
                     				INNER JOIN curso_usuario  cusu on cusu.usuario_id = u.id
 					INNER JOIN curso cu on cusu.curso_id = cu.id
-					WHERE  u.nombre LIKE  '$letra%' OR u.apellidos LIKE '$letra%' ORDER By u.roles";
+					WHERE  cu.activo = 1 and (u.nombre LIKE  '$letra%' OR u.apellidos LIKE '$letra%') ORDER By u.roles";
 			}
+
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
 			$stmt = $db->prepare($query);
 			$param = array();
 			$stmt->execute($param);
 			$res = $stmt->fetchAll();
-//echo "<pre>"; print_r($res);  echo "</pre>";die();
+/*
+		            $em  = $this->getEntityManager();
+		            $stmt = $em->getConnection()->prepare($query);
+		            $stmt->bindParam(':letra',$letra);
+		            $stmt->bindParam(':letra',$letra);
+		            $stmt->execute();
+		            $res = $stmt->fetchAll();
+*/
+	//	            echo count($res); echo "<pre>"; print_r($res);  echo "</pre>";die();
 	    } catch (\Doctrine\ORM\NoResultException $exception) {
 	        return null;
 	    }
@@ -72,12 +81,25 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 	public function busquedaGeneral($busqueda)	{
 
 		try {
-			$query = "SELECT  u.*
+
+/*			$query = "SELECT DISTINCT u.*, cusu.media
 					from usuario u
                     				INNER JOIN curso_usuario  cusu on cusu.usuario_id = u.id
 					INNER JOIN curso cu on cusu.curso_id = cu.id
-				WHERE  u.nombre LIKE  '%$busqueda%' OR u.apellidos LIKE '%$busqueda%' OR  u.username LIKE '%$busqueda%'
+				WHERE  cu.activo = 1 and  u.nombre LIKE  '%$busqueda%' OR u.apellidos LIKE '%$busqueda%' OR  u.username LIKE '%$busqueda%'
 				OR  u.email LIKE '%$busqueda%' or u.telefono LIKE '%$busqueda%' ORDER BY u.roles";
+		*/
+			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, cusu.media
+					from usuario usu
+                    				INNER JOIN curso_usuario  cusu on cusu.usuario_id = usu.id
+					INNER JOIN curso cu on cusu.curso_id = cu.id
+					WHERE cu.activo = 1 and
+						(usu.nombre LIKE  '%$busqueda%'
+						OR usu.apellidos LIKE '%$busqueda%'
+						OR  usu.username LIKE '%$busqueda%'
+						OR  usu.email LIKE '%$busqueda%'
+						OR usu.telefono LIKE '%$busqueda%' )
+						ORDER BY usu.roles";
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
 			$stmt = $db->prepare($query);
@@ -113,14 +135,23 @@ class UsuarioRepository extends \Doctrine\ORM\EntityRepository
 	public function mostarUsuariosConEncuestasEnCursoActivo()	{
 
 		try {
-			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, cusu.media, tit.nombre as titulacion, tit.codigo
+			/*$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, cusu.media, tit.nombre as titulacion, tit.codigo
 					from usuario usu
 					INNER JOIN encuesta enc on usu.id = enc.usuario_id
 					INNER JOIN titulacion tit on tit.id = enc.titulacion_id
 					INNER JOIN curso_titulacion ct on ct.titulacion_id = tit.id
 					INNER JOIN curso cu on ct.curso_id = cu.id
-					INNER JOIN curso_usuario cusu on cusu.usuario_id = usu.id /*and cu.id = cusu.curso_id*/
+					INNER JOIN curso_usuario cusu on cusu.usuario_id = usu.id
 					WHERE cu.activo = 1";
+					*/
+			$query = "SELECT DISTINCT usu.id, usu.username,usu.nombre, usu.apellidos,usu.email,usu.fechaAlta, usu.avatar,usu.roles, usu.telefono, cusu.media/*, tit.nombre as titulacion, tit.codigo*/
+					from usuario usu
+					INNER JOIN encuesta enc on usu.id = enc.usuario_id
+				/*	INNER JOIN titulacion tit on tit.id = enc.titulacion_id
+					INNER JOIN curso_titulacion ct on ct.titulacion_id = tit.id*/
+					INNER JOIN curso_usuario cusu on cusu.usuario_id = usu.id
+					INNER JOIN curso cu on cusu.curso_id = cu.id and enc.curso_id = cu.id
+					WHERE cu.activo = 1 ";
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
 			$stmt = $db->prepare($query);

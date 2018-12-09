@@ -110,6 +110,10 @@ class Usuario implements UserInterface
      * @var int
      *
      * @ORM\Column(name="telefono", type="integer", nullable=true)
+     * @Assert\Length(
+     *      min = "6",
+     *      max = "11",
+     * )
      */
     private $telefono;
 

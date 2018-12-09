@@ -139,16 +139,16 @@ function funcion(){
                       <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
                         <div class="well profile_view">
                           <div class="col-sm-12">
-                            <h3 class="brief text-center" style='color: black;' ><i>{{ usuario.username }}</i></h3>
+                            <h4 class="brief text-center" style='color: #73879C;' ><i>{{ usuario.username }}</i></h4>
                             <div class="left col-xs-7">
                               <h2>{{ usuario.nombre }}  {{ usuario.apellidos }}</h2>
-                              {% if  usuario.codigor is defined %}
+                              {% if  usuario.codigo is defined %}
                                     <p><strong>{{ usuario.codigo }}: </strong> {{ usuario.titulacion }} </p>
                               {% endif %}
 
                               <ul class="list-unstyled">
-                                <li><i class="fa fa-envelope"></i> {#% trans %}Email{% endtrans %#}: {{ usuario.email }}</li>
-                                <li><i class="fa fa-phone"></i> {#% trans %}Telefono{% endtrans %#}: {{ usuario.telefono }}</li>
+                                <li><i class="fa fa-envelope"></i> : {{ usuario.email }}</li>
+                                <li><i class="fa fa-phone"></i> : {{ usuario.telefono }}</li>
                               </ul>
                             </div>
                             <div class="right col-xs-5 text-center">

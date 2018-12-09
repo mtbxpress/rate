@@ -25,14 +25,21 @@ class PreguntaRepository extends \Doctrine\ORM\EntityRepository
 				INNER JOIN titulacion t ON t.id = e.titulacion_id
 				INNER JOIN curso_titulacion ct ON ct.titulacion_id = t.id
 				INNER JOIN curso c ON c.id = ct.curso_id
-				WHERE u.roles = '$role' AND e.completada = 'SI' AND c.activo = 1";
-
+				WHERE u.roles = :role AND e.completada = 'SI' AND c.activo = 1";
+/*
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
 			$stmt = $db->prepare($query);
 			$param = array();
 			$stmt->execute($param);
 			$res = $stmt->fetchAll();
+*/
+		            $em  = $this->getEntityManager();
+		            $stmt = $em->getConnection()->prepare($query);
+		            $stmt->bindParam(':role',$role);
+		            $stmt->execute();
+		            $res = $stmt->fetchAll();
+
 	    } catch (\Doctrine\ORM\NoResultException $exception) {
 	        return null;
 	    }
@@ -54,7 +61,7 @@ class PreguntaRepository extends \Doctrine\ORM\EntityRepository
 				WHERE c.activo = 1";
 				*/
 			if($tipo != null){
-				$sub = "and p.tipo = '$tipo'";
+				$sub = "and p.tipo = ':tipo'";
 			}
 			else { $sub = ''; }
 			$query = "SELECT p.*
@@ -62,13 +69,20 @@ class PreguntaRepository extends \Doctrine\ORM\EntityRepository
 				INNER JOIN curso_preguntas cp ON cp.pregunta_id = p.id
 				INNER JOIN curso c ON cp.curso_id = c.id
 				WHERE c.activo = 1 $sub ";
-
+/*
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
 			$stmt = $db->prepare($query);
 			$param = array();
 			$stmt->execute($param);
 			$res = $stmt->fetchAll();
+*/
+		            $em  = $this->getEntityManager();
+		            $stmt = $em->getConnection()->prepare($query);
+		            $stmt->bindParam(':tipo',$tipo);
+		            $stmt->execute();
+		            $res = $stmt->fetchAll();
+
 	    } catch (\Doctrine\ORM\NoResultException $exception) {
 	        return null;
 	    }
