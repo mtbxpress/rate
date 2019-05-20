@@ -30,7 +30,8 @@
                 {% else %}
                     href="#"
                 {% endif %}
-                      class="site_title"><b>{% trans %}Anyo{% endtrans %} {{ app.session.get('cursoActivo') }}</b></a>
+                      {# class="site_title"><b>{% trans %}Anyo{% endtrans %} {{ app.session.get('cursoActivo') }}</b></a> #}
+                      class="menu_section" font size="17"><b><font size="4">{% trans %}Anyo{% endtrans %} {{ app.session.get('cursoActivo') }}</font></b></a>                      
               </div>
        <br>
            {% if  app.user.roles[0]  != 'ROLE_ADMIN' %}
