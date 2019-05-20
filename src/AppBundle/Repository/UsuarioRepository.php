@@ -262,9 +262,16 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 			$stmt->execute($param);
 			$res = $stmt->fetchAll();
 
-			$query2 = "SELECT DISTINCT COUNT(id) as numEnc
+			// Media de de todos los años
+			// $query2 = "SELECT DISTINCT COUNT(id) as numEnc
+			// 	FROM encuesta enc
+			// 	WHERE enc.completada = 'SI' and enc.evaluado_id = $idUsuario ";
+
+			//// Media del año activo
+			$query2 = "SELECT DISTINCT COUNT(enc.id) as numEnc
 				FROM encuesta enc
-				WHERE enc.completada = 'SI' and enc.evaluado_id = $idUsuario ";
+                INNER JOIN curso c on c.id = enc.curso_id
+				WHERE enc.completada = 'SI' and enc.evaluado_id = $idUsuario and c.activo = 1 ";
 
 			$stmt = $db->prepare($query2);
 			$param = array();
@@ -310,7 +317,7 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 			INNER JOIN encuesta e ON e.id = ep.encuesta_id
 			INNER JOIN resultado r ON ep.resultado_id = r.id
             		INNER JOIN curso c ON c.id = e.curso_id
-			WHERE e.evaluado_id = 40 and e.completada = 'SI' AND c.activo = 1 ";
+			WHERE e.evaluado_id = $idUsuario and e.completada = 'SI' AND c.activo = 1 ";
 
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();

@@ -75,28 +75,28 @@ class EncuestaController extends Controller
                        $preguntas = $rep->obtenerPreguntasCursoActivo($tipoPregunta);
                   //      echo $tipoPregunta;  echo count($preguntas ); die("jdgiu");
 
-                  if(isset($preguntas) ){
-                       foreach ($preguntas as $key => $pregunta) {
+                      if(isset($preguntas) ){
+                           foreach ($preguntas as $key => $pregunta) {
 
-                          $encPre = new EncuestaPregunta();
+                              $encPre = new EncuestaPregunta();
 
-                          $rep = $em->getRepository('AppBundle:Pregunta');
-                          $preg = $rep->find( $pregunta['id'] );
+                              $rep = $em->getRepository('AppBundle:Pregunta');
+                              $preg = $rep->find( $pregunta['id'] );
 
-                          $encPre->setEncuesta($encuesta);
-                          $encPre->setPregunta($preg);
-                          $encuesta->setCurso($cursoActivo[0]);
-                          $encuesta->addEncuestapregunta($encPre);
-                          $preg->addEncuestapreguna($encPre);
+                              $encPre->setEncuesta($encuesta);
+                              $encPre->setPregunta($preg);
+                              $encuesta->setCurso($cursoActivo[0]);
+                              $encuesta->addEncuestapregunta($encPre);
+                              $preg->addEncuestapreguna($encPre);
+                              $em->persist($encuesta);
+                              $em->persist($preg);
+                              $em->flush();
+                           }
                           $em->persist($encuesta);
-                          $em->persist($preg);
                           $em->flush();
-                       }
-                      $em->persist($encuesta);
-                      $em->flush();
-                      $this->addFlash('success', 'Registro creado correctamente' );
-                    }
-                    else{ $this->addFlash('danger', 'No se puede crear una encuesta si no existen preguntas' ); }
+                          $this->addFlash('success', 'Registro creado correctamente' );
+                        }
+                        else{ $this->addFlash('danger', 'No se puede crear una encuesta si no existen preguntas' ); }
 
 
                     }

@@ -61,7 +61,7 @@ class PreguntaRepository extends \Doctrine\ORM\EntityRepository
 				WHERE c.activo = 1";
 				*/
 			if($tipo != null){
-				$sub = "and p.tipo = ':tipo'";
+				$sub = "and p.tipo = :tipo ";
 			}
 			else { $sub = ''; }
 			$query = "SELECT p.*
@@ -79,7 +79,8 @@ class PreguntaRepository extends \Doctrine\ORM\EntityRepository
 */
 		            $em  = $this->getEntityManager();
 		            $stmt = $em->getConnection()->prepare($query);
-		            $stmt->bindParam(':tipo',$tipo);
+		            if($tipo != null){ $stmt->bindParam(':tipo',$tipo); }
+		            
 		            $stmt->execute();
 		            $res = $stmt->fetchAll();
 
