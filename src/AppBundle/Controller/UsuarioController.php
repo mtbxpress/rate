@@ -221,7 +221,10 @@ class UsuarioController extends Controller
 
             $subido = $this->subirImagenAction($form,$usuario);
             if( $subido && $avatarOriginal != 'avatar_default.jpeg' ){
-                unlink('imagenes/avatares/'.$avatarOriginal);
+                if(file_exists ( 'imagenes/avatares/'.$avatarOriginal )){
+                    unlink('imagenes/avatares/'.$avatarOriginal);
+                }
+//                unlink('imagenes/avatares/'.$avatarOriginal);
             }
             if( !$subido ){
                 $usuario->setAvatar($avatarOriginal);
@@ -260,7 +263,10 @@ class UsuarioController extends Controller
             $idLogado = $this->getuser()->getId();
             if($idLogado != $usuario->getId()){
                 if( $usuario->getAvatar() != 'avatar_default.jpeg' ){
-                     unlink('imagenes/avatares/'.$usuario->getAvatar());
+                    // unlink('imagenes/avatares/'.$usuario->getAvatar());
+                    if(file_exists ( 'imagenes/avatares/'.$usuario->getAvatar() )){
+                        unlink('imagenes/avatares/'.$usuario->getAvatar());
+                    }                     
                 }
                 $m->remove($usuario);
                 $m->flush();
