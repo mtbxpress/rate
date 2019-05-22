@@ -338,16 +338,8 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 	public function calcularNumTiposUsuarios()	{
 
 		try {
-/*			$query = "SELECT
-			SUM(CASE WHEN roles = 'ROLE_ADMIN' THEN 1 ELSE 0 END) admin,
-			SUM(CASE WHEN roles = 'ROLE_ALU' THEN 1 ELSE 0 END) alumno,
-			SUM(CASE WHEN roles = 'ROLE_PROFE' THEN 1 ELSE 0 END) profe,
-			SUM(CASE WHEN roles = 'ROLE_PROFI' THEN 1 ELSE 0 END) profi,
-			SUM(CASE WHEN roles = 'ROLE_PROFI' OR roles = 'ROLE_PROFE' OR roles = 'ROLE_ADMIN' OR roles = 'ROLE_ALU' THEN 1 ELSE 0 END) total
-			FROM usuario; ";
-*/
-			$query = "SELECT
-			SUM(CASE WHEN roles = 'ROLE_ADMIN' THEN 1 ELSE 0 END) admin,
+
+			$query = "SELECT			
 			SUM(CASE WHEN roles = 'ROLE_ALU' THEN 1 ELSE 0 END) alumno,
 			SUM(CASE WHEN roles = 'ROLE_PROFE' THEN 1 ELSE 0 END) profe,
 			SUM(CASE WHEN roles = 'ROLE_PROFI' THEN 1 ELSE 0 END) profi,
@@ -363,6 +355,15 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 			$param = array();
 			$stmt->execute($param);
 			$res = $stmt->fetchAll();
+
+			$query = "SELECT
+			SUM(CASE WHEN roles = 'ROLE_ADMIN' THEN 1 ELSE 0 END) admin
+				FROM usuario u";
+
+			$stmt = $db->prepare($query);
+			$stmt->execute();
+			$res[0]['admin'] = $stmt->fetchAll()[0]['admin'];
+			$res[0]['total'] += $res[0]['admin'];
 
 	    } catch (\Doctrine\ORM\NoResultException $exception) {
 	        return null;
