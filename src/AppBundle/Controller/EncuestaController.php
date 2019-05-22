@@ -41,7 +41,7 @@ class EncuestaController extends Controller
 
                 $rolUsuario = $usu->getRoles()[0];
                 $rolEvaluado = $eva->getRoles()[0];
-            	   if($usu != $eva ){
+                 if($usu != $eva ){
 
                     if(
                         ($rolUsuario == 'ROLE_ALU' && ($rolEvaluado == 'ROLE_PROFI' || $rolEvaluado == 'ROLE_PROFE') ) ||
@@ -49,15 +49,15 @@ class EncuestaController extends Controller
                         ($rolUsuario == 'ROLE_PROFE' && ($rolEvaluado == 'ROLE_ALU' ) )
                     ){
 
-	            	   $na = $eva->getNombre().' '.$eva->getApellidos() ;
-	            	   $encuesta->setNaevaluado($na);
+                   $na = $eva->getNombre().' '.$eva->getApellidos() ;
+                   $encuesta->setNaevaluado($na);
                       $encuesta->setTitulacion($tit);
                       $encuesta->setUsuario($usu);
                       $encuesta->setEvaluado($eva);
 
-	            	   $rep = $em->getRepository('AppBundle:Curso');
-	                $cursoActivo = $rep->findBy(	array('activo' => 1));
-	                $cursoActivo[0]->addTitulacion($encuesta->getTitulacion());
+                   $rep = $em->getRepository('AppBundle:Curso');
+                  $cursoActivo = $rep->findBy(  array('activo' => 1));
+                  $cursoActivo[0]->addTitulacion($encuesta->getTitulacion());
 
                        $rep = $em->getRepository('AppBundle:Pregunta');
                        if($encuesta->getEvaluado()->getRoles()[0] == 'ROLE_PROFE'){
@@ -103,7 +103,7 @@ class EncuestaController extends Controller
                         else { $this->addFlash('danger', 'Este tipo usuario no puede realizar esa encuesta' ); }
 
                 }
- 	  else { $this->addFlash('danger', 'Un usuario no puede evaluarse así mismo' ); }
+    else { $this->addFlash('danger', 'Un usuario no puede evaluarse así mismo' ); }
             }
         }catch (Exception $ex) {
                 echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
