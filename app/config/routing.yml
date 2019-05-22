@@ -167,20 +167,20 @@ eliminar_encuesta:
         idEncuesta: \d+
 
 mostrar_encuestas_signadas:
-    path: /{_locale}/mostar/encuestasasignadas
+    path: /inicio/{_locale}/mostar/encuestasasignadas
     defaults: { _controller: AppBundle:Encuesta:mostrarEncuestasAsignadas,_locale: es }
     requirements:
         _locale: 'en|es'
 
 realizar_encuesta:
-    path:  /{_locale}/realizar/encuesta/{idEncuesta}
+    path:  /inicio/{_locale}/realizar/encuesta/{idEncuesta}
     defaults: { _controller: AppBundle:Encuesta:realizarEncuesta, _locale: es }
     requirements:
         _locale: 'en|es'
         idEncuesta: \d+
 
 insertar_datos_encuesta:
-    path:  /{_locale}/insertar/{idEncuesta}
+    path:  /inicio/{_locale}/insertar/{idEncuesta}
     defaults: { _controller: AppBundle:Encuesta:insertarDatosEncuesta, _locale: es }
     requirements:
         _locale: 'en|es'
