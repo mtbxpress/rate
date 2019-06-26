@@ -134,3 +134,6 @@ No esta inscrito en este curso: You are not enrolled in this course
 No puede crear una pregunta por que ya se ha completado alguna encuesta: You can not create a question because a survey has already been completed
 No se puede crear una encuesta si no existen preguntas: You can not create a survey if there are no questions
 No puede eliminar el curso por que se han realizado encuestas: You can not delete the course because surveys have been done
+aviso.legal: Legal notice and Privacy policy
+leer.aviso.legal: Please read Legal notice and Privacy policy
+#politica.privacidad: Privacy policy

@@ -8,6 +8,13 @@
 {% block title %}Inicio{% endblock %}
 {% block head %}
         {{ parent() }}
+<style>
+.overflow {
+    overflow: scroll;
+    height:350px;
+/*    width:100px;    */
+}
+</style>        
 {% endblock %}
 {% block pageContent %}
 				<!-- page content -->
@@ -17,7 +24,7 @@
 						<div class="page-title">
 							<div class="title_left">
 								<h3>
-									{% block titulo_seccion %}Apartado seleccionado{% endblock %}
+									{% trans %}leer.aviso.legal{% endtrans %}
 								</h3>
 
 							</div>
@@ -46,7 +53,7 @@
 							<div class="col-md-12">
 								<div class="x_panel">
 									<div class="x_title">
-										<h2>Prescripciones tecnicas asignadas <small>Posible subtitulo</small></h2>
+										<h2>Aviso legal</h2>
 										<ul class="nav navbar-right panel_toolbox">
 											<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
 											<li class="dropdown">
@@ -62,25 +69,57 @@
 										</ul>
 										<div class="clearfix"></div>
 									</div>
-									<div class="x_content">
+									<div class="x_content overflow">
 										<!-- content starts here -->
 										 <div class="col-md-12">
-										 	<div class="col-md-4"><i>Prescripcion tecnica numero 1</i></div>
-										 	<div class="col-md-4"></div>
-										 	<div class="col-md-2">Estado</div>
-										 	<div class="col-md-2">Fecha</div>
+<h3>BLA BLA BLA</h3>
+<h5>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</h5>
+
+<h5>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</h5>
+
+<h5>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</h5>
+
+<h5>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</h5>
+
+<h5>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</h5>
+
 										 </div>
-										 <div class="col-md-12">
-										 	<div class="col-md-4"><i>Prescripcion tecnica numero 2</i></div>
-										 	<div class="col-md-4"></div>
-										 	<div class="col-md-2">Estado</div>
-										 	<div class="col-md-2">Fecha</div>
-										 </div>
-										 <div class="col-md-12">
-										 	<div class="col-md-4"><i>Prescripcion tecnica numero 3</i></div>
-										 	<div class="col-md-4"></div>
-										 	<div class="col-md-2">Estado</div>
-										 	<div class="col-md-2">Fecha</div>
+
 										 </div>
 										<!-- content ends here -->
 									</div>
@@ -94,7 +133,7 @@
 							<div class="col-md-12">
 								<div class="x_panel">
 									<div class="x_title">
-										<h2>Plantillas asignadas <small>Posible subtitulo</small></h2>
+										<h2>Política de privacidad</h2>
 										<ul class="nav navbar-right panel_toolbox">
 											<li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
 											<li class="dropdown">
@@ -110,27 +149,54 @@
 										</ul>
 										<div class="clearfix"></div>
 									</div>
-									<div class="x_content">
+									<div class="x_content overflow">
 										<!-- content starts here -->
 										 <div class="col-md-12">
-										 	<div class="col-md-4"><i>Plantilla numero 1</i></div>
-										 	<div class="col-md-4"></div>
-										 	<div class="col-md-2">Estado</div>
-										 	<div class="col-md-2">Fecha</div>
-										 </div>
-										 <div class="col-md-12">
-										 	<div class="col-md-4"><i>Plantilla numero 2</i></div>
-										 	<div class="col-md-4"></div>
-										 	<div class="col-md-2">Estado</div>
-										 	<div class="col-md-2">Fecha</div>
-										 </div>
-										 <div class="col-md-12">
-										 	<div class="col-md-4"><i>Plantilla numero 3</i></div>
-										 	<div class="col-md-4"></div>
-										 	<div class="col-md-2">Estado</div>
-										 	<div class="col-md-2">Fecha</div>
-										 </div>
-										<!-- content ends here -->
+<h3>BLA BLA BLA</h3>
+<h5>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</h5>
+
+<h5>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</h5>
+
+<h5>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</h5>
+
+<h5>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</h5>
+
+<h5>
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+</h5>										 </div>
 									</div>
 								</div>
 							</div>
