@@ -18,13 +18,16 @@ class InicioController extends Controller{
     public function inicioAction(Request $request)
     {
 
-    	$em = $this->getDoctrine()->getManager();
-        	$rep = $em->getRepository('AppBundle:Curso');
-             $cursoActivo = $rep->findBy(	array('activo' => 1));
-             if($cursoActivo){
-             	$session = $request->getSession();
-    		$session->set('cursoActivo', $cursoActivo[0]->getDescripcion());
-             }
+    	// $em = $this->getDoctrine()->getManager();
+     //    $rep = $em->getRepository('AppBundle:Curso');
+     //    $cursoActivo = $rep->findBy(array('activo' => 1));
+
+     //    if($cursoActivo){
+
+     //      	$session = $request->getSession();
+    	// 	$session->set('cursoActivo', $cursoActivo[0]->getDescripcion());
+     //        //die("CURSO ".$session->get('cursoActivo') );
+     //    }
 
         return $this->render('Inicio/inicio.html.twig'/*, array('cursoActivo' => $cursoActivo)*/);
     //    return $this->render('Inicio/inicio.html.twig');
