@@ -27,7 +27,6 @@ security:
 
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
-        #- { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/inicio, roles: [ROLE_ALU, ROLE_PROFI, ROLE_PROFE, ROLE_ADMIN ]}
 
 

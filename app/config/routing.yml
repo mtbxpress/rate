@@ -187,7 +187,7 @@ insertar_datos_encuesta:
         idEncuesta: \d+
 
 mostrar_estadisticas:
-    path: /admin/{_locale}/mostar/estadisticas
+    path: /inicio/{_locale}/mostar/estadisticas
     defaults: { _controller: AppBundle:Usuario:mostrarEstadisticas,_locale: es }
     requirements:
         _locale: 'en|es'
