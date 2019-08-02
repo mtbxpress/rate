@@ -39,7 +39,7 @@ class CursoUsuario
      * @ORM\Column(name="usuario", type="integer")
      */
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="cursousuario")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Usuario", inversedBy="cursousuario", cascade={"persist"})
      * @ORM\JoinColumn(name="usuario_id", referencedColumnName="id")
      */
     private $usuario;

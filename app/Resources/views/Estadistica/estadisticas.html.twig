@@ -392,6 +392,36 @@
                 </div>
               </div>
             </div>
+        <div class="row">
+            <div class="col-sm-3"></div>
+              <div class="col-sm-6">
+                  <div id="formulario" >
+                        <div class='text-center' ><h3>NUEVO JUGADOR</h3></div>
+                        <form  class='form-horizontal text-center' role='form'>
+                          <div class='form-group'>
+                            {#<label for='Nombre' class='col-sm-2 control-label'>Nombre</label>#}
+                            <div class='col-sm-12'>
+                              <div class="form-group">
+                                <label for="sel1">Select list:</label>
+                                <select class="form-control" id="titulacion">
+                                  {% for tit in titulaciones %}
+                                    <option value="{{ tit.id }}" >{{ tit.nombre }} - {{ tit.codigo }}</option>
+
+                                  {% endfor %}
+
+                                </select>
+                              </div>
+
+                            </div>
+
+                          </div>
+                          <div class='form-group'><button id='aceptar' type='button' class='btn btn-primary'>ACEPTAR</button></div>
+                          <input type="hidden" id="idClub"  value="">
+                        </form>
+                  </div>
+              </div>
+            <div class="col-sm-3"></div>
+        </div>
           </div>
 
           </div>
@@ -497,5 +527,33 @@
    $(window).on('load',function(){
      $(".loader").fadeOut( "slow" );
   });
+
+$(document).ready(function() {
+
+     $( "#aceptar" ).click(function() {
+
+        var titulacion = $( "#titulacion" ).val().trim();
+        mostrarRankingTitulaciones("ROLE_ALU",5, titulacion);
+    //    mostrarRankingTitulaciones("ROLE_PROFI",5, titulacion);
+    //    mostrarRankingTitulaciones("ROLE_PROFE",5, titulacion);
+    });
+});
+
+function mostrarRankingTitulaciones(role, cantidad, titulacion){
+
+      $.ajax({
+                data:  {'role': role, 'cantidad': cantidad, 'titulacion': titulacion},
+                dataType: 'json',
+                url:   '/inicio/es/rankingAjax',
+                type:  'POST',
+                beforeSend: function () {
+                  console.log("ANTES");
+                },
+                success:  function (response) {
+                  console.log(response);
+
+                },
+              });
+}
 </script>
 {% endblock %}

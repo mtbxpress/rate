@@ -339,7 +339,7 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 
 		try {
 
-			$query = "SELECT			
+			$query = "SELECT
 			SUM(CASE WHEN roles = 'ROLE_ALU' THEN 1 ELSE 0 END) alumno,
 			SUM(CASE WHEN roles = 'ROLE_PROFE' THEN 1 ELSE 0 END) profe,
 			SUM(CASE WHEN roles = 'ROLE_PROFI' THEN 1 ELSE 0 END) profi,
@@ -444,5 +444,31 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 	    }
 	  return $res;
 	}
+
+	public function calcularTopUsuariosPorTitulacion($rol, $cantidad, $titu)	{
+
+		try {
+
+			$query = "SELECT e.* FROM encuesta e
+			INNER JOIN usuario u ON e.usuario_id = u.id
+			INNER JOIN curso c on c.id = e.curso_id and c.activo='1'
+			INNER JOIN titulacion t ON t.id = e.titulacion_id AND t.id= $titu
+			INNER JOIN curso_usuario cu ON cu.curso_id = c.id and cu.usuario_id = u.id
+			WHERE u.roles = '$rol' ORDER BY cu.media DESC LIMIT $cantidad ";
+
+//			return $query;
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+	  return $res;
+	}
+
 }
 

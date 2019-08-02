@@ -107,9 +107,9 @@ class Usuario implements UserInterface
     private $avatar = 'avatar_default.jpeg';
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="telefono", type="integer", nullable=true)
+     * @ORM\Column(name="telefono", type="float", nullable=true)
      * @Assert\Length(
      *      min = "6",
      *      max = "11",

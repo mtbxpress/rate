@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 use AppBundle\Form\UsuarioType;
 
@@ -257,20 +258,29 @@ class UsuarioController extends Controller
         try{
             $m = $this->getDoctrine()->getManager();
             $usuario = $m->getRepository('AppBundle:Usuario')->find($idUsuario);
+
+        //    $cursoActivo = $m->getRepository('AppBundle:Curso')->findBy(array('activo' => true));
+            $cursoUsuario = $m->getRepository('AppBundle:CursoUsuario')->findBy(array(/*'curso' => $cursoActivo[0]->getId() ,*/ 'usuario' => $usuario->getId()) );
+
             if(!$usuario){
                 throw $this->createNotFoundException('El usuario con id: '.$idUsuario.' no existe.');
             }
             $idLogado = $this->getuser()->getId();
             if($idLogado != $usuario->getId()){
+
+                foreach ($cursoUsuario as $key => $value) {
+                    $m->remove($value);
+                }
+                $m->flush();
                 if( $usuario->getAvatar() != 'avatar_default.jpeg' ){
                     // unlink('imagenes/avatares/'.$usuario->getAvatar());
                     if(file_exists ( 'imagenes/avatares/'.$usuario->getAvatar() )){
                         unlink('imagenes/avatares/'.$usuario->getAvatar());
-                    }                     
+                    }
                 }
                 $m->remove($usuario);
                 $m->flush();
-                        $this->addFlash('success', 'Registro eliminado correctamente' );
+                $this->addFlash('success', 'Registro eliminado correctamente' );
              }
              else{
                 $this->addFlash('danger', 'No puede eliminarse así mismo' );
@@ -282,6 +292,8 @@ class UsuarioController extends Controller
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
     }
+
+
     /**
      * Busca usuarios según una letra
      * @return Response HTML
@@ -321,6 +333,10 @@ class UsuarioController extends Controller
     public function mostrarEstadisticasAction(){
         try{
             $em = $this->getDoctrine()->getManager();
+
+            $rep = $em->getRepository('AppBundle:Titulacion');
+            $titulaciones = $rep->titulacionesCursoActivo();
+
             $rep = $em->getRepository('AppBundle:Curso');
             $cursoActivo = $rep->findBy(array('activo' => true));
 
@@ -334,12 +350,40 @@ class UsuarioController extends Controller
             $topProfi = $rep->calcularTopUsuarios('ROLE_PROFI',5);
             $topProfe = $rep->calcularTopUsuarios('ROLE_PROFE',5);
 
+
         } catch (Exception $ex) {
             echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
         }
 
-        return $this->render('Estadistica/estadisticas.html.twig', array('numUsuarios' => $numUsuarios, 'numEncuestas' => $numEncuestas, 'numEncCompletada' => $numEncCompletada, 'numEncNoCompletada' => $numEncNoCompletada, 'topAlu' => $topAlu, 'topProfi' => $topProfi, 'topProfe' => $topProfe) );
+        return $this->render('Estadistica/estadisticas.html.twig', array('numUsuarios' => $numUsuarios, 'numEncuestas' => $numEncuestas, 'numEncCompletada' => $numEncCompletada, 'numEncNoCompletada' => $numEncNoCompletada, 'topAlu' => $topAlu, 'topProfi' => $topProfi, 'topProfe' => $topProfe, 'titulaciones' => $titulaciones) );
     }
+
+    public function llamadaAjaxRankingAction(Request $request){
+
+        $titulacion = $request->request->get('titulacion');
+        $cantidad = $request->request->get('cantidad');
+        $role = $request->request->get('role');
+
+
+        if(!$request->isXmlHttpRequest()){
+
+            $m = $this->getDoctrine()->getManager();
+            $rep = $m->getRepository('AppBundle:Usuario');
+
+            $ranking = $rep->calcularTopUsuariosPorTitulacion($role, $cantidad, $titulacion);
+//die("dd ".$ranking );
+            $result = array('ResultadoS' => count($ranking) );
+            return new JsonResponse($result);
+
+        }
+        else {
+              $result = array('error' => 1, 'Resultado' => 'Error al crear evento' );
+                return new JsonResponse($result);
+        }
+    }
+
+
+
 
  /*  public function calcularMediasAction($idUsuario){
         try{

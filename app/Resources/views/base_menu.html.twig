@@ -7,11 +7,15 @@
 		<link href="{{ asset('template/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
 		<!-- Font Awesome -->
 		<link href="{{ asset('template/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    {#
 		<!-- Animate -->
 		<link href="{{ asset('template/vendors/animate.css/animate.min.css') }}" rel="stylesheet">
-		<!-- Tema customizado -->
+		#}
+    <!-- Tema customizado -->
 		<link href="{{ asset('template/build/css/custom.css') }}" rel="stylesheet">
+    {#
 		<link href="{{ asset('template/vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
+    #}
 		<script src="{{ asset('template/vendors/jquery/dist/jquery.min.js') }}"></script>
 
 		<!-- Lo que viene ahora es para Internet Explorer, por si no es compatible con bootstrap -->
@@ -25,17 +29,24 @@
 		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
+    {#
         <!-- NProgress -->
     <link href="{{ asset('template/vendors/nprogress/nprogress.css') }}" rel="stylesheet">
+    #}
+    {#
     <!-- iCheck -->
     <link href="{{ asset('template/vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
-
+    #}
     <!-- bootstrap-progressbar -->
     <link href="{{ asset('template/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
+    {#
     <!-- JQVMap -->
     <link href="{{ asset('template/vendors/jqvmap/dist/jqvmap.min.css') }}" rel="stylesheet"/>
+    #}
+    {#
     <!-- bootstrap-daterangepicker -->
     <link href="{{ asset('template/vendors/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+    #}
     <!--datatable -->
 {#    <script src="{{ asset('template/build/mi_datatable/datatables.net/js/jquery.dataTables.min.js') }}"></script>#}
     <link href="{{ asset('template/build/mi_datatable/datatables.net-bs/css/dataTables.bootstrap.min.css') }}" rel="stylesheet">
@@ -94,7 +105,7 @@
 
    {% block footerContent %}
            <!-- footer content -->
-           <footer>         
+           <footer>
              <div class="pull-right">
                UPO Rate - {% trans %}Sistema.evaluacion.encuestas{% endtrans %} <a href="{{ path('inicio')}}" ><b>{% trans %} aviso.legal {% endtrans %} </b></a>
              </div>
@@ -124,56 +135,81 @@
     <!-- bootstrap progress js -->
     <script src="{{ asset('template/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
  {#   <script src="{{ asset('template/vendors/nicescroll/jquery.nicescroll.min.js') }}"></script> #}
+ {#
      <!-- moris js -->
     <script src="{{ asset('template/vendors/morris.js/morris.js') }}"></script>
+  #}
   {#  <script src="{{ asset('template/vendors/app/js/moris/example.js') }}"></script> #}
-
+  {#
     <script src="{{ asset('template/vendors/raphael/raphael.min.js') }}"></script>
+    #}
+    {#
     <!-- icheck -->
     <script src="{{ asset('template/vendors/iCheck/icheck.min.js') }}"></script>
-
+    #}
     <script src="{{ asset('template/build/js/custom.js') }}"></script>
     <!-- Switchery -->
     <link href="{{ asset('template//vendors/switchery/dist/switchery.min.css') }}" rel="stylesheet">
+    {#
     <!-- FastClick -->
     <script src="{{ asset('template/vendors/fastclick/lib/fastclick.js') }}"></script>
+    #}
+    {#
     <!-- NProgress -->
     <script src="{{ asset('template/vendors/nprogress/nprogress.js') }}"></script>
+    #}
     <!-- Chart.js -->
     <script src="{{ asset('template/vendors/Chart.js/dist/Chart.min.js') }}"></script>
+    {#
     <!-- gauge.js -->
     <script src="{{ asset('template/vendors/gauge.js/dist/gauge.min.js') }}"></script>
+    #}
     <!-- bootstrap-progressbar -->
     <script src="{{ asset('template/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
+    {#
     <!-- iCheck -->
     <script src="{{ asset('template/vendors/iCheck/icheck.min.js') }}"></script>
+    #}
+    {#
     <!-- Skycons -->
     <script src="{{ asset('template/vendors/skycons/skycons.js') }}"></script>
+    #}
+    {#
     <!-- Flot -->
     <script src="{{ asset('template/vendors/Flot/jquery.flot.js') }}"></script>
     <script src="{{ asset('template/vendors/Flot/jquery.flot.pie.js') }}"></script>
     <script src="{{ asset('template/vendors/Flot/jquery.flot.time.js') }}"></script>
     <script src="{{ asset('template/vendors/Flot/jquery.flot.stack.js') }}"></script>
     <script src="{{ asset('template/vendors/Flot/jquery.flot.resize.js') }}"></script>
-    <!-- Flot plugins -->
+    <!-- Flot plugins-->
     <script src="{{ asset('template/vendors/flot.orderbars/js/jquery.flot.orderBars.js') }}"></script>
     <script src="{{ asset('template/vendors/flot-spline/js/jquery.flot.spline.min.js') }}"></script>
     <script src="{{ asset('template/vendors/flot.curvedlines/curvedLines.js') }}"></script>
-    <!-- DateJS -->
+    #}
+
+    {#
+    <!-- DateJS-->
     <script src="{{ asset('template/vendors/DateJS/build/date.js') }}"></script>
+    #}
+    {#
     <!-- JQVMap -->
     <script src="{{ asset('template/vendors/jqvmap/dist/jquery.vmap.js') }}"></script>
     <script src="{{ asset('template/vendors/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>
     <script src="{{ asset('template/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>
+    #}
+    {#
     <!-- bootstrap-daterangepicker -->
     <script src="{{ asset('template/vendors/moment/min/moment.min.js') }}"></script>
     <script src="{{ asset('template/vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    #}
     <!-- datatable -->
     <script src="{{ asset('template/build/mi_datatable/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('template/build/mi_datatable/datatables.net/js/dataTables.responsive.min.js') }}"></script>
     <!-- Switchery -->
     <script src="{{ asset('template/vendors/switchery/dist/switchery.min.js') }}"></script>
+    {#
     <!-- jQuery Smart Wizard -->
     <script src="{{ asset('template/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js') }}"></script>
+    #}
 {% endblock %}
 

@@ -192,6 +192,13 @@ mostrar_estadisticas:
     requirements:
         _locale: 'en|es'
 
+mostrar_ranking_ajax:
+    path:   /inicio/{_locale}/rankingAjax
+    defaults: { _controller: AppBundle:Usuario:llamadaAjaxRanking, _locale: es }
+    requirements:
+        _locale: 'en|es'
+
+
 #editar_encuesta:
 #    path:  /admin/{_locale}/crear/encuesta/{idEncuesta}
 #    defaults: { _controller: AppBundle:Encuesta:editarEncuesta, _locale: es }

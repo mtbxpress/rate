@@ -31,4 +31,27 @@ class TitulacionRepository extends \Doctrine\ORM\EntityRepository
 		return $res;
 	}
 
+	public function titulacionesCursoActivo()	{
+
+		try {
+			$query = "SELECT t.id, t.nombre, t.codigo FROM titulacion t
+						INNER JOIN curso_titulacion ct on ct.titulacion_id = t.id
+						INNER JOIN curso c ON c.id = ct.curso_id AND c.activo = 1
+						ORDER BY t.nombre";
+
+			$em  = $this->getEntityManager();
+			$db = $em->getConnection();
+			$stmt = $db->prepare($query);
+			$param = array();
+			$stmt->execute($param);
+			$res = $stmt->fetchAll();
+
+	    } catch (\Doctrine\ORM\NoResultException $exception) {
+	        return null;
+	    }
+		return $res;
+	}
+
+
+
 }
