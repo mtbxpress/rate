@@ -337,7 +337,7 @@ if (typeof NProgress != 'undefined') {
 		return new Date(year, month - 1, day).getTime();
 	}
 
-
+/*
 	function init_flot_chart(){
 
 		if( typeof ($.plot) === 'undefined'){ return; }
@@ -588,7 +588,7 @@ if (typeof NProgress != 'undefined') {
 		};
 
 	}
-
+*/
 
 	/* STARRR */
 
@@ -5009,7 +5009,7 @@ if (typeof NProgress != 'undefined') {
 	$(document).ready(function() {
 
 		init_sparklines();
-		init_flot_chart();
+//		init_flot_chart();
 		init_sidebar();
 		init_wysiwyg();
 		init_InputMask();
@@ -5033,12 +5033,17 @@ if (typeof NProgress != 'undefined') {
 		init_select2();
 		init_validator();
 		init_DataTables();
+
 		init_chart_doughnut();
 		init_gauge();
+		init_compose();
+		//CustomTabs
+
+
 		init_PNotify();
 		init_starrr();
 		init_calendar();
-		init_compose();
+
 		init_CustomNotification();
 		init_autosize();
 		init_autocomplete();
