@@ -335,7 +335,8 @@ class UsuarioController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $rep = $em->getRepository('AppBundle:Titulacion');
-            $titulaciones = $rep->titulacionesCursoActivo();
+        //    $titulaciones = $rep->titulacionesCursoActivo();
+            $titulaciones = $rep->mostarTitulacionesCursoActivo();
 
             $rep = $em->getRepository('AppBundle:Curso');
             $cursoActivo = $rep->findBy(array('activo' => true));
@@ -365,19 +366,19 @@ class UsuarioController extends Controller
         $role = $request->request->get('role');
 
 
-        if(!$request->isXmlHttpRequest()){
+        if($request->isXmlHttpRequest()){
 
             $m = $this->getDoctrine()->getManager();
             $rep = $m->getRepository('AppBundle:Usuario');
 
             $ranking = $rep->calcularTopUsuariosPorTitulacion($role, $cantidad, $titulacion);
-//die("dd ".$ranking );
-            $result = array('ResultadoS' => count($ranking) );
+
+            $result = array('error' => 0, 'datos' => $ranking );
             return new JsonResponse($result);
 
         }
         else {
-              $result = array('error' => 1, 'Resultado' => 'Error al crear evento' );
+              $result = array('error' => 1, 'datos' => 'Error al crear evento' );
                 return new JsonResponse($result);
         }
     }

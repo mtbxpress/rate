@@ -18,7 +18,7 @@ class EncuestaRepository extends \Doctrine\ORM\EntityRepository
 				$sub = "and enc.usuario_id = :idUsuario";
 			}
 			else{ $sub = ""; }
-			$query = "SELECT enc.id, enc.completada, enc.titulacion_id as titulacion_id, enc.usuario_id as usuario, enc.evaluado_id as evaluado, c.descripcion as curso, tit.nombre as titulacion, usu.username, usu.nombre as nombre_usuario, usu.apellidos, enc.naevaluado
+			$query = "SELECT enc.id, enc.empresa_facultad, enc.completada, enc.titulacion_id as titulacion_id, enc.usuario_id as usuario, enc.evaluado_id as evaluado, c.descripcion as curso, tit.nombre as titulacion, usu.username, usu.nombre as nombre_usuario, usu.apellidos, enc.naevaluado
 						from encuesta enc
                         			INNER JOIN usuario usu on usu.id = enc.usuario_id
 						INNER JOIN titulacion tit on enc.titulacion_id = tit.id

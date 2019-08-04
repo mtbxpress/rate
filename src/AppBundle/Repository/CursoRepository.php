@@ -32,4 +32,21 @@
 		    }
 		//	return $res;
 		}
+
+
+		public function getIdUltimoCurso()	{
+
+			try {
+
+			    $em  = $this->getEntityManager();
+			    $stmt = $em->getConnection()->prepare("SELECT id FROM curso ORDER by descripcion desc limit 1 ");
+			    $stmt->execute();
+		        $res = $stmt->fetchAll();
+		    } catch (\Doctrine\ORM\NoResultException $exception) {
+		        return null;
+		    }
+
+		return $res[0]['id'];
+			return $res;
+		}
 	}

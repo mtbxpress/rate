@@ -18,9 +18,22 @@ class CursoController extends Controller
             $em = $this->getDoctrine()->getManager();
             $rep = $em->getRepository('AppBundle:Curso');
 
+
+
+            $idUltimoCurso = $rep->getIdUltimoCurso();//ultimo antes del nuevo
+
+
             if($form->isSubmitted() && $form->isValid()){
 
                 $em = $this->getDoctrine()->getManager();
+
+                //Copio las preguntas del año anterior
+                $c = $rep->find($idUltimoCurso);
+                $preguntas = $c->getPreguntas();
+                foreach ($preguntas as $key => $value) {
+                  $curso->addPregunta($value);
+                }
+
                 $em->persist($curso);
                 $em->flush();
                 if($curso->getActivo()){
@@ -29,10 +42,10 @@ class CursoController extends Controller
                     $session->set('cursoActivo', $curso->getDescripcion());
                 }
 
+
+
                 $this->addFlash('success', 'Registro creado correctamente' );
-          //      $curso = new Curso();
-                ///$form = $this->createForm(\AppBundle\Form\TitulacionType::class, $titulacion);
-                //return $this->render('Titulacion/crear_titulacion.html.twig', array('form' => $form->createView() ));
+
             }
         }catch (Exception $ex) {
                 $this->addFlash('danger', 'Error al crear el registro' );

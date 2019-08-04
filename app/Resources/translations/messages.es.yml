@@ -106,8 +106,8 @@ Cambiar avatar: Cambiar avatar
 Español: Español
 Ingles: Inglés
 Idiomas: Idiomas
-Profesor Externo: Profesor Externo
-Profesor Interno: Profesor Interno
+Profesor Externo: Prof. Externo
+Profesor Interno: Prof. Interno
 Prof Interno: P.Interno
 Prof Externo: P.Externo
 eliminar.encuesta.completada: No se puede eliminar una encuesta que ya ha sido completada
@@ -139,3 +139,6 @@ No puede eliminar el curso por que se han realizado encuestas: No puede eliminar
 aviso.legal: Aviso legal y Política privacidad
 leer.aviso.legal: Por favor lea el aviso legal y la política de privacidad
 #politica.privacidad: Política privacidad
+ranking.titulacion: Ranking por titulación
+Empresa.facultad: Empresa o Facultad del usuario evaluado
+centro: Centro

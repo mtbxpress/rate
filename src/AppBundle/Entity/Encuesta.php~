@@ -5,10 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Encuesta
  *
- * @ORM\Table(name="encuesta" , uniqueConstraints={ @ORM\UniqueConstraint(name="usu_tit_eva_unicos", columns={"titulacion_id", "usuario_id", "evaluado_id"})  })
+ * @ORM\Table(name="encuesta" , uniqueConstraints={ @ORM\UniqueConstraint(name="usu_tit_eva_unicos", columns={"titulacion_id", "usuario_id", "evaluado_id", "curso_id"})  })
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EncuestaRepository")
  */
 class Encuesta
@@ -87,6 +89,17 @@ class Encuesta
      * @ORM\JoinColumn(name="curso_id", referencedColumnName="id")
      */
     private $curso;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="empresa_facultad", type="string", length=50)
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "50",
+     * )
+     */
+    private $empresaFacultad;
 
     public function __construct() {
         //$this->preguntas = new \Doctrine\Common\Collections\ArrayCollection();
@@ -286,4 +299,30 @@ class Encuesta
     {
         $this->encuestapregunta->removeElement($encuestapreguntum);
     }
+
+    /**
+     * Set curso
+     *
+     * @param \AppBundle\Entity\Curso $curso
+     *
+     * @return Encuesta
+     */
+    public function setCurso(\AppBundle\Entity\Curso $curso = null)
+    {
+        $this->curso = $curso;
+
+        return $this;
+    }
+
+    /**
+     * Get curso
+     *
+     * @return \AppBundle\Entity\Curso
+     */
+    public function getCurso()
+    {
+        return $this->curso;
+    }
+
+
 }

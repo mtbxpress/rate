@@ -29,6 +29,7 @@ class EncuestaController extends Controller
                 $tit = $request->request->get('titulacion');
                 $usu = $request->request->get('usuario');
                 $eva = $request->request->get('evaluado');
+                $empresaFacultad = $request->request->get('empresaFacultad');
 
                 $rep = $em->getRepository('AppBundle:Titulacion');
                 $tit = $rep->find(  $request->request->get('titulacion'));
@@ -54,10 +55,11 @@ class EncuestaController extends Controller
                       $encuesta->setTitulacion($tit);
                       $encuesta->setUsuario($usu);
                       $encuesta->setEvaluado($eva);
+                      $encuesta->setEmpresaFacultad(strtoupper(trim($empresaFacultad)));
 
-                   $rep = $em->getRepository('AppBundle:Curso');
-                  $cursoActivo = $rep->findBy(  array('activo' => 1));
-                  $cursoActivo[0]->addTitulacion($encuesta->getTitulacion());
+                    $rep = $em->getRepository('AppBundle:Curso');
+                    $cursoActivo = $rep->findBy(  array('activo' => 1));
+                    $cursoActivo[0]->addTitulacion($encuesta->getTitulacion());
 
                        $rep = $em->getRepository('AppBundle:Pregunta');
                        if($encuesta->getEvaluado()->getRoles()[0] == 'ROLE_PROFE'){
@@ -112,8 +114,10 @@ class EncuestaController extends Controller
         $encuestas = $rep->mostarEncuestasCursoActivo();
         $rep = $em->getRepository('AppBundle:Titulacion');
         $titulacionesActivas = $rep->mostarTitulacionesCursoActivo();
+
         $rep = $em->getRepository('AppBundle:Usuario');
         $usuariosActivos = $rep->mostarUsuariosConCursoActivo();
+
 
         return $this->render('Encuesta/crear_encuesta.html.twig', array('form' => $form->createView(), 'encuestas'=>$encuestas, 'titulacionesActivas' => $titulacionesActivas, 'usuariosActivos' => $usuariosActivos ));
     }

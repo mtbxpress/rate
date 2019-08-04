@@ -5,6 +5,8 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * Encuesta
  *
@@ -87,6 +89,17 @@ class Encuesta
      * @ORM\JoinColumn(name="curso_id", referencedColumnName="id")
      */
     private $curso;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="empresa_facultad", type="string", length=50)
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "50",
+     * )
+     */
+    private $empresaFacultad;
 
     public function __construct() {
         //$this->preguntas = new \Doctrine\Common\Collections\ArrayCollection();
@@ -309,5 +322,31 @@ class Encuesta
     public function getCurso()
     {
         return $this->curso;
+    }
+
+
+
+    /**
+     * Set empresaFacultad
+     *
+     * @param string $empresaFacultad
+     *
+     * @return Encuesta
+     */
+    public function setEmpresaFacultad($empresaFacultad)
+    {
+        $this->empresaFacultad = $empresaFacultad;
+
+        return $this;
+    }
+
+    /**
+     * Get empresaFacultad
+     *
+     * @return string
+     */
+    public function getEmpresaFacultad()
+    {
+        return $this->empresaFacultad;
     }
 }

@@ -17,7 +17,8 @@ class TitulacionRepository extends \Doctrine\ORM\EntityRepository
 						from titulacion tit
 						INNER JOIN curso_titulacion ct on ct.titulacion_id = tit.id
 						INNER JOIN curso cu on ct.curso_id = cu.id
-						WHERE cu.activo = 1";
+						WHERE cu.activo = 1
+						ORDER BY tit.nombre";
 			$em  = $this->getEntityManager();
 			$db = $em->getConnection();
 			$stmt = $db->prepare($query);
@@ -28,7 +29,7 @@ class TitulacionRepository extends \Doctrine\ORM\EntityRepository
 	    } catch (\Doctrine\ORM\NoResultException $exception) {
 	        return null;
 	    }
-		return $res;
+	    return $res;
 	}
 
 	public function titulacionesCursoActivo()	{

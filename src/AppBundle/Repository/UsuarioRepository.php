@@ -449,7 +449,7 @@ WHERE e.evaluado_id = 35 and e.completada = 'SI'
 
 		try {
 
-			$query = "SELECT e.* FROM encuesta e
+			$query = "SELECT e.*, u.username, u.nombre, u.apellidos, cu.media FROM encuesta e
 			INNER JOIN usuario u ON e.usuario_id = u.id
 			INNER JOIN curso c on c.id = e.curso_id and c.activo='1'
 			INNER JOIN titulacion t ON t.id = e.titulacion_id AND t.id= $titu

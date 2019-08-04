@@ -97,14 +97,14 @@
                                                       <select name="usuario"  class="form-control select2"  style="width: 100%;" required="">
                                                         <option></option>
                                                           {% for usuario in usuariosActivos %}
-                                                              <option value="{{usuario.id}}">{{ usuario.apellidos }}, {{ usuario.nombre }}  //  
+                                                              <option value="{{usuario.id}}">{{ usuario.apellidos }}, {{ usuario.nombre }}  //
                                                                 {% if usuario.roles == 'ROLE_PROFI' %}
                                                                     PROFESOR INTERNO
                                                                 {% elseif usuario.roles == 'ROLE_PROFE' %}
                                                                     PROFESOR EXTERNO
                                                                 {% elseif usuario.roles == 'ROLE_ALU' %}
-                                                                    ALUMNO                                                                    
-                                                                {% endif %}                                                                
+                                                                    ALUMNO
+                                                                {% endif %}
 
                                                               </option>
                                                           {% endfor %}
@@ -115,17 +115,23 @@
                                                       <select name="evaluado"  class="form-control select2"  style="width: 100%;" required="">
                                                         <option></option>
                                                           {% for evaluado in usuariosActivos %}
-                                                              <option value="{{evaluado.id}}">{{ evaluado.apellidos }}, {{ evaluado.nombre }}  //  
+                                                              <option value="{{evaluado.id}}">{{ evaluado.apellidos }}, {{ evaluado.nombre }}  //
                                                                 {% if evaluado.roles == 'ROLE_PROFI' %}
                                                                     PROFESOR INTERNO
                                                                 {% elseif evaluado.roles == 'ROLE_PROFE' %}
                                                                     PROFESOR EXTERNO
                                                                 {% elseif evaluado.roles == 'ROLE_ALU' %}
-                                                                    ALUMNO                                                                    
+                                                                    ALUMNO
                                                                 {% endif %}
                                                               </option>
                                                           {% endfor %}
                                                       </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="Titulacion">{% trans %}Empresa.facultad{% endtrans %}</label>
+                                              <input type="text" name="empresaFacultad"  class="form-control"  style="width: 100%;" required="">
+
                                         </div>
                       <div class="ln_solid"></div>
           <!--  Aceptar y Reset en la misma línea  -->
@@ -171,6 +177,7 @@
                   <th>{% trans %}Titulacion{% endtrans %}</th>
                   <th>{% trans %}usuario.usuario{% endtrans %}</th>
                   <th>{% trans %}usuario.evaluado{% endtrans %}</th>
+                  <th>{% trans %}centro{% endtrans %}</th>
                   <th>{% trans %}Completada{% endtrans %}</th>
                   <th>{% trans %}Opciones{% endtrans %}</th>
                 </tr>
@@ -182,6 +189,7 @@
                         <td>{{ encuesta.titulacion }}</td>
                         <td>{{ encuesta.nombre_usuario }} {{ encuesta.apellidos }}</td>
                         <td>{{ encuesta.naevaluado }}</td>
+                        <td>{{ encuesta.empresa_facultad }}</td>
                         <td class="text-center">{{ encuesta.completada }}</td>
                     <td>
                       <div class="text-center">
@@ -215,6 +223,7 @@
                   <th>{% trans %}Titulacion{% endtrans %}</th>
                   <th>{% trans %}usuario.usuario{% endtrans %}</th>
                   <th>{% trans %}usuario.evaluado{% endtrans %}</th>
+                  <th>{% trans %}centro{% endtrans %}</th>
                   <th>{% trans %}Completada{% endtrans %}</th>
                   <th>{% trans %}Opciones{% endtrans %}</th>
                 </tr>
