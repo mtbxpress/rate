@@ -421,7 +421,8 @@
                             </div>
 
                           </div>
-                          <div class='form-group'><button id='aceptar' type='button' class='btn btn-primary'>ACEPTAR</button></div>
+                          {#<div class='form-group'><button id='aceptar' type='button' class='btn btn-primary'>ACEPTAR</button></div>
+                          #}
                           <input type="hidden" id="idClub"  value="">
                         </form>
                   </div>
@@ -593,7 +594,8 @@
 
 $(document).ready(function() {
 
-     $( "#aceptar" ).click(function() {
+  //   $( "#aceptar" ).click(function() {
+     $( "#titulacion" ).click(function() {
 
         var titulacion = $( "#titulacion" ).val().trim();
         mostrarRankingTitulaciones("ROLE_ALU",5, titulacion);
@@ -625,10 +627,11 @@ function mostrarRankingTitulaciones(role, cantidad, titulacion){
                   if(response['datos'].length > 0){
 
                       response['datos'].forEach(function(element) {
+                        if(element['media'] > 0){
+                          var html = "<article class='media event'><a class='pull-left date'><div class='text-center'><span class='fa fa-star'></span></div><p class='day'>"+element['media']+"</p></a><div class='media-body'><a class='title' href=''>"+element['username']+"</a><h4>"+element['nombre']+" "+element['apellidos']+"</h4></div></article>";
 
-                        var html = "<article class='media event'><a class='pull-left date'><div class='text-center'><span class='fa fa-star'></span></div><p class='day'>"+element['media']+"</p></a><div class='media-body'><a class='title' href=''>"+element['username']+"</a><h4>"+element['nombre']+" "+element['apellidos']+"</h4></div></article>";
-
-                        $("#"+textRole).html(html);
+                          $("#"+textRole).html(html);
+                        }
                       });
 
                 }

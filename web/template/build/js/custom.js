@@ -762,7 +762,7 @@ if (typeof NProgress != 'undefined') {
 	  };
 
 
-/*		if ($('#chart_gauge_01').length){
+		if ($('#chart_gauge_01').length){
 
 			var chart_gauge_01_elem = document.getElementById('chart_gauge_01');
 			var chart_gauge_01 = new Gauge(chart_gauge_01_elem).setOptions(chart_gauge_settings);
@@ -778,7 +778,7 @@ if (typeof NProgress != 'undefined') {
 			chart_gauge_01.setTextField(document.getElementById("gauge-text"));
 
 		}
-*/
+
 		if ($('#chart_gauge_02').length){
 
 			var chart_gauge_02_elem = document.getElementById('chart_gauge_02');
