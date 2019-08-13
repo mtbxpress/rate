@@ -7,6 +7,8 @@
 #  resource: '@AppBundle/Resources/config/routing.yml'
 #  prefix: /
 
+
+#methods:  [GET]
 ########    LOGIN/LOGOUT  ##########
 login:
     path: /
@@ -198,6 +200,14 @@ mostrar_ranking_ajax:
     requirements:
         _locale: 'en|es'
 
+recuperar_password:
+    path:   /recuperarPassword/{email}
+    defaults: {_controller: AppBundle:Usuario:recuperarPassword }
+
+formulario_registro:
+    path:   /registro
+    defaults: {_controller: AppBundle:Usuario:registro }
+    methods:  [POST]
 
 #editar_encuesta:
 #    path:  /admin/{_locale}/crear/encuesta/{idEncuesta}

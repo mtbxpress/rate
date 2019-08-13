@@ -315,7 +315,7 @@ class Usuario implements UserInterface
     public function setRoles($roles)
     {
     if (!in_array($roles, array('ROLE_ALU', 'ROLE_ADMIN',  'ROLE_PROFI', 'ROLE_PROFE'))) {
-        print_r($roles);
+     //   print_r($roles);
         throw new \InvalidArgumentException("Rol no valido");
     }
         $this->roles = $roles;

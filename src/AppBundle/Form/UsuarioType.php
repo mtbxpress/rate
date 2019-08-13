@@ -26,6 +26,7 @@ class UsuarioType extends AbstractType
     {
         $builder->add('username',TextType::class,array('required' => true, 'label' => 'Nombre Usuario'))
         ->add('password',PasswordType::class)
+       // ->add('password',TextType::class)
         ->add('nombre',TextType::class,array('required' => true, 'label' => 'Nombre'))
         ->add('apellidos',TextType::class,array('required' => true, 'label' => 'Apellidos'))
         ->add('email',EmailType::class, array('required' => true))

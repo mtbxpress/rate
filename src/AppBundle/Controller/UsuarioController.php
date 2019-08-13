@@ -128,10 +128,11 @@ class UsuarioController extends Controller
 
                 $roles = $request->request->get('roles');
                 $usuario->setRoles($roles);
-                $passNoCodificada = $usuario->getPassword();
+                //$passNoCodificada = $usuario->getPassword();
                 //Codificamos la contraseña antes de guardarla
                 $password = $passwordEncoder->encodePassword($usuario, $usuario->getPassword());
                 $usuario->setPassword($password);
+                //$usuario->setPassword($passNoCodificada);
 
 
                 $usuarioExiste =$em->getRepository('AppBundle:Usuario')->findByUsername($usuario->getusername());
@@ -148,7 +149,7 @@ class UsuarioController extends Controller
          //       $usuario->addCurso($cursoActivo[0]);
 
                 $em->persist($usuario);
-                $em->persist($cursoActivo[0]);
+            //    $em->persist($cursoActivo[0]);
                 $em->flush();
 
                 $cursoUsuario = new CursoUsuario();
@@ -383,7 +384,113 @@ class UsuarioController extends Controller
         }
     }
 
+    public function recuperarPasswordAction(\Swift_Mailer $mailer, $email, UserPasswordEncoderInterface $passwordEncoder)   {
 
+        try{
+            if($email != null && $email != ''){
+                $m = $this->getDoctrine()->getManager();
+                $usuario = $m->getRepository('AppBundle:Usuario')->findBy(['email' => $email]);
+                $error = []; $last_username = ""; $mensaje = "";
+                if(count($usuario) > 0){
+
+                        $pass = substr( md5(microtime()), 1, 8);
+                        //$pass = $usuario[0]->getPassword();
+                        $message = (new \Swift_Message("Recuperacion Password"))
+                            ->setFrom('gestorofertas2018@gmail.com')
+                            ->setTo($email)
+                            ->setBody(
+                                $this->renderView(
+                                    'emails/plantilla_recuperar_password.html.twig',
+                                    array('pass' => $pass)
+                                ),
+                                'text/html'
+                            );
+                        $res = $mailer->send($message);
+                        if($res == 1){
+                                $mensaje = 'RESTAURADA' ;
+
+                                $pass = $passwordEncoder->encodePassword($usuario[0], $pass);
+                                $usuario[0]->setPassword($pass);
+                            $m->persist($usuario[0]);
+                            $m->flush();
+                        }
+                        else{
+                            $mensaje = "NO RESTAURADA";
+                        }
+                      }
+                }
+                return $this->render('login.html.twig',array('error' => $error, 'last_username' => $last_username, 'mensaje' => $mensaje ));
+        }
+        catch (Exception $ex) {
+            echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
+        }
+    }
+
+    public function registroAction(Request $request, ValidatorInterface $validator, UserPasswordEncoderInterface $passwordEncoder){
+        try{
+
+            $em = $this->getDoctrine()->getManager();
+
+
+            $error = []; $last_username = ""; $mensaje = "";
+
+            $email = $request->request->get('email2');
+            $nombre_usuario = $request->request->get('nombre_usuario');
+            $pass = $request->request->get('pass');
+            $nombre = $request->request->get('nombre');
+            $apellidos = $request->request->get('apellidos');
+            $telefono = $request->request->get('telefono');
+            $email = $request->request->get('email2');
+
+            $rep = $em->getRepository('AppBundle:Usuario');
+            $usuarioExiste = $rep->findOneBy(array('username' => $nombre_usuario ));
+            $emailExiste = $rep->findOneBy(array('email' => $email));
+
+            if(isset($usuarioExiste)){
+                $mensaje = 'USUARIO EXISTE';
+            }elseif(isset($emailExiste)){
+                $mensaje = 'EMAIL EXISTE';
+            }else{
+
+                $usuario = new Usuario();
+                $errors = $validator->validate($usuario);
+                $usuario->setFechaAlta(new \DateTime());
+
+                $usuario->setRoles("ROLE_ALU");
+                $usuario->setAvatar("avatar_default.jpeg");
+                $usuario->setUsername($nombre_usuario);
+                $usuario->setNombre($nombre);
+                $usuario->setApellidos($apellidos);
+                $usuario->setEmail($email);
+                $password = $passwordEncoder->encodePassword($usuario, $pass);
+                $usuario->setPassword($password);
+
+                $rep = $em->getRepository('AppBundle:Curso');
+                $cursoActivo = $rep->findBy(array('activo' => true));
+
+                $em->persist($usuario);
+                $em->flush();
+
+                $cursoUsuario = new CursoUsuario();
+                $cursoUsuario->setUsuario($usuario);
+                $cursoUsuario->setCurso($cursoActivo[0]);
+                $em->persist($cursoUsuario);
+                $em->flush();
+
+                if($usuario->getId() > 0) { $mensaje = 'USUARIO CREADO'; }
+                else{ $mensaje = 'USUARIO NO CREADO'; }
+
+            }
+
+
+            return $this->render('login.html.twig',array('error' => $error, 'last_username' => $last_username, 'mensaje' => $mensaje ));
+
+        }
+    catch (Exception $ex) {
+        echo 'Excepción capturada: ',  $ex->getMessage(), "\n";
+    }
+        return $this->render('login.html.twig',array('error' => $error, 'last_username' => $last_username, 'mensaje' => "" ));
+    }
 
 
  /*  public function calcularMediasAction($idUsuario){

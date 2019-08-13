@@ -31,7 +31,7 @@
                     href="#"
                 {% endif %}
                       {# class="site_title"><b>{% trans %}Anyo{% endtrans %} {{ app.session.get('cursoActivo') }}</b></a> #}
-                      class="menu_section" font size="17"><b><font size="4">{% trans %}Anyo{% endtrans %} {{ app.session.get('cursoActivo') }}</font></b></a>                      
+                      class="menu_section" font size="17"><b><font size="4">{% trans %}Anyo{% endtrans %} {{ app.session.get('cursoActivo') }}</font></b></a>
               </div>
        <br>
            {% if  app.user.roles[0]  != 'ROLE_ADMIN' %}
@@ -111,6 +111,8 @@
                   {#<li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>#}
                 </ul>
               </div>
+
+      {% endif %}
               <div class="menu_section">
                 <h3>{% trans %}Estadisticas{% endtrans %}</h3>
                 <ul class="nav side-menu">
@@ -118,9 +120,6 @@
                   </li>
                 </ul>
               </div>
-
-      {% endif %}
-
             </div>
             <!-- /sidebar menu -->
 					{#	{{ include("AppBundle:views:Menus:menu_admin.html.twig") }}#}

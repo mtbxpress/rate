@@ -69,7 +69,11 @@ swiftmailer:
     spool: { type: memory }
     encryption: ssl
     auth_mode: login
-    #host: smtp.gmail.com
+  #  host: smtp.gmail.com
+
+# Permitir acceder desde aplicaciones menos seguras https://myaccount.google.com/u/2/lesssecureapps?pageId=none
+
+
 sensio_framework_extra:
    router:
         annotations: false
